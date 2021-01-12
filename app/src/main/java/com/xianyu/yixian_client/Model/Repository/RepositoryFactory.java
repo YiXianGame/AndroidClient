@@ -3,7 +3,7 @@ package com.xianyu.yixian_client.Model.Repository;
 import android.annotation.SuppressLint;
 
 import com.xianyu.yixian_client.Model.Room.DataBase_Room;
-import com.xianyu.yixian_client.Model.Room.Entity.Simple_SkillCard;
+import com.xianyu.yixian_client.Model.Room.Entity.History;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 
 import java.util.List;
@@ -23,7 +23,7 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * @ProjectName: YiXian_Client
- * @Package: com.xianyu.yixian_client.Model.Repository
+ * @Package: com.xianyu.yixian_client.Model.repository
  * @ClassName: RepositoryFactory
  * @Description: java类作用描述
  * @Author: Jianxian
@@ -61,35 +61,26 @@ public class RepositoryFactory{
         RxNoneOne(user -> local.clearAllUser(user), arg);
     }
 
-
-    public void insertSkillCard(Simple_SkillCard simple_skillCard) {
-        RxNoneOne(arg -> local.insertSkillCard(arg), simple_skillCard);
-    }
-
-
-    public Single<List<Simple_SkillCard>> querySkillCard() {
-        return local.querySkillCard();
-    }
-
-
     public void updateUser(User user) {
         RxNoneOne(arg -> local.insertUser(arg), user);
     }
 
-    public void ValidUser(User user) {
-        RxNoneOne(arg -> remote.ValidUser(arg), user);
+    public void insertHistory(History... history) {
+        RxNoneOne(arg -> local.insertHistory(history), history);
     }
 
-
-    public void RegisterUser(User user) {
-        remote.RegisterUser(user);
+    public void deleteHistory(History... history) {
+        RxNoneOne(arg -> local.deleteHistory(history), history);
     }
 
-
-    public void ChangeUser(User user,String verificationCode) {
-        remote.ChangeUser(user,verificationCode);
+    public void updateHistory(History... history) {
+        RxNoneOne(arg -> local.updateHistory(history), history);
     }
 
+    public Single<List<History>> queryHistory(long user_id) {
+        return local.queryHistory(user_id);
+    }
+    //RxJava2的异步方法封装
     @SuppressLint("CheckResult")
     public <T> void RxNoneOne(Consumer<T> functions,T arg){
         Observable.create(new ObservableOnSubscribe<T>() {

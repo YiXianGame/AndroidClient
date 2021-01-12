@@ -3,7 +3,6 @@ package com.xianyu.yixian_client;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
-import com.xianyu.yixian_client.Model.Event.ReceiveEvent.ReceiveEvent;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 
 /**
@@ -19,8 +18,6 @@ import com.xianyu.yixian_client.Model.Room.Entity.User;
  * @Version: 1.0
  */
 public class Core {
-    public static ReceiveEvent information_ReceiveEvent = new ReceiveEvent();
-    public static ReceiveEvent gameReceive_Event = new ReceiveEvent();
     public static MutableLiveData<User> liveUser = new MutableLiveData<User>();
     public static Gson gson;
 }

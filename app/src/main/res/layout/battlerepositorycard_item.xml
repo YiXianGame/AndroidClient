@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="250dp"
+        android:layout_height="118dp">
+
+        <TextView
+            android:id="@+id/is_magic"
+            android:layout_width="111dp"
+            android:layout_height="37dp"
+            android:text="技能名"
+            android:textAppearance="@style/TextAppearance.YiXian.Headline4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.426" />
+
+        <TextView
+            android:id="@+id/skill1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
+            android:text="技能1"
+            app:layout_constraintBottom_toTopOf="@+id/skill"
+            app:layout_constraintEnd_toStartOf="@+id/skill" />
+
+        <TextView
+            android:id="@+id/skill2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="45dp"
+            android:layout_marginBottom="4dp"
+            android:text="技能2"
+            app:layout_constraintBottom_toTopOf="@+id/skill"
+            app:layout_constraintStart_toEndOf="@+id/skill1" />
+
+        <TextView
+            android:id="@+id/skill3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="4dp"
+            android:text="技能3"
+            app:layout_constraintBottom_toTopOf="@+id/skill"
+            app:layout_constraintStart_toEndOf="@+id/skill" />
+
+        <TextView
+            android:id="@+id/skill4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="4dp"
+            android:text="技能4"
+            app:layout_constraintEnd_toStartOf="@+id/skill"
+            app:layout_constraintTop_toBottomOf="@+id/skill1" />
+
+        <TextView
+            android:id="@+id/skill5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="13dp"
+            android:text="技能5"
+            app:layout_constraintStart_toEndOf="@+id/skill"
+            app:layout_constraintTop_toBottomOf="@+id/skill3" />
+
+        <TextView
+            android:id="@+id/skill6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:text="技能6"
+            app:layout_constraintEnd_toStartOf="@+id/skill"
+            app:layout_constraintTop_toBottomOf="@+id/skill" />
+
+        <TextView
+            android:id="@+id/skill7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="4dp"
+            android:text="技能7"
+            app:layout_constraintStart_toEndOf="@+id/skill6"
+            app:layout_constraintTop_toBottomOf="@+id/skill" />
+
+        <TextView
+            android:id="@+id/skill8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:text="技能8"
+            app:layout_constraintStart_toEndOf="@+id/skill"
+            app:layout_constraintTop_toBottomOf="@+id/skill" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -10,9 +10,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.hilt.EntryPoint;
-import dagger.hilt.InstallIn;
-import dagger.hilt.components.SingletonComponent;
 import io.reactivex.Single;
 
 
@@ -31,11 +28,13 @@ import io.reactivex.Single;
 public class LoginViewModel extends ViewModel {
     public MutableLiveData<String> verificationCode = new MutableLiveData<String>();
     public MutableLiveData<String> surePassword = new MutableLiveData<String>();
+
     public RepositoryFactory repositoryFactory;
     @Inject
     public LoginViewModel(RepositoryFactory repositoryFactory){
         this.repositoryFactory = repositoryFactory;
     }
+
     public void insertUser(User user){
         repositoryFactory.insertUser(user);
     }
@@ -52,13 +51,13 @@ public class LoginViewModel extends ViewModel {
        return repositoryFactory.queryUsers();
     }
     public void ValidUser(User user){
-        repositoryFactory.ValidUser(user);
-    };
+
+    }
     public void RegisterUser(User user){
-        repositoryFactory.RegisterUser(user);
+
     }
     public void ChangeUser(User user){
-        repositoryFactory.ChangeUser(user,verificationCode.getValue());
+
     }
 
 }

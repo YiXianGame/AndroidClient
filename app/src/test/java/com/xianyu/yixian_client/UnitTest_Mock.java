@@ -10,7 +10,6 @@ import androidx.room.Room;
 
 import com.xianyu.yixian_client.Model.Room.Dao.UserDao;
 import com.xianyu.yixian_client.Model.Room.DataBase_Room;
-import com.xianyu.yixian_client.Model.Room.Entity.User;
 
 import org.junit.After;
 import org.junit.Before;

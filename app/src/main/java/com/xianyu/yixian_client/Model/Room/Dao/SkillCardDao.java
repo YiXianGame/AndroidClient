@@ -6,8 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.xianyu.yixian_client.Model.Room.Entity.Simple_SkillCard;
-import com.xianyu.yixian_client.Model.Room.Entity.User;
+import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 
 import java.util.List;
 
@@ -29,17 +28,17 @@ import io.reactivex.Single;
 @Dao
 public interface SkillCardDao {
     @Insert
-    public void insert(Simple_SkillCard... simple_skillCards);
+    public void insert(SkillCard... skillCards);
 
     @Update
-    public void update(Simple_SkillCard... simple_skillCards);
+    public void update(SkillCard... skillCards);
 
     @Delete
-    public void delete(Simple_SkillCard... simple_skillCards);
+    public void delete(SkillCard... skillCards);
 
-    @Query("SELECT * FROM skill_cards WHERE name = :name")
-    public Single<Simple_SkillCard> query(String name);
+    @Query("SELECT * FROM skillcard WHERE name = :name")
+    public Single<SkillCard> query(String name);
 
-    @Query("SELECT * FROM skill_cards")
-    public Single<List<Simple_SkillCard>> query();
+    @Query("SELECT * FROM skillcard")
+    public Single<List<SkillCard>> query();
 }

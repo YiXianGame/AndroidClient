@@ -1,8 +1,10 @@
 package com.xianyu.yixian_client.Login;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -13,7 +15,6 @@ import com.xianyu.yixian_client.Login.Fragment.Bind.DepthPageTransformer;
 import com.xianyu.yixian_client.Login.Fragment.Bind.Login_Fragment_Adapter;
 import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Model.Log.Log.Tag;
-import com.xianyu.yixian_client.Model.Repository.RepositoryFactory;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.Model.ShortCode.MessageDialog;
 import com.xianyu.yixian_client.R;
@@ -21,7 +22,6 @@ import com.xianyu.yixian_client.R;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import dagger.hilt.android.EntryPointAccessors;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -33,6 +33,7 @@ import io.reactivex.schedulers.Schedulers;
 
 @AndroidEntryPoint
 public class Login extends AppCompatActivity {
+    //。。。
     private ViewPager2 paper;
     private TabLayout tab;
     @Inject
@@ -49,7 +50,11 @@ public class Login extends AppCompatActivity {
         //Service初始化
         Intent intentOne = new Intent(this, LoginService.class);
         startService(intentOne);
-
+        //视频初始化
+        VideoView videoView = findViewById(R.id.back_ground);
+        videoView.setVideoPath(Uri.parse("android.resource://" + getPackageName() + "/raw/" + R.raw.cg_bg).toString());
+        videoView.setOnPreparedListener(mp -> mp.setLooping(true));
+        videoView.start();
         //跳出主线程
         Disposable temp = Observable.create(new ObservableOnSubscribe<LoginViewModel>() {
             @Override
@@ -61,8 +66,6 @@ public class Login extends AppCompatActivity {
         }).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(loginViewModel -> {
             Log.d(Tag.Information,"监察者开始调用");
             viewModel = loginViewModel;
-            //注册消息事件
-            Core.information_ReceiveEvent.add(new LoginReceive(this,viewModel));
             //fragment绑定初始化
             paper = findViewById(R.id.paper);
             paper.setPageTransformer(new DepthPageTransformer());

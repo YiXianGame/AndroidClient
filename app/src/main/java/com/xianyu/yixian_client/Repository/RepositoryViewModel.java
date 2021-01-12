@@ -13,7 +13,7 @@ import dagger.hilt.components.SingletonComponent;
 
 /**
  * @ProjectName: YiXian_Client
- * @Package: com.xianyu.yixian_client.Repository
+ * @Package: com.xianyu.yixian_client.repository
  * @ClassName: RepositoryViewModel
  * @Description: java类作用描述
  * @Author: Jianxian

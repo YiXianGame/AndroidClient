@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/description"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="155dp"
+            android:layout_margin="20dp"
+            android:text="@string/description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/materialButton7"
+            app:layout_constraintHorizontal_weight="10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Card_status"/>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="51dp"
+            android:text="@string/name"
+            android:textAppearance="@style/TextAppearance.YiXian.Headline5"
+            app:layout_constraintBottom_toTopOf="@id/Card_attribute"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/materialButton3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/materialButton3"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="125dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toTopOf="@id/materialButton6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/attack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/attack"
+                >
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/num1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/num">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/materialButton7"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="125dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toTopOf="@id/materialButton8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintTop_toBottomOf="@+id/materialButton4">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/recover_Mp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recover_Mp"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/num4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/num"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/materialButton4"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="125dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toTopOf="@id/materialButton7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintTop_toBottomOf="@+id/materialButton6">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/cure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cure"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/num3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/num"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/materialButton6"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="125dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toTopOf="@id/materialButton4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintTop_toBottomOf="@+id/materialButton3" >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/damage_Mp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/damage_Mp"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/num2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/num"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/materialButton8"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="125dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/probability"
+            app:layout_constraintBottom_toTopOf="@id/materialButton9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintTop_toBottomOf="@+id/materialButton7">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/probability"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/probability"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/num5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/num"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/materialButton9"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="125dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toTopOf="@id/materialButton10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintTop_toBottomOf="@+id/materialButton8">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/attack_Number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/attack_Number"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/num6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/num"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/materialButton12"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="125dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/need_Mp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintTop_toBottomOf="@+id/materialButton10"
+            app:layout_constraintVertical_bias="0.0">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/need_Mp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/need_Mp"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/num8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/num"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+       <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/materialButton10"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="125dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toTopOf="@id/materialButton12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintTop_toBottomOf="@+id/materialButton9">
+           <com.google.android.material.textfield.TextInputEditText
+               android:id="@+id/auxiliary_Number"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/auxiliary_Number"/>
+           <com.google.android.material.textfield.TextInputEditText
+               android:id="@+id/num7"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/num"/>
+       </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/Card_attribute"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintBottom_toTopOf="@id/Card_status"
+            app:layout_constraintEnd_toStartOf="@id/materialButton6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            tools:ignore="MissingConstraints">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/Card_status"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintBottom_toTopOf="@id/description"
+            app:layout_constraintEnd_toStartOf="@id/materialButton4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Card_attribute"
+            tools:ignore="MissingConstraints">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+
+
+</com.google.android.material.card.MaterialCardView>

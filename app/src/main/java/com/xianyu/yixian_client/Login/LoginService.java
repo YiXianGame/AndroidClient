@@ -23,7 +23,7 @@ import com.xianyu.yixian_client.R;
  */
 public class LoginService extends Service {
     MediaPlayer mediaPlayer;
-
+//0000000
     @Override
     public void onCreate() {
         mediaPlayer = MediaPlayer.create(this, R.raw.b);

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="#FFFFFF"
+    tools:context=".PersonalInformation.PersonalInformation_Activity">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.3"
+        android:background="@drawable/beijing"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintCircleAngle="15"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <EditText
+        android:id="@+id/nickName"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/head_image"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/head_image"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <ImageView
+        android:id="@+id/head_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/touxiang"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintBottom_toTopOf="@id/paper"
+        app:layout_constraintLeft_toLeftOf="@id/paper"
+        app:layout_constraintRight_toLeftOf="@id/nickName"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/select_group_button"
+        android:layout_width="0dp"
+        android:layout_height="210dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:fontFamily="@font/ziti"
+            android:onClick="personal_Click"
+            android:text="个人信息"
+            android:textColor="#A57D04"
+            android:textSize="30dp" />
+
+        <Button
+            android:id="@+id/button5"
+            android:onClick="history_Click"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:fontFamily="@font/ziti"
+            android:text="战斗记录"
+            android:textColor="#A57D04"
+            android:textSize="30dp" />
+
+        <Button
+            android:id="@+id/button7"
+            android:onClick="information_Click"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:fontFamily="@font/ziti"
+            android:text="仙域大陆"
+            android:textColor="#A57D04"
+            android:textSize="30dp" />
+    </LinearLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/paper"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintLeft_toRightOf="@id/select_group_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/head_image"
+        app:layout_constraintVertical_weight="3" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

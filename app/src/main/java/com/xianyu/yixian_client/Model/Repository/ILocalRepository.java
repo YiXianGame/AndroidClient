@@ -1,15 +1,16 @@
 package com.xianyu.yixian_client.Model.Repository;
 
-import com.xianyu.yixian_client.Model.Room.Entity.Simple_SkillCard;
+import com.xianyu.yixian_client.Model.Room.Entity.History;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Single;
 
 /**
  * @ProjectName: YiXian_Client
- * @Package: com.xianyu.yixian_client.Model.Repository
+ * @Package: com.xianyu.yixian_client.Model.repository
  * @ClassName: ILocalRepository
  * @Description: java类作用描述
  * @Author: Jianxian
@@ -30,7 +31,8 @@ interface ILocalRepository {
 
     public void clearAllUser(User user);
 
-    public void insertSkillCard(Simple_SkillCard simple_skillCard);
-
-    public Single<List<Simple_SkillCard>> querySkillCard();
+    public void insertHistory(History... history);
+    public void deleteHistory(History... history);
+    public void updateHistory(History... skillCards);
+    public Single<List<History>> queryHistory(long user_id);
 }

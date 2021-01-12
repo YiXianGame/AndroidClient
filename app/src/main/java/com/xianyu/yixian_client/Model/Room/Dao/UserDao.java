@@ -5,7 +5,9 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
 import com.xianyu.yixian_client.Model.Room.Entity.User;
+
 import java.util.List;
 import io.reactivex.Single;
 
@@ -35,10 +37,9 @@ public interface UserDao {
     @Delete
     public void delete(User... user);
 
-    @Query("SELECT * FROM users WHERE username = :username")
+    @Query("SELECT * FROM user WHERE username = :username")
     public Single<User> query(String username);
-    @Query("SELECT * FROM users WHERE qQ = :qQ")
-    public Single<List<User>> query(long qQ);
-    @Query("SELECT * FROM users")
+
+    @Query("SELECT * FROM user")
     public Single<List<User>> query();
 }

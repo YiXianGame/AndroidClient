@@ -4,8 +4,6 @@ import android.app.Application;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
-import com.xianyu.yixian_client.Model.Tcp.DateToLongSerializer;
-import com.xianyu.yixian_client.Model.Tcp.LongToDateDeserializer;
 
 import java.text.DateFormat;
 
@@ -30,8 +28,7 @@ public class XYApplication extends Application {
         super.onCreate();
         Core.gson = new Gson().newBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
-                .registerTypeAdapter(java.util.Date.class, new DateToLongSerializer()).setDateFormat(DateFormat.LONG)
-                .registerTypeAdapter(java.util.Date.class, new LongToDateDeserializer()).setDateFormat(DateFormat.LONG)
+                .excludeFieldsWithoutExposeAnnotation()
                 .create();
     }
 }

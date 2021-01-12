@@ -1,8 +1,10 @@
 package com.xianyu.yixian_client.Model.Repository;
 
 import com.xianyu.yixian_client.Model.Room.DataBase_Room;
-import com.xianyu.yixian_client.Model.Room.Entity.Simple_SkillCard;
+import com.xianyu.yixian_client.Model.Room.Entity.History;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
+
+import java.util.ArrayList;
 import java.util.List;
 import io.reactivex.Single;
 
@@ -50,12 +52,24 @@ public class LocalRepository implements ILocalRepository{
     }
 
     @Override
-    public void insertSkillCard(Simple_SkillCard simple_skillCard) {
-        db.skillCardDao().insert(simple_skillCard);
+    public void insertHistory(History... history) {
+        db.historyDao().insert(history);
     }
 
     @Override
-    public Single<List<Simple_SkillCard>> querySkillCard() {
-        return db.skillCardDao().query();
+    public void deleteHistory(History... history) {
+        db.historyDao().delete(history);
     }
+
+    @Override
+    public void updateHistory(History... history) {
+        db.historyDao().update(history);
+    }
+
+    @Override
+    public Single<List<History>> queryHistory(long user_id) {
+        return db.historyDao().query(user_id);
+    }
+
+
 }

@@ -13,7 +13,7 @@ import com.xianyu.yixian_client.Login.LoginViewModel;
 /**
  * @ProjectName: YiXian_Client
  * @Package: com.xianyu.yixian_client.Login
- * @ClassName: Login_Fragment_Adapter
+ * @ClassName: PersonalInformation_Fragment_Adapter
  * @Description: java类作用描述
  * @Author: Jianxian
  * @CreateDate: 2020/12/18 22:34
