@@ -23,7 +23,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class RemoteRepository {
     public RemoteRepository(){
-        boolean remote = true;
+        boolean remote = false;
         if(remote){
             IUser user = RPCRequestProxyFactory.Register(IUser.class,"User","192.168.0.105","28015");
             Observable.create((ObservableOnSubscribe<Void>) emitter -> user.hello("你好")).subscribeOn(Schedulers.io()).subscribe();
