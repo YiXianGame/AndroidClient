@@ -51,7 +51,6 @@ public class XYApplication extends Application {
         User user;
         Friend friend;
         CardGroup cardGroup;
-        Date date = new Date();
         User owner = new User();
         owner.setNickName("涯丶");
         owner.setMoney(1234);
@@ -109,7 +108,6 @@ public class XYApplication extends Application {
 
         for(int i=1;i<5;i++){
             user = new User();
-            date = new Date();
             user.setId(i);
             user.setNickName("用户" + random.nextInt());
             user.setMoney(random.nextInt(1000));
