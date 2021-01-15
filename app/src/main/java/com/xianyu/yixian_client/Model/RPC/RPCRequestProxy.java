@@ -2,6 +2,7 @@ package com.xianyu.yixian_client.Model.RPC;
 
 import android.util.Pair;
 
+import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Model.Tcp.SocketClient;
 
 import java.lang.reflect.InvocationHandler;
@@ -38,6 +39,7 @@ public  class RPCRequestProxy implements InvocationHandler {
             for(int i=1;i < args.length;i++){
                 obj[i] = args[i - 1];
             }
+            String a = Core.gson.toJson(args);
             Arrays.fill(obj,1,obj.length,args);
             ClientRequestModel request = new ClientRequestModel("2.0", service, methodId.toString(), obj);
             SocketClient socketClient = RPCClientFactory.GetClient(clientkey);
