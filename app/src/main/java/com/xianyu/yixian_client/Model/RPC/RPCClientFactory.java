@@ -16,7 +16,7 @@ public class RPCClientFactory {
             SocketClient socketClient = null;
             socketClient = clients.get(key);
             if(socketClient == null){
-                socketClient = new SocketClient(key.first,Integer.parseInt(key.second));
+                socketClient = new SocketClient(key.first,key.second);
                 clients.put(key, socketClient);
                 try {
                     socketClient.start();

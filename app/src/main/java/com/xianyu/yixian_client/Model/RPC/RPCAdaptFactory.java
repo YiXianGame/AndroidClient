@@ -4,10 +4,13 @@ import android.os.Debug;
 import android.util.Log;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
+
 import com.xianyu.yixian_client.Model.Log.Log.Tag;
 
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,16 +19,16 @@ import kotlin.TuplesKt;
 
 public class RPCAdaptFactory {
     //Java没有自带三元组，这里就引用Kotlin了.
-    public static ConcurrentHashMap<Triple<String,String,String>,RPCAdaptProxy> services = new ConcurrentHashMap<>();
-    public static void Register(Class classImp,String serviceName,String hostname,String port){
-        RPCAdaptProxy service = null;
+    public static HashMap<Triple<String,String,String>,RPCAdaptProxy> services = new HashMap<>();
+
+    public static void Register(@NonNull Class classImp,@NonNull String serviceName,@NonNull String hostname,@NonNull String port,@NonNull RPCType type){
         Triple<String,String,String> key = new Triple<>(serviceName,hostname,port);
-        service = services.get(key);
+        RPCAdaptProxy service = services.get(key);
         if(service == null){
             try{
                 RPCClientFactory.GetClient(new Pair<>(hostname,port));
                 service = new RPCAdaptProxy();
-                service.Register(classImp);
+                service.Register(classImp,type);
                 services.put(key,service);
             }
             catch (Exception err){

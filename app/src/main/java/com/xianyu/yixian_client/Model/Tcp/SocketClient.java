@@ -23,8 +23,10 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoop;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.FixedRecvByteBufAllocator;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -50,21 +52,23 @@ import static com.xianyu.yixian_client.Core.gson;
  */
 public class SocketClient {
     public final String host;
-    public final int port;
+    public final String port;
     private Channel channel;
     private Bootstrap bootstrap;
-    public ConcurrentHashMap<Integer,ClientRequestModel> tasks = new ConcurrentHashMap<Integer, ClientRequestModel>();
+    public ConcurrentHashMap<Integer,ClientRequestModel> tasks = new ConcurrentHashMap<>();
     private Random random = new Random();
     public AtomicInteger remain = new AtomicInteger(0);
-    public SocketClient(String host, int port) {
+    public SocketClient(String host, String port) {
         this.host = host;
         this.port = port;
     }
     public void start() throws Exception {
+        //客户端写得可能有点花里胡哨,
         NioEventLoopGroup group = new NioEventLoopGroup();
         try {
             bootstrap = new Bootstrap();                //1
             bootstrap.group(group)                                //2
+                    .option(ChannelOption.RCVBUF_ALLOCATOR,new FixedRecvByteBufAllocator(1024))
                     .channel(NioSocketChannel.class)            //3
                     .handler(new ChannelInitializer<SocketChannel>() {    //5
                         @Override
@@ -90,7 +94,7 @@ public class SocketClient {
         if (channel != null && channel.isActive()) {
             return;
         }
-        ChannelFuture future = bootstrap.connect(host, port);
+        ChannelFuture future = bootstrap.connect(host, Integer.parseInt(port));
         future.addListener(new ChannelFutureListener() {
             public void operationComplete(ChannelFuture futureListener) throws Exception {
                 if (futureListener.isSuccess()) {

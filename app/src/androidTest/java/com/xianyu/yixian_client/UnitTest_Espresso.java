@@ -10,6 +10,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.xianyu.yixian_client.Login.Login;
 import com.xianyu.yixian_client.Model.Room.DataBase_Room;
+import com.xianyu.yixian_client.Model.Room.Entity.User;
 
 import org.junit.After;
 import org.junit.Before;
@@ -31,7 +32,7 @@ import javax.inject.Inject;
 public class UnitTest_Espresso {
     @Inject
     DataBase_Room dataBase_room;
-    @Rule
+
     public ActivityTestRule<Login> activityTestRule = new ActivityTestRule<Login>(Login.class);
     @Before
     public void Create_Database(){
@@ -42,7 +43,7 @@ public class UnitTest_Espresso {
     public void Database(){
         User user = new User();
         user.setUserName("12312");
-        user.setQQ(839336369);
+        user.setId(839336369);
         dataBase_room.userDao().insert(user);
 
     }

@@ -8,6 +8,10 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
+import io.netty.buffer.UnpooledByteBufAllocator;
+import io.netty.buffer.UnpooledDirectByteBuf;
+import io.netty.buffer.UnpooledHeapByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 
@@ -17,51 +21,58 @@ public class CustomDecoder extends ByteToMessageDecoder {
     int patternSize = 1;//消息类型长度
     int futureSize = 27;//后期看情况加
     //下面这部分的byte用于接收数据
-    private byte[] head = new byte[headSize + 1];
-    private byte[] pattern = new byte[patternSize];
+    private byte  pattern;
     private byte[] future = new byte[futureSize];
     int needRemain = 0;
-    StringBuilder sb = new StringBuilder();
+    //申请了一个动态ByteBuf,因为使用动态StringBuilder预转码，会导致多字节符号会乱码.申请一次就一直用,所以直接非池化了.
+    ByteBuf content = UnpooledByteBufAllocator.DEFAULT.directBuffer(1024,102400);
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-        int count = in.array().length;
-        int pos = 0;
-        while(pos < count){
+        //能提高一点性能是一点,减少函数调用与资源返回=-=
+        int writerIndex = in.writerIndex();
+        int readerIndex = 0;
+        while(readerIndex < writerIndex){
             if(needRemain != 0){
-                if(needRemain <= count - pos){
-                    String data = in.toString(pos,needRemain, Charset.forName("UTF-8"));
-                    if(pattern[0] == 0){
-                        out.add(Core.gson.fromJson(sb.toString(), ServerRequestModel.class));
+                if(needRemain <= writerIndex - readerIndex){
+                    //收到的数据足够成包,开始组包.
+                    content.writeBytes(in.array(),readerIndex,needRemain);
+                    if(pattern == 0){
+                        out.add(Core.gson.fromJson(content.toString(Charset.forName("UTF-8")), ServerRequestModel.class));
                     }
                     else {
-                        out.add(Core.gson.fromJson(sb.toString(), ClientResponseModel.class));
+                        out.add(Core.gson.fromJson(content.toString(Charset.forName("UTF-8")), ClientResponseModel.class));
                     }
-                    pos = needRemain + pos;
+                    content.resetWriterIndex();
+                    readerIndex += needRemain;
                     needRemain = 0;
                     continue;
                 }
                 else {
-                    sb.append(in.toString(pos,count - pos, Charset.forName("UTF-8")));
-                    needRemain  = needRemain - count + pos;
+                    //收到的数据全部接受,并继续等待
+                    int remain = writerIndex - readerIndex;
+                    content.writeBytes(in.array(), readerIndex,remain);
+                    needRemain  -= remain;
                     break;
                 }
             }
             else {
-                if(count - pos < headSize - head[0]){
-                    System.arraycopy(in.array(),pos,head,head[0]+1,count - pos);
-                    head[0] += (byte)(count - pos);
-                    break;
+                int remain = writerIndex - readerIndex;
+                if(writerIndex - readerIndex < headSize){
+                    //收到的数据不足成头包
+                    in.setBytes(0,in.array(), readerIndex,remain);
+                    in.writerIndex(remain);
+                    return;
                 }
                 else {
-                    System.arraycopy(in.array(),pos,head,head[0]+1,headSize - head[0]);
-                    pos += headSize - head[0];
-                    head[0]  = 0;
-                    needRemain = ((head[1] & 0xff) << 24 )|((head[2]& 0xff) <<16 )|((head[3] & 0xff)<<8)|(head[4] & 0xff);
-                    pattern[0] = head[bodySize + 1];
-                    System.arraycopy(head,bodySize + patternSize + 1,future,0,futureSize);
+                    //收到的数据足以成头包
+                    needRemain = ((in.array()[readerIndex + 3] & 0xff) << 24 )|((in.array()[readerIndex + 2] & 0xff) <<16 )|((in.array()[readerIndex + 1] & 0xff)<<8)|(in.array()[readerIndex] & 0xff);
+                    pattern = in.array()[bodySize];
+                    System.arraycopy(in.array(), readerIndex + bodySize + patternSize,future,0,futureSize);
+                    readerIndex += headSize;
                     continue;
                 }
             }
         }
+        in.resetWriterIndex();
     }
 }

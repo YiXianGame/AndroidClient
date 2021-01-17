@@ -1,5 +1,8 @@
 package com.xianyu.yixian_client.Model.Tcp;
 
+import android.util.Log;
+
+import com.xianyu.yixian_client.Model.Log.Log.Tag;
 import com.xianyu.yixian_client.Model.RPC.ClientRequestModel;
 import com.xianyu.yixian_client.Model.RPC.ClientResponseModel;
 import com.xianyu.yixian_client.Model.RPC.RPCAdaptFactory;
@@ -33,18 +36,39 @@ public class CustomHeartbeatHandler extends ChannelHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         if(msg instanceof ClientResponseModel){
-           ClientRequestModel request = socketClient.tasks.get(((ClientResponseModel) msg).Id);
-           request.setResult(((ClientResponseModel) msg).Result);
+           ClientRequestModel request = socketClient.tasks.get(Integer.parseInt(((ClientResponseModel) msg).Id));
+           if(request != null){
+               request.setResult(((ClientResponseModel) msg).Result);
+           }
         }
         else if(msg instanceof ServerRequestModel){
             ServerRequestModel request = (ServerRequestModel)msg;
-            RPCAdaptProxy adapt = RPCAdaptFactory.services.get(new Triple<>(((ServerRequestModel) msg).Service,socketClient.host,socketClient.port));
+            RPCAdaptProxy adapt;
+            Method method;
+            adapt = RPCAdaptFactory.services.get(new Triple<>(((ServerRequestModel) msg).Service, socketClient.host, socketClient.port));
             if(adapt != null){
-                Method method = adapt.methods.get(request.MethodId);
-                if(method != null){
+                method = adapt.getMethods().get(request.MethodId);
+                if(method!= null){
+                    Log.d(Tag.RemoteRepository,"\n(---------------------------------------------------------);");
+                    Log.d(Tag.RemoteRepository,String.format("%s:%s::[服-指令]\n%s",socketClient.host,socketClient.port,request));
+                    Log.d(Tag.RemoteRepository,"(---------------------------------------------------------);");
+                    adapt.ConvertParams(request.MethodId,request.Params);
                     method.invoke(null,request.Params);
                 }
+                else {
+                    Log.e(Tag.RemoteRepository,"\n------------------未找到该方法--------------------");
+                    Log.e(Tag.RemoteRepository,String.format("%s:%s::[客]\n%s",socketClient.host,socketClient.port,request));
+                    Log.e(Tag.RemoteRepository,"--------------------------------------------");
+                    return;
+                }
             }
+            else {
+                Log.e(Tag.RemoteRepository,"\n------------------未找到该服务--------------------");
+                Log.e(Tag.RemoteRepository,String.format("%s:%s::[客]\n%s",socketClient.host,socketClient.port,request));
+                Log.e(Tag.RemoteRepository,"--------------------------------------------");
+                return;
+            }
+
         }
     }
 
