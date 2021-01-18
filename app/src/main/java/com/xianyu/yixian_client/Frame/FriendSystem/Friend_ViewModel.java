@@ -1,13 +1,18 @@
 package com.xianyu.yixian_client.Frame.FriendSystem;
 
+import androidx.lifecycle.ViewModel;
+
 import com.xianyu.yixian_client.Model.Repository.Repository;
 
 import javax.inject.Inject;
 
-public class Friend_ViewModel {
-    Repository repository;
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
+public class Friend_ViewModel extends ViewModel {
     @Inject
-    Friend_ViewModel(Repository repository){
-        this.repository = repository;
+    Repository repository;
+    Friend_ViewModel(){
+
     }
 }

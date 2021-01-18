@@ -7,6 +7,8 @@ import com.xianyu.yixian_client.Model.Repository.Repository;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 
 /**
  * @ProjectName: YiXian_Client
@@ -20,13 +22,14 @@ import javax.inject.Inject;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
+@AndroidEntryPoint
 public class LoginViewModel extends ViewModel {
     public MutableLiveData<String> verificationCode = new MutableLiveData<String>();
     public MutableLiveData<String> surePassword = new MutableLiveData<String>();
-    public Repository repository;
     @Inject
-    public LoginViewModel(Repository repository){
-        this.repository = repository;
+    public Repository repository;
+    public LoginViewModel(){
+
     }
 
 }

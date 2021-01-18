@@ -58,7 +58,7 @@ public class GroupAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         GroupViewHolder groupViewHolder;
         if(convertView == null){
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.battlerepositorygroup_item,parent,false);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.battle_repository_group_item,parent,false);
             groupViewHolder = new GroupViewHolder(convertView);
             convertView.setTag(groupViewHolder);
         }
@@ -74,7 +74,7 @@ public class GroupAdapter extends BaseExpandableListAdapter {
         SkillCard child = groups.get(groupPosition).getCards().get(childPosition);
         GroupChildrenViewHolder groupChildrenViewHolder;
         if(convertView == null){
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.battlerepositorygroupshow_item,parent,false);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.battle_repository_groupshow_item,parent,false);
             groupChildrenViewHolder = new GroupChildrenViewHolder(convertView);
             convertView.setTag(groupChildrenViewHolder);
         }

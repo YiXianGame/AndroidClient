@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.PersonalInformation.PersonalInformationViewModel;
@@ -29,39 +30,39 @@ import dagger.hilt.android.AndroidEntryPoint;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-@AndroidEntryPoint
 public class Personal_Fragment extends Fragment {
-    @Inject
+    
     public PersonalInformationViewModel viewModel;
-    public PersonalInformationPersonalFragmentBinding binding;
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = PersonalInformationPersonalFragmentBinding.inflate(inflater,container,false);
-        init();
+        PersonalInformationPersonalFragmentBinding binding = PersonalInformationPersonalFragmentBinding.inflate(inflater,container,false);
+        viewModel = new ViewModelProvider(requireActivity()).get(PersonalInformationViewModel.class);
+        init(binding.getRoot());
         return binding.getRoot();
     }
 
-    private void init() {
-        TextView textView = binding.getRoot().findViewById(R.id.kills_text);
+    private void init(View view) {
+        TextView textView = view.findViewById(R.id.kills_text);
         textView.setText(Core.liveUser.getValue().getKills());
 
-        TextView textView1 = binding.getRoot().findViewById(R.id.battle_text);
+        TextView textView1 = view.findViewById(R.id.battle_text);
         textView.setText(Core.liveUser.getValue().getBattle_Count());
 
-        TextView textView2 = binding.getRoot().findViewById(R.id.textView8);
+        TextView textView2 = view.findViewById(R.id.textView8);
         textView.setText(Core.liveUser.getValue().getDeaths());
 
-        TextView textView3 = binding.getRoot().findViewById(R.id.title_text);
+        TextView textView3 = view.findViewById(R.id.title_text);
         textView.setText(Core.liveUser.getValue().getTitle());
 
-        TextView textView4 = binding.getRoot().findViewById(R.id.lv_text);
+        TextView textView4 = view.findViewById(R.id.lv_text);
         textView.setText(Core.liveUser.getValue().getLv());
 
-        TextView textView5 = binding.getRoot().findViewById(R.id.history_exp);
+        TextView textView5 = view.findViewById(R.id.history_exp);
         textView.setText(Core.liveUser.getValue().getExp());
 
-        TextView textView6 = binding.getRoot().findViewById(R.id.time_text);
+        TextView textView6 = view.findViewById(R.id.time_text);
         textView.setText((int) Core.liveUser.getValue().getRegistration_date());
 
 

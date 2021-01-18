@@ -25,7 +25,7 @@ public class CardAdapt extends RecyclerView.Adapter<CardAdapt.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //用来创建ViewHolder实例，再将加载好的布局传入构造函数，最后返回ViewHolder实例
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.repositorycard_item,null);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.repository_card_item,null);
         ViewHolder holder=new ViewHolder(view);
         return holder;
     }

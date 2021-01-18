@@ -19,16 +19,13 @@ import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
-    MainActivityBinding binding;
-    @Inject
     MainViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //视窗绑定
-        binding = MainActivityBinding.inflate(getLayoutInflater());
+        MainActivityBinding binding = MainActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         init();
     }
@@ -57,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
         v3.getBackground().setAlpha(20);//0~255透明度值
         v4.getBackground().setAlpha(20);//0~255透明度值
         v5.getBackground().setAlpha(20);//0~255透明度值
-        TextView text1 = binding.getRoot().findViewById(R.id.textView_experience);
-        TextView text2 = binding.getRoot().findViewById(R.id.textView_username);
+        TextView text1 = findViewById(R.id.textView_experience);
+        TextView text2 = findViewById(R.id.textView_username);
 
         viewModel.repository.queryUserById(123456)
                 .subscribeOn(Schedulers.io())//查询数据时的线程

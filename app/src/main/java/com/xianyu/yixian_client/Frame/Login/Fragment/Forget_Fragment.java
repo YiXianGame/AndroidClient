@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.ContentView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
@@ -33,15 +35,13 @@ import dagger.hilt.android.AndroidEntryPoint;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-@AndroidEntryPoint
 public class Forget_Fragment extends Fragment {
-    @Inject
     public LoginViewModel viewModel;
-    public ForgetFragmentBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = ForgetFragmentBinding.inflate(inflater,container,false);
+        ForgetFragmentBinding binding = ForgetFragmentBinding.inflate(inflater,container,false);
+        viewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
         TextInputEditText userName_UI = binding.getRoot().findViewById(R.id.username);
         TextInputEditText passWord_UI = binding.getRoot().findViewById(R.id.password);
         TextInputEditText verification_UI = binding.getRoot().findViewById(R.id.verification_code);

@@ -4,8 +4,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.xianyu.yixian_client.Model.Repository.Repository;
+import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * @ProjectName: YiXian_Client
@@ -19,11 +24,15 @@ import javax.inject.Inject;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
+@AndroidEntryPoint
 public class RepositoryViewModel extends ViewModel {
     MutableLiveData<String> message = new MutableLiveData<>();
-    Repository repository;
     @Inject
-    public RepositoryViewModel(Repository repository){
-        this.repository = repository;
+    Repository repository;
+    public RepositoryViewModel(){
+
+    }
+    public ArrayList<SkillCard> getCards(){
+        return null;
     }
 }

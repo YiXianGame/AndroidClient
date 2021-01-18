@@ -28,7 +28,7 @@ public class SkillCardAdapt extends RecyclerView.Adapter<SkillCardAdapt.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //用来创建ViewHolder实例，再将加载好的布局传入构造函数，最后返回ViewHolder实例
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.battlerepositorycard_item,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.battle_repository_card_item,parent,false);
         ViewHolder holder =new ViewHolder(view);
         return holder;
     }

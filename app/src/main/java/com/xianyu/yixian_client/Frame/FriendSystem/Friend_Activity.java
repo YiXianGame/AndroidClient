@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.widget.CheckBox;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -21,11 +22,9 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-@AndroidEntryPoint
 public class Friend_Activity extends AppCompatActivity {
     ArrayList<User> friends;
     FriendsActivityBinding binding;
@@ -36,6 +35,7 @@ public class Friend_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //binding初始化
         binding = FriendsActivityBinding.inflate(getLayoutInflater());
+        viewModel = new ViewModelProvider(this).get(Friend_ViewModel.class);
         setContentView(binding.getRoot());
         init();
     }

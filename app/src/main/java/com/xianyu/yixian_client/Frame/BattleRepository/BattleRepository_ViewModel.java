@@ -6,11 +6,14 @@ import com.xianyu.yixian_client.Model.Repository.Repository;
 
 import javax.inject.Inject;
 
-public class BattleRepositoryViewModel extends ViewModel {
-    public Repository repository;
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
+public class BattleRepository_ViewModel extends ViewModel {
     @Inject
-    public BattleRepositoryViewModel(Repository repository){
-        this.repository = repository;
+    public Repository repository;
+    public BattleRepository_ViewModel(){
+
     }
 
 }

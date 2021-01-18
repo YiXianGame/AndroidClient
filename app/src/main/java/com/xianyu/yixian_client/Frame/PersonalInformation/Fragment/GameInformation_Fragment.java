@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.xianyu.yixian_client.Frame.PersonalInformation.PersonalInformationViewModel;
-import com.xianyu.yixian_client.databinding.PersonalInformationGameInformationFragmentBinding;
+import com.xianyu.yixian_client.Model.Repository.Repository;
+import com.xianyu.yixian_client.databinding.PersonalInformationGameFragmentBinding;
 
 import javax.inject.Inject;
 
@@ -26,15 +28,13 @@ import dagger.hilt.android.AndroidEntryPoint;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-@AndroidEntryPoint
 public class GameInformation_Fragment extends Fragment {
-    @Inject
-    public PersonalInformationViewModel viewModel;
-    public PersonalInformationGameInformationFragmentBinding binding;
+    private PersonalInformationViewModel viewModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = PersonalInformationGameInformationFragmentBinding.inflate(inflater,container,false);
+        PersonalInformationGameFragmentBinding binding = PersonalInformationGameFragmentBinding.inflate(inflater,container,false);
+        viewModel = new ViewModelProvider(requireActivity()).get(PersonalInformationViewModel.class);
         return binding.getRoot();
     }
 

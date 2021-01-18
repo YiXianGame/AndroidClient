@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
@@ -33,15 +34,14 @@ import dagger.hilt.android.AndroidEntryPoint;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-@AndroidEntryPoint
 public class Login_Fragment extends Fragment {
-    @Inject
+
     public LoginViewModel viewModel;
-    public com.xianyu.yixian_client.databinding.LoginFragmentBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = LoginFragmentBinding.inflate(inflater,container,false);
+        LoginFragmentBinding binding = LoginFragmentBinding.inflate(inflater,container,false);
+        viewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
         TextInputEditText userName_UI = binding.getRoot().findViewById(R.id.username);
         TextInputEditText passWord_UI = binding.getRoot().findViewById(R.id.password);
         Core.liveUser.observe(getViewLifecycleOwner(), new Observer<User>() {

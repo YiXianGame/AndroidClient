@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
@@ -15,6 +16,7 @@ import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.Login_Fragment_Adapter
 import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Model.ShortCode.MessageDialog;
 import com.xianyu.yixian_client.R;
+import com.xianyu.yixian_client.databinding.LoginActivityBinding;
 
 import javax.inject.Inject;
 
@@ -26,26 +28,21 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-@AndroidEntryPoint
 public class Login extends AppCompatActivity {
-    //。。。
     private ViewPager2 paper;
     private TabLayout tab;
-    @Inject
     LoginViewModel viewModel;
     private final CompositeDisposable disposable = new CompositeDisposable();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
+        LoginActivityBinding binding = LoginActivityBinding.inflate(getLayoutInflater());
+        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        setContentView(binding.getRoot());
         //初始化
         Init();
     }
     private void Init(){
-        viewModel.repository.queryUserById(123456)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(user -> Core.liveUser.setValue(user));
         //音频初始化
         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.b);
         mediaPlayer.setLooping(true);

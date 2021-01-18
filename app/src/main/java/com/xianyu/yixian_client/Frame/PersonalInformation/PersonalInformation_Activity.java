@@ -1,6 +1,7 @@
 package com.xianyu.yixian_client.Frame.PersonalInformation;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
@@ -12,23 +13,19 @@ import com.xianyu.yixian_client.Frame.PersonalInformation.Fragment.Bind.Personal
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.PersonalInformationActivityBinding;
 
-import javax.inject.Inject;
-
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-@AndroidEntryPoint
 public class PersonalInformation_Activity extends AppCompatActivity {
-    PersonalInformationActivityBinding personalInformationActivityBinding;
-    @Inject
     PersonalInformationViewModel viewModel;
     ViewPager2 paper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        personalInformationActivityBinding = PersonalInformationActivityBinding.inflate(getLayoutInflater());
-        setContentView(personalInformationActivityBinding.getRoot());
+        PersonalInformationActivityBinding binding = PersonalInformationActivityBinding.inflate(getLayoutInflater());
+        viewModel = new ViewModelProvider(this).get(PersonalInformationViewModel.class);
+        setContentView(binding.getRoot());
         viewModel.repository.queryUserById(123456)
                 .subscribeOn(Schedulers.io())//查询数据时的线程
                 .observeOn(AndroidSchedulers.mainThread())//数据查找完毕的线程

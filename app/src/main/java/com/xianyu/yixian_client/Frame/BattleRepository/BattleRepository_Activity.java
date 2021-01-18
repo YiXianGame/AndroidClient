@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.widget.ExpandableListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
@@ -16,25 +17,21 @@ import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.SkillCardAdapt;
 import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Model.Room.Entity.CardGroup;
 import com.xianyu.yixian_client.R;
-import com.xianyu.yixian_client.databinding.BattlerepositoryActivityBinding;
+import com.xianyu.yixian_client.databinding.BattleRepositoryActivityBinding;
 
 import java.util.ArrayList;
-
-import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-@AndroidEntryPoint
-public class BattleRepositoryActivity extends AppCompatActivity {
-    BattlerepositoryActivityBinding binding;
-    @Inject
-    BattleRepositoryViewModel viewModel;
+public class BattleRepository_Activity extends AppCompatActivity {
+    BattleRepository_ViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = BattlerepositoryActivityBinding.inflate(getLayoutInflater());
+        BattleRepositoryActivityBinding binding = BattleRepositoryActivityBinding.inflate(getLayoutInflater());
+        viewModel = new ViewModelProvider(this).get(BattleRepository_ViewModel.class);
         setContentView(binding.getRoot());
         //初始化
         init();
@@ -43,7 +40,7 @@ public class BattleRepositoryActivity extends AppCompatActivity {
     @SuppressLint("CheckResult")
     private void init() {
         ExpandableListView expandableListView;
-        expandableListView = binding.getRoot().findViewById(R.id.group_layout);
+        expandableListView = findViewById(R.id.group_layout);
         viewModel.repository.queryUserById(123456)
                 .subscribeOn(Schedulers.io())//查询数据时的线程
                 .observeOn(AndroidSchedulers.mainThread())//数据查找完毕的线程
@@ -66,7 +63,7 @@ public class BattleRepositoryActivity extends AppCompatActivity {
                     Core.liveSkillcards.setValue(new ArrayList<>(skillCards));
                     RecyclerView recyclerView;
                     SkillCardAdapt cardAdapt = new SkillCardAdapt(Core.liveSkillcards.getValue());
-                    recyclerView = binding.getRoot().findViewById(R.id.recycler_view);
+                    recyclerView = findViewById(R.id.recycler_view);
                     recyclerView.setAdapter(cardAdapt);
                     TextInputEditText editText = findViewById(R.id.searchName_textInput);
                     editText.addTextChangedListener(new TextWatcher() {
