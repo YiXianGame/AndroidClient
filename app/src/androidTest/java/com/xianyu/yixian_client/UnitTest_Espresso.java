@@ -3,22 +3,19 @@ package com.xianyu.yixian_client;
 import android.content.Context;
 
 
-import androidx.lifecycle.Observer;
 import androidx.test.filters.SmallTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.xianyu.yixian_client.Login.Login;
+import com.xianyu.yixian_client.Frame.Login.Login;
 import com.xianyu.yixian_client.Model.Room.DataBase_Room;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.inject.Inject;
 

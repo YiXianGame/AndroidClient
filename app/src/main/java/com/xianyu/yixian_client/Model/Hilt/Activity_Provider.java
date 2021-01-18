@@ -1,10 +1,6 @@
 package com.xianyu.yixian_client.Model.Hilt;
 
-import com.xianyu.yixian_client.Model.Room.Dao.UserDao;
-import com.xianyu.yixian_client.Model.Room.DataBase_Room;
-
 import dagger.Module;
-import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.components.ActivityComponent;
 

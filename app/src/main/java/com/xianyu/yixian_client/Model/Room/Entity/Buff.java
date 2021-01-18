@@ -1,12 +1,6 @@
 package com.xianyu.yixian_client.Model.Room.Entity;
 
-import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
-
 import com.google.gson.annotations.Expose;
-import com.xianyu.yixian_client.Model.Enums;
 
 /**
  * @ProjectName: YiXian_Client

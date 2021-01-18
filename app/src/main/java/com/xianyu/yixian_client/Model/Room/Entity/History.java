@@ -1,7 +1,5 @@
 package com.xianyu.yixian_client.Model.Room.Entity;
 
-import java.sql.Date;
-
 import com.google.gson.annotations.Expose;
 
 public class History {

@@ -13,29 +13,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApp">
-        <activity android:name=".PersonalInformation.PersonalInformation_Activity" android:screenOrientation="landscape">
+        <activity android:name=".Frame.PersonalInformation.PersonalInformation_Activity" android:screenOrientation="landscape">
 
         </activity>
-        <activity android:name=".Main.MainActivity" android:screenOrientation="landscape">
+        <activity android:name=".Frame.Main.MainActivity" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FriendSystem.Friend_Activity" android:screenOrientation="landscape">
+        <activity android:name=".Frame.FriendSystem.Friend_Activity" android:screenOrientation="landscape">
 
         </activity>
-        <activity android:name=".Repository.RepositoryActivity" android:screenOrientation="landscape">
+        <activity android:name=".Frame.Repository.RepositoryActivity" android:screenOrientation="landscape">
 
         </activity>
 
-        <activity android:name=".BattleRepository.BattleRepositoryActivity" android:screenOrientation="landscape">
+        <activity android:name=".Frame.BattleRepository.BattleRepositoryActivity" android:screenOrientation="landscape">
 
         </activity>
 
 
         <activity
-            android:name=".Login.Login"
+            android:name=".Frame.Login.Login"
             android:screenOrientation="landscape">
         </activity>
     </application>

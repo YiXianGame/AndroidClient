@@ -1,6 +1,5 @@
 package com.xianyu.yixian_client.Model.RPC;
 
-import android.os.Debug;
 import android.util.Log;
 import android.util.Pair;
 
@@ -8,14 +7,9 @@ import androidx.annotation.NonNull;
 
 import com.xianyu.yixian_client.Model.Log.Log.Tag;
 
-import java.util.Collection;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.concurrent.ConcurrentHashMap;
 
 import kotlin.Triple;
-import kotlin.TuplesKt;
 
 public class RPCAdaptFactory {
     //Java没有自带三元组，这里就引用Kotlin了.

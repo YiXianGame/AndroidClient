@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
-import com.xianyu.yixian_client.Model.Room.Entity.CardGroup;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 

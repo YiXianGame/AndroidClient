@@ -2,7 +2,6 @@ package com.xianyu.yixian_client.Model.Room.Entity;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 

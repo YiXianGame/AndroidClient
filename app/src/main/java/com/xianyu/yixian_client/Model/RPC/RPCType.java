@@ -1,7 +1,5 @@
 package com.xianyu.yixian_client.Model.RPC;
 
-import android.util.Pair;
-
 import java.util.HashMap;
 
 public class RPCType {

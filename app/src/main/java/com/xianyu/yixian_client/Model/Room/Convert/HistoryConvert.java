@@ -4,7 +4,6 @@ import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.xianyu.yixian_client.Model.Room.Entity.CardGroup;
 import com.xianyu.yixian_client.Model.Room.Entity.History;
 
 import java.util.ArrayList;

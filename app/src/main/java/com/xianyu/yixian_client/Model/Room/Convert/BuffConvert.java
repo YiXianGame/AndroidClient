@@ -5,10 +5,8 @@ import androidx.room.TypeConverter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xianyu.yixian_client.Model.Room.Entity.Buff;
-import com.xianyu.yixian_client.Model.Room.Entity.CardGroup;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BuffConvert {
     @TypeConverter

@@ -1,15 +1,11 @@
 package com.xianyu.yixian_client.Model.Room.Entity;
 
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
-import com.xianyu.yixian_client.Model.Repository.Repository;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @ProjectName: YiXian_Client

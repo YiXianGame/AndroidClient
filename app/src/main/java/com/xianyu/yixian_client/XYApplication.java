@@ -2,8 +2,6 @@ package com.xianyu.yixian_client;
 
 import android.app.Application;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
 import com.xianyu.yixian_client.Model.Repository.Repository;
 import com.xianyu.yixian_client.Model.Room.Entity.Buff;
 import com.xianyu.yixian_client.Model.Room.Entity.CardGroup;
@@ -13,7 +11,6 @@ import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.Random;
 
 import javax.inject.Inject;

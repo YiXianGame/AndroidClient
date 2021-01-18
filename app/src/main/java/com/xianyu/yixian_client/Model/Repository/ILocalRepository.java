@@ -1,12 +1,9 @@
 package com.xianyu.yixian_client.Model.Repository;
 
-import com.xianyu.yixian_client.Model.Room.Entity.Buff;
 import com.xianyu.yixian_client.Model.Room.Entity.Friend;
-import com.xianyu.yixian_client.Model.Room.Entity.History;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Single;

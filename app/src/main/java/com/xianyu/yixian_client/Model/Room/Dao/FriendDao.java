@@ -7,7 +7,6 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.xianyu.yixian_client.Model.Room.Entity.Friend;
-import com.xianyu.yixian_client.Model.Room.Entity.History;
 
 import java.util.List;
 

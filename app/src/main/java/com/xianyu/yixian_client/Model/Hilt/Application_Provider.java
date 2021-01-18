@@ -4,7 +4,6 @@ import android.content.Context;
 
 import androidx.room.Room;
 
-import com.xianyu.yixian_client.Model.Room.Dao.UserDao;
 import com.xianyu.yixian_client.Model.Room.DataBase_Room;
 
 import dagger.Module;

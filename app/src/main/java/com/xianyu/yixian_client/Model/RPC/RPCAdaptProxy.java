@@ -1,10 +1,7 @@
 package com.xianyu.yixian_client.Model.RPC;
 
-import android.util.Pair;
-
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 
 public class RPCAdaptProxy {
