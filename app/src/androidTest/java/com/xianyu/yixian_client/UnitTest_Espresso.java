@@ -7,7 +7,7 @@ import androidx.test.filters.SmallTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.xianyu.yixian_client.Frame.Login.Login;
+import com.xianyu.yixian_client.Frame.Login.Login_Activity;
 import com.xianyu.yixian_client.Model.Room.DataBase_Room;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 
@@ -30,7 +30,7 @@ public class UnitTest_Espresso {
     @Inject
     DataBase_Room dataBase_room;
 
-    public ActivityTestRule<Login> activityTestRule = new ActivityTestRule<Login>(Login.class);
+    public ActivityTestRule<Login_Activity> activityTestRule = new ActivityTestRule<Login_Activity>(Login_Activity.class);
     @Before
     public void Create_Database(){
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();

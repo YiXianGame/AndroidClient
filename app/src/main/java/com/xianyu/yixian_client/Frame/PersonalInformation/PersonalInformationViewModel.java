@@ -8,13 +8,11 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
-@AndroidEntryPoint
 public class PersonalInformationViewModel extends ViewModel {
 
     public Repository repository;
-    @Inject
-    public PersonalInformationViewModel(Repository repository){
-        this.repository = repository;
+    public PersonalInformationViewModel(){
+
     }
 
 }

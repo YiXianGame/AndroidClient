@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">YiXian_Client</string>
     <string name="login">游戏登录</string>
@@ -37,9 +38,9 @@
     <string name="game_type1">回合</string>
     <string name="game_type2">即时</string>
     <string name="game_setting">设置</string>
-    <string name="user_papers">100点魂萃</string>
-    <string name="user_coin">1000枚精粹</string>
-    <string name="user_experience">经验值</string>
+    <string name="user_papers">点卷</string>
+    <string name="user_coin">金币</string>
+    <string name="user_experience">经验</string>
     <string name="user_username">昵称</string>
 
     <string name="history_result">胜负</string>
@@ -64,6 +65,4 @@
     <string name="personal_information">个人信息</string>
     <string name="delete">删除好友</string>
     <string name="screen">筛选</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

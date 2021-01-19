@@ -22,11 +22,9 @@ import dagger.hilt.android.AndroidEntryPoint;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-@AndroidEntryPoint
 public class LoginViewModel extends ViewModel {
     public MutableLiveData<String> verificationCode = new MutableLiveData<String>();
     public MutableLiveData<String> surePassword = new MutableLiveData<String>();
-    @Inject
     public Repository repository;
     public LoginViewModel(){
 

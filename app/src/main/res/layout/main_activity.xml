@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <VideoView
         android:id="@+id/videoView_main"
         android:layout_width="match_parent"
@@ -13,190 +12,15 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView_papers"
-        android:layout_width="44dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/user_papers"
-        app:layout_constraintStart_toEndOf="@+id/textView_coin"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView_userlog"
-        android:src="@drawable/touxiang"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="25dp"
-        android:contentDescription="@string/user_log"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <Button
-        android:id="@+id/GameType_button1"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/main_activity"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginLeft="250dp"
-        android:background="@drawable/shape_circle"
-        android:text="@string/game_type1"
-        app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/GameType_button2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
-
-    <Button
-        android:id="@+id/GameType_button2"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginLeft="5dp"
-        android:text="@string/game_type2"
-        android:layout_marginRight="250dp"
-        app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/GameType_button1"
-        app:layout_constraintRight_toRightOf="parent"
-        android:background="@drawable/shape_circle"/>
-
-    <TextView
-        android:id="@+id/textView_coin"
-        android:layout_width="44dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="264dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/user_coin"
-        app:layout_constraintStart_toEndOf="@+id/textView_username"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView_username"
-        android:layout_width="44dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/user_username"
-        app:layout_constraintStart_toEndOf="@+id/imageView_userlog"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView_experience"
-        android:layout_width="107dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="12dp"
-        android:text="@string/user_experience"
-        app:layout_constraintStart_toEndOf="@+id/imageView_userlog"
-        app:layout_constraintTop_toBottomOf="@+id/textView_username" />
-
-
-    <ImageButton
-        android:id="@+id/button_setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:src="@drawable/setting"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button_notice"
-        android:layout_width="64dp"
         android:layout_height="0dp"
-        android:layout_marginTop="105dp"
-        android:layout_marginRight="25dp"
-        android:text="@string/game_notice"
-        app:layout_constraintBottom_toTopOf="@id/button_Shopping"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="1" />
-
-    <Button
-        android:id="@+id/button_Shopping"
-        android:layout_width="64dp"
-        android:layout_height="0dp"
-        android:layout_marginRight="25dp"
-        android:text="@string/game_Shopping"
-        app:layout_constraintBottom_toTopOf="@id/button_enjoy"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_notice"
-        app:layout_constraintVertical_weight="1" />
-
-    <Button
-        android:id="@+id/button_enjoy"
-        android:layout_width="64dp"
-        android:layout_height="0dp"
-        android:layout_marginRight="25dp"
-        android:text="@string/game_enjoy"
-        app:layout_constraintBottom_toTopOf="@id/button_official"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_Shopping"
-        app:layout_constraintVertical_weight="1" />
-
-    <Button
-        android:id="@+id/button_official"
-        android:layout_width="64dp"
-        android:layout_height="0dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="100dp"
-        android:text="@string/game_official"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_enjoy"
-        app:layout_constraintVertical_weight="1" />
-
-    <Button
-        android:id="@+id/button_friend"
-        android:layout_width="51dp"
-        android:layout_height="38dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/navigationView" />
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:tabIndicatorColor="#FFFFFF"
-        app:tabMinWidth="250dp"
-        app:tabTextAppearance="@style/TextAppearance.YiXian.Headline5"
-        app:tabTextColor="#FFFFFF">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="皮肤" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="魂海" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="战备" />
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="任务" />
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="百科" />
-    </com.google.android.material.tabs.TabLayout>
-
-
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/main_navigation" />
 </androidx.constraintlayout.widget.ConstraintLayout>

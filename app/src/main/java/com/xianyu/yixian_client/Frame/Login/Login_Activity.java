@@ -28,13 +28,14 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class Login extends AppCompatActivity {
+public class Login_Activity extends AppCompatActivity {
     private ViewPager2 paper;
     private TabLayout tab;
     LoginViewModel viewModel;
     private final CompositeDisposable disposable = new CompositeDisposable();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         LoginActivityBinding binding = LoginActivityBinding.inflate(getLayoutInflater());
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);

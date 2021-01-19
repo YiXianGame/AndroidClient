@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@color/teal_200"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/head_image"
+        android:src="@drawable/touxiang"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:contentDescription="@string/user_log"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        >
+        <Button
+            android:id="@+id/round_button"
+            android:layout_width="90dp"
+            android:layout_height="180dp"
+            android:background="@drawable/shape_half_left_circle"
+            android:textAppearance="@style/TextAppearance.YiXian.Headline5"
+            android:fontFamily="@font/ziti"
+            android:text="@string/game_type1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <Button
+            android:id="@+id/realTime_button"
+            android:layout_width="90dp"
+            android:layout_height="180dp"
+            android:text="@string/game_type2"
+            android:fontFamily="@font/ziti"
+            android:textAppearance="@style/TextAppearance.YiXian.Headline5"
+            app:layout_constraintTop_toTopOf="@id/round_button"
+            app:layout_constraintBottom_toBottomOf="@id/round_button"
+            app:layout_constraintLeft_toRightOf="@id/round_button"
+            android:background="@drawable/shape_half_right_circle"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/papers_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@string/user_papers"
+        android:textAppearance="@style/TextAppearance.YiXian.Body1"
+        app:layout_constraintLeft_toRightOf="@id/coin_textView"
+        app:layout_constraintTop_toTopOf="@id/coin_textView" />
+    <TextView
+        android:id="@+id/coin_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user_coin"
+        android:textAppearance="@style/TextAppearance.YiXian.Body1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/username_textView"
+        app:layout_constraintTop_toTopOf="@id/head_image" />
+
+    <TextView
+        android:id="@+id/username_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/user_username"
+        android:textAppearance="@style/TextAppearance.YiXian.Body1"
+        android:fontFamily="@font/ziti"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintLeft_toRightOf="@id/head_image"
+        app:layout_constraintBottom_toTopOf="@id/experience_textView"
+        app:layout_constraintTop_toTopOf="@id/head_image" />
+
+    <TextView
+        android:id="@+id/experience_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/user_experience"
+        android:layout_marginLeft="10dp"
+        android:textAppearance="@style/TextAppearance.YiXian.Body1"
+        android:fontFamily="@font/ziti"
+        app:layout_constraintTop_toBottomOf="@id/username_textView"
+        app:layout_constraintStart_toEndOf="@id/head_image"
+        app:layout_constraintBottom_toBottomOf="@id/head_image" />
+
+
+    <ImageButton
+        android:id="@+id/setting_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:padding="0dp"
+        android:src="@drawable/setting"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/notice_button"
+        android:layout_width="64dp"
+        android:layout_height="0dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/setting_button"
+        android:text="@string/game_notice"
+        android:background="@drawable/main_right_button"
+        app:layout_constraintBottom_toTopOf="@id/shopping_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_weight="1" />
+
+    <Button
+        android:id="@+id/shopping_button"
+        android:layout_width="64dp"
+        android:layout_height="0dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/main_right_button"
+        android:text="@string/game_Shopping"
+        app:layout_constraintBottom_toTopOf="@id/creative_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notice_button"
+        app:layout_constraintVertical_weight="1" />
+
+    <Button
+        android:id="@+id/creative_button"
+        android:layout_width="64dp"
+        android:layout_height="0dp"
+        android:background="@drawable/main_right_button"
+        android:layout_marginRight="5dp"
+        android:text="@string/game_enjoy"
+        app:layout_constraintBottom_toTopOf="@id/official_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shopping_button"
+        app:layout_constraintVertical_weight="1" />
+
+    <Button
+        android:id="@+id/official_button"
+        android:layout_width="64dp"
+        android:layout_height="0dp"
+        android:background="@drawable/main_right_button"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/game_official"
+        app:layout_constraintBottom_toTopOf="@id/tabLayout"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/creative_button"
+        app:layout_constraintVertical_weight="1" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tabIndicatorColor="#00FFFFFF"
+        app:tabMinWidth="250dp"
+        app:tabTextAppearance="@style/TextAppearance.YiXian.Headline5"
+        app:tabTextColor="#FFFFFF">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="皮肤" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="魂海" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="战备" />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="任务" />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="百科" />
+    </com.google.android.material.tabs.TabLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

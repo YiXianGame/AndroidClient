@@ -16,7 +16,7 @@
         <activity android:name=".Frame.PersonalInformation.PersonalInformation_Activity" android:screenOrientation="landscape">
 
         </activity>
-        <activity android:name=".Frame.Main.MainActivity" android:screenOrientation="landscape">
+        <activity android:name=".Frame.Main.Main_Activity" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -35,7 +35,7 @@
 
 
         <activity
-            android:name=".Frame.Login.Login"
+            android:name=".Frame.Login.Login_Activity"
             android:screenOrientation="landscape">
         </activity>
     </application>

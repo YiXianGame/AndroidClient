@@ -2,6 +2,7 @@ package com.xianyu.yixian_client.Model.Room.Entity;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 
 import com.google.gson.annotations.Expose;
 
@@ -23,7 +24,12 @@ import com.google.gson.annotations.Expose;
                 @ForeignKey(entity = User.class, parentColumns = "id",
                         childColumns = "user_1", onDelete = ForeignKey.CASCADE),
                 @ForeignKey(entity = User.class, parentColumns = "id",
-                        childColumns = "user_2", onDelete = ForeignKey.CASCADE)}
+                        childColumns = "user_2", onDelete = ForeignKey.CASCADE)},
+        indices = {
+        @Index(value = {"user_1"}),
+        @Index(value = {"user_2"})
+        }
+
 )
 public class Friend {
     @Expose

@@ -8,9 +8,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
-@AndroidEntryPoint
 public class Friend_ViewModel extends ViewModel {
-    @Inject
     Repository repository;
     Friend_ViewModel(){
 

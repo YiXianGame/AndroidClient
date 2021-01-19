@@ -24,10 +24,8 @@ import dagger.hilt.android.AndroidEntryPoint;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-@AndroidEntryPoint
 public class RepositoryViewModel extends ViewModel {
     MutableLiveData<String> message = new MutableLiveData<>();
-    @Inject
     Repository repository;
     public RepositoryViewModel(){
 

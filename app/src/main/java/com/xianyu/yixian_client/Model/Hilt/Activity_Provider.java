@@ -1,8 +1,11 @@
 package com.xianyu.yixian_client.Model.Hilt;
 
 import dagger.Module;
+import dagger.hilt.EntryPoint;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.components.ActivityComponent;
+import dagger.hilt.android.components.ApplicationComponent;
+import dagger.hilt.components.SingletonComponent;
 
 /**
  * @ProjectName: YiXian_Client
