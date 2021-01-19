@@ -57,6 +57,7 @@ public class XYApplication extends Application {
         owner.setUserName("839336369");
         owner.setActive(User.State.Leisure);
         owner.setId(123456);
+        Core.liveUser.setValue(owner);
         History history;
         for(int i = 0;i<5;i++){
             history = new History(random.nextInt(20),true);

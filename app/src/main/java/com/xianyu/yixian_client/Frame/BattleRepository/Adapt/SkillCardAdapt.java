@@ -32,7 +32,10 @@ public class SkillCardAdapt extends RecyclerView.Adapter<SkillCardAdapt.ViewHold
         ViewHolder holder =new ViewHolder(view);
         return holder;
     }
-
+    public void refresh(List<SkillCard> skillCards){
+        origin_data = skillCards;
+        filter();
+    }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //用于对RecyclerView的子项进行赋值，会在每个子项滚动到屏幕内的时候执行

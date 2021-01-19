@@ -17,7 +17,7 @@ import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
 import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.R;
-import com.xianyu.yixian_client.databinding.ForgetFragmentBinding;
+import com.xianyu.yixian_client.databinding.LoginForgetFragmentBinding;
 
 import javax.inject.Inject;
 
@@ -40,7 +40,7 @@ public class Forget_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ForgetFragmentBinding binding = ForgetFragmentBinding.inflate(inflater,container,false);
+        LoginForgetFragmentBinding binding = LoginForgetFragmentBinding.inflate(inflater,container,false);
         viewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
         TextInputEditText userName_UI = binding.getRoot().findViewById(R.id.username);
         TextInputEditText passWord_UI = binding.getRoot().findViewById(R.id.password);

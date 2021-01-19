@@ -29,20 +29,43 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 @AndroidEntryPoint
 public class Main_Activity extends AppCompatActivity {
+    MediaPlayer mediaPlayer;
+    VideoView videoView;
     @Inject
     Repository repository;
+    MainActivityBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //视窗绑定
-        MainActivityBinding binding = MainActivityBinding.inflate(getLayoutInflater());
+        //视图绑定
+        binding = MainActivityBinding.inflate(getLayoutInflater());
         MainViewModel viewModel =  new ViewModelProvider(this).get(MainViewModel.class);
         viewModel.initialization(repository);
         setContentView(binding.getRoot());
-        //视频初始化
-        VideoView videoView = binding.getRoot().findViewById(R.id.videoView_main);
-        videoView.setVideoPath(Uri.parse("android.resource://" + this.getPackageName() + "/raw/" + R.raw.cg_bg).toString());//路径
-        videoView.setOnPreparedListener(mp -> mp.setLooping(true));//循环
-        videoView.start();//开始
+        videoView = binding.getRoot().findViewById(R.id.videoView_main);
+        videoView.setVideoPath(Uri.parse("android.resource://" + getPackageName() + "/raw/" + R.raw.cg_bg).toString());
+        videoView.setOnPreparedListener(mp -> mp.setLooping(true));
+        mediaPlayer = MediaPlayer.create(this, R.raw.b);
+        mediaPlayer.setLooping(true);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mediaPlayer.start();
+        videoView.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mediaPlayer.pause();
+        videoView.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.stop();
+        videoView.stopPlayback();
     }
 }

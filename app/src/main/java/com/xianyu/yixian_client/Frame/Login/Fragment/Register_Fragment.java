@@ -16,7 +16,7 @@ import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
 import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.R;
-import com.xianyu.yixian_client.databinding.RegisterFragmentBinding;
+import com.xianyu.yixian_client.databinding.LoginRegisterFragmentBinding;
 
 import javax.inject.Inject;
 
@@ -39,7 +39,7 @@ public class Register_Fragment extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RegisterFragmentBinding binding = RegisterFragmentBinding.inflate(inflater,container,false);
+        LoginRegisterFragmentBinding binding = LoginRegisterFragmentBinding.inflate(inflater,container,false);
         viewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
         TextInputEditText userName_UI = binding.getRoot().findViewById(R.id.username);
         TextInputEditText passWord_UI = binding.getRoot().findViewById(R.id.password);

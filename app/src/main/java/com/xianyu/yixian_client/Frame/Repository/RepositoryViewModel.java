@@ -26,9 +26,12 @@ import dagger.hilt.android.AndroidEntryPoint;
  */
 public class RepositoryViewModel extends ViewModel {
     MutableLiveData<String> message = new MutableLiveData<>();
-    Repository repository;
+    private Repository repository;
     public RepositoryViewModel(){
 
+    }
+    public void initialization(Repository repository){
+        this.repository = repository;
     }
     public ArrayList<SkillCard> getCards(){
         return null;

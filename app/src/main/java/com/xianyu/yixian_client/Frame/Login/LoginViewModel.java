@@ -25,10 +25,12 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class LoginViewModel extends ViewModel {
     public MutableLiveData<String> verificationCode = new MutableLiveData<String>();
     public MutableLiveData<String> surePassword = new MutableLiveData<String>();
-    public Repository repository;
+    private Repository repository;
     public LoginViewModel(){
 
     }
-
+    public void initialization(Repository repository){
+        this.repository = repository;
+    }
 }
 

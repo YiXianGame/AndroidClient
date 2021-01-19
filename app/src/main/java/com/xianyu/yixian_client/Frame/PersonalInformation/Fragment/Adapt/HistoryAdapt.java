@@ -22,7 +22,7 @@ public class HistoryAdapt extends RecyclerView.Adapter<HistoryAdapt.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //用来创建ViewHolder实例，再将加载好的布局传入构造函数，最后返回ViewHolder实例
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.personal_information_history_item,null);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.personal_profile_history_item,null);
         ViewHolder holder=new ViewHolder(view);
         return holder;
     }

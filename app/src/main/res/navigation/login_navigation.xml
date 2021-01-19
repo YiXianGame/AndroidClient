@@ -3,10 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/information_navigation"
-    app:startDestination="@id/login">
+    app:startDestination="@id/main_Fragment">
+    <fragment
+        android:id="@+id/main_Fragment"
+        android:name="com.xianyu.yixian_client.Frame.Login.Fragment.Main_Fragment"
+        android:label="Login_Fragment" >
+        <action
+            android:id="@+id/action_login_Activity_to_main_navigation"
+            app:destination="@id/main_Activity"
+            app:popUpTo="@id/main_Activity"
+            app:popUpToInclusive="false" />
+    </fragment>
     <activity
-        android:id="@+id/login"
-        android:name="com.xianyu.yixian_client.Frame.Login.Login_Activity"
-        android:label="login_activity"
-        tools:layout="@layout/login_activity" />
+        android:id="@+id/main_Activity"
+        android:name="com.xianyu.yixian_client.Frame.Main.Main_Activity"
+        android:label="Main_Activity" />
 </navigation>

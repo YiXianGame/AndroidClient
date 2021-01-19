@@ -10,13 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.xianyu.yixian_client.Core;
-import com.xianyu.yixian_client.Frame.PersonalInformation.PersonalInformationViewModel;
+import com.xianyu.yixian_client.Frame.PersonalInformation.PersonalProfileViewModel;
 import com.xianyu.yixian_client.R;
-import com.xianyu.yixian_client.databinding.PersonalInformationPersonalFragmentBinding;
-
-import javax.inject.Inject;
-
-import dagger.hilt.android.AndroidEntryPoint;
+import com.xianyu.yixian_client.databinding.PersonalProfilePersonalFragmentBinding;
 
 /**
  * @ProjectName: YiXian_Client
@@ -32,13 +28,13 @@ import dagger.hilt.android.AndroidEntryPoint;
  */
 public class Personal_Fragment extends Fragment {
     
-    public PersonalInformationViewModel viewModel;
+    public PersonalProfileViewModel viewModel;
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        PersonalInformationPersonalFragmentBinding binding = PersonalInformationPersonalFragmentBinding.inflate(inflater,container,false);
-        viewModel = new ViewModelProvider(requireActivity()).get(PersonalInformationViewModel.class);
+        PersonalProfilePersonalFragmentBinding binding = PersonalProfilePersonalFragmentBinding.inflate(inflater,container,false);
+        viewModel = new ViewModelProvider(requireActivity()).get(PersonalProfileViewModel.class);
         init(binding.getRoot());
         return binding.getRoot();
     }

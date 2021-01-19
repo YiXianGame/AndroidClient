@@ -11,14 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.PersonalInformation.Fragment.Adapt.HistoryAdapt;
-import com.xianyu.yixian_client.Frame.PersonalInformation.PersonalInformationViewModel;
-import com.xianyu.yixian_client.Model.Repository.Repository;
+import com.xianyu.yixian_client.Frame.PersonalInformation.PersonalProfileViewModel;
 import com.xianyu.yixian_client.R;
-import com.xianyu.yixian_client.databinding.PersonalInformationHistoryFragmentBinding;
-
-import javax.inject.Inject;
-
-import dagger.hilt.android.AndroidEntryPoint;
+import com.xianyu.yixian_client.databinding.PersonalProfileHistoryFragmentBinding;
 
 /**
  * @ProjectName: YiXian_Client
@@ -34,12 +29,12 @@ import dagger.hilt.android.AndroidEntryPoint;
  */
 public class History_Fragment extends Fragment  {
 
-    private PersonalInformationViewModel viewModel;
+    private PersonalProfileViewModel viewModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        PersonalInformationHistoryFragmentBinding binding = PersonalInformationHistoryFragmentBinding.inflate(inflater,container,false);
-        viewModel = new ViewModelProvider(requireActivity()).get(PersonalInformationViewModel.class);
+        PersonalProfileHistoryFragmentBinding binding = PersonalProfileHistoryFragmentBinding.inflate(inflater,container,false);
+        viewModel = new ViewModelProvider(requireActivity()).get(PersonalProfileViewModel.class);
         init(binding.getRoot());
         return binding.getRoot();
     }

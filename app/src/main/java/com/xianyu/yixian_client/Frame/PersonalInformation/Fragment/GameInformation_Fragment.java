@@ -8,13 +8,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.xianyu.yixian_client.Frame.PersonalInformation.PersonalInformationViewModel;
-import com.xianyu.yixian_client.Model.Repository.Repository;
-import com.xianyu.yixian_client.databinding.PersonalInformationGameFragmentBinding;
-
-import javax.inject.Inject;
-
-import dagger.hilt.android.AndroidEntryPoint;
+import com.xianyu.yixian_client.Frame.PersonalInformation.PersonalProfileViewModel;
+import com.xianyu.yixian_client.databinding.PersonalProfileGameFragmentBinding;
 
 /**
  * @ProjectName: YiXian_Client
@@ -29,12 +24,12 @@ import dagger.hilt.android.AndroidEntryPoint;
  * @Version: 1.0
  */
 public class GameInformation_Fragment extends Fragment {
-    private PersonalInformationViewModel viewModel;
+    private PersonalProfileViewModel viewModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        PersonalInformationGameFragmentBinding binding = PersonalInformationGameFragmentBinding.inflate(inflater,container,false);
-        viewModel = new ViewModelProvider(requireActivity()).get(PersonalInformationViewModel.class);
+        PersonalProfileGameFragmentBinding binding = PersonalProfileGameFragmentBinding.inflate(inflater,container,false);
+        viewModel = new ViewModelProvider(requireActivity()).get(PersonalProfileViewModel.class);
         return binding.getRoot();
     }
 

@@ -5,7 +5,7 @@
     android:id="@+id/repository_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Frame.Repository.RepositoryActivity">
+    tools:context=".Frame.Repository.RepositoryFragment">
 
     <ImageView
         android:id="@+id/imageView"

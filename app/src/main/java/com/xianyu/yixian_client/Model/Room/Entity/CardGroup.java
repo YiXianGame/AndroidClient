@@ -37,10 +37,6 @@ public class CardGroup {
         this.cards_id = cards_id;
     }
 
-    public ArrayList<SkillCard> getCards() {
-        return cards;
-    }
-
     public void setCards(ArrayList<SkillCard> cards) {
         this.cards = cards;
     }

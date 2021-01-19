@@ -23,13 +23,12 @@ import com.xianyu.yixian_client.Frame.Login.Fragment.Register_Fragment;
  */
 public class Login_Fragment_Adapter extends FragmentStateAdapter {
     private static final int NUM_LOGIN_FRAGMENT = 3;
-    private FragmentActivity activity;
 
-    public Login_Fragment_Adapter(FragmentActivity activity) {
-        super(activity);
-        // TODO Auto-generated constructor stub
-        this.activity = activity;
+    public Login_Fragment_Adapter(@NonNull FragmentActivity fragmentActivity) {
+        super(fragmentActivity);
     }
+
+
     @NonNull
     @Override
     public Fragment createFragment(int position) {

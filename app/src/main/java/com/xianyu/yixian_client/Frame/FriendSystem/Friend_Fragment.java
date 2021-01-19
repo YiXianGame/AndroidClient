@@ -4,15 +4,21 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.FriendSystem.Adapt.Friend_Adapt;
+import com.xianyu.yixian_client.Model.Repository.Repository;
 import com.xianyu.yixian_client.Model.Room.Entity.Friend;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.R;
@@ -22,30 +28,32 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-
-public class Friend_Activity extends AppCompatActivity {
-    ArrayList<User> friends;
+@AndroidEntryPoint
+public class Friend_Fragment extends Fragment {
     FriendsActivityBinding binding;
-    @Inject
     Friend_ViewModel viewModel;
+    @Inject
+    Repository repository;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        //binding初始化
         binding = FriendsActivityBinding.inflate(getLayoutInflater());
         viewModel = new ViewModelProvider(this).get(Friend_ViewModel.class);
-        setContentView(binding.getRoot());
+        viewModel.initialization(repository);
         init();
+        return binding.getRoot();
     }
-    @SuppressLint("CheckResult")
+
     void init(){
         ArrayList<User> friends_data = new ArrayList<>();
         Friend_Adapt adapt = new Friend_Adapt(friends_data);
         RecyclerView recyclerView = binding.getRoot().findViewById(R.id.friends);
         recyclerView.setAdapter(adapt);
-        TextInputEditText textInputEditText = findViewById(R.id.search_textInput);
+        TextInputEditText textInputEditText = binding.getRoot().findViewById(R.id.search_textInput);
         textInputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -62,35 +70,11 @@ public class Friend_Activity extends AppCompatActivity {
 
             }
         });
-        CheckBox checkBox = findViewById(R.id.levelSort_check);
+        CheckBox checkBox = binding.getRoot().findViewById(R.id.levelSort_check);
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> adapt.bluePrint.setLevel(isChecked));
-        checkBox = findViewById(R.id.activeSort_check);
+        checkBox = binding.getRoot().findViewById(R.id.activeSort_check);
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> adapt.bluePrint.setActive(isChecked));
-        checkBox = findViewById(R.id.reverseSort_check);
+        checkBox = binding.getRoot().findViewById(R.id.reverseSort_check);
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> adapt.bluePrint.setReverse(isChecked));
-
-        viewModel.repository.queryUserById(123456)
-                .subscribeOn(Schedulers.io())//查询数据时的线程
-                .observeOn(AndroidSchedulers.mainThread())//数据查找完毕的线程
-                .subscribe(user -> {
-                    Core.liveUser.setValue(user);
-                    viewModel.repository.queryFriend(Core.liveUser.getValue().getId())
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(friends -> {
-                                for (Friend friend:friends) {
-                                    long id;
-                                    if (friend.getUser_1() != Core.liveUser.getValue().getId())id = friend.getUser_1();
-                                    else id = friend.getUser_2();
-                                    viewModel.repository.queryUserById(id)
-                                            .subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(user_friend -> {
-                                                friends_data.add(user_friend);
-                                                adapt.refreshData(friends_data);
-                                            });
-                                }
-                            });
-                });
     }
 }

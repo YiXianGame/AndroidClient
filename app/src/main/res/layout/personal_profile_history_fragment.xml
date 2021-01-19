@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="#FFFFFF"
-    tools:context=".Frame.PersonalInformation.PersonalInformation_Activity">
+    tools:context=".Frame.PersonalInformation.PersonalProfile_Fragment">
     <LinearLayout
         android:id="@+id/history"
         android:layout_width="match_parent"
@@ -59,7 +59,7 @@
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:spanCount="1"
-            tools:listitem="@layout/personal_information_history_item">
+            tools:listitem="@layout/personal_profile_history_item">
 
         </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>

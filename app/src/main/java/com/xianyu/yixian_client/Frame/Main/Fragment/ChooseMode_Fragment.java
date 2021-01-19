@@ -10,10 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.xianyu.yixian_client.Frame.Main.MainViewModel;
-import com.xianyu.yixian_client.Frame.PersonalInformation.PersonalInformationViewModel;
 import com.xianyu.yixian_client.Model.Log.Log.Tag;
 import com.xianyu.yixian_client.databinding.MainChooseModeFragmentBinding;
-import com.xianyu.yixian_client.databinding.PersonalInformationGameFragmentBinding;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -28,7 +26,6 @@ public class ChooseMode_Fragment extends Fragment {
         if(binding == null){
             binding = MainChooseModeFragmentBinding.inflate(inflater,container,false);
             viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-            Log.d(Tag.Debug,"数值是" + ChooseMode_FragmentArgs.fromBundle(getArguments()).getRoomMode());
         }
         return binding.getRoot();
     }
