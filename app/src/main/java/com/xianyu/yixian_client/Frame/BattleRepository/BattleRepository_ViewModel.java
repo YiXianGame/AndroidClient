@@ -1,7 +1,5 @@
 package com.xianyu.yixian_client.Frame.BattleRepository;
 
-import android.util.Pair;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -21,9 +19,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BattleRepository_ViewModel extends ViewModel {
     public MutableLiveData<List<SkillCard>> skillcards_live = new MutableLiveData<>();
-    public MutableLiveData<ArrayList<Pair<CardGroup,ArrayList<SkillCard>>>> cardGroups_live = new MutableLiveData<>();
-    private Repository repository;
+    public MutableLiveData<ArrayList<CardGroup>> cardGroups_live = new MutableLiveData<>();
     private final CompositeDisposable disposable = new CompositeDisposable();
+    private Repository repository;
     public BattleRepository_ViewModel(){
 
     }
@@ -38,22 +36,16 @@ public class BattleRepository_ViewModel extends ViewModel {
     }
     public void refreshAllSkillCards(){
         disposable.add(repository.queryAllSkillCards().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(value -> skillcards_live.postValue(value)));
+                .subscribe(skillCards -> skillcards_live.postValue(skillCards)));
     }
-    public void refreshCardGroups(){
-        ArrayList<Pair<CardGroup,ArrayList<SkillCard>>> parent_cardGroups = new ArrayList<>();
-        for (CardGroup cardGroup : Core.liveUser.getValue().getCardGroups()){
-            Pair<CardGroup,ArrayList<SkillCard>> cards = new Pair<>(cardGroup,new ArrayList<>());
-            parent_cardGroups.add(cards);
-            for(long id : cardGroup.getCards_id()){
-               disposable.add(repository.querySkillCardById(id)
-                       .subscribeOn(Schedulers.io())
-                       .observeOn(AndroidSchedulers.mainThread())
-                       .subscribe(skillCard ->{
-                           cards.second.add(skillCard);
-                           cardGroups_live.postValue(parent_cardGroups);
-                       }));
-            }
-        }
+    public void refreshUser(){
+        disposable.add(repository.queryUserById(Core.liveUser.getValue().getId()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(user -> cardGroups_live.postValue(user.getCardGroups()))
+        );
+    }
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        disposable.clear();
     }
 }

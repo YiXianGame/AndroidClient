@@ -40,7 +40,7 @@ public class Main_Fragment extends Fragment {
     private ViewPager2 paper;
     private TabLayout tab;
     LoginViewModel viewModel;
-    private final CompositeDisposable disposable = new CompositeDisposable();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,6 +96,7 @@ public class Main_Fragment extends Fragment {
         ).attach();
         paper.setOffscreenPageLimit(3);
         tab.selectTab(tab.getTabAt(1));
+
     }
 
     public void Login_Click() {

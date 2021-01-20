@@ -18,8 +18,6 @@ import com.google.gson.annotations.Expose;
 public class Buff {
     public enum Category { Freeze };
     @Expose
-    String name;//状态名称
-    @Expose
     int duration_Immediate;//效果持续时长
     @Expose
     int duration_Round;//效果持续回合
@@ -27,14 +25,6 @@ public class Buff {
     int power;//能力
     @Expose
     Category category;//类型
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public int getDuration_Immediate() {
         return duration_Immediate;

@@ -16,6 +16,15 @@
             android:id="@+id/action_main_dest_to_battleRepository_Fragment"
             app:destination="@id/battleRepository_Fragment"
             app:launchSingleTop="true" />
+        <action
+            android:id="@+id/action_main_dest_to_friend_Fragment"
+            app:destination="@id/friend_Fragment" />
+        <action
+            android:id="@+id/action_main_dest_to_personal_Fragment"
+            app:destination="@id/personal_Fragment" />
+        <action
+            android:id="@+id/action_main_dest_to_repositoryFragment"
+            app:destination="@id/repositoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/chooseMode_dest"
@@ -30,6 +39,19 @@
         android:id="@+id/battleRepository_Fragment"
         android:name="com.xianyu.yixian_client.Frame.BattleRepository.BattleRepository_Fragment"
         android:label="BattleRepository_Fragment" />
+    <fragment
+        android:id="@+id/friend_Fragment"
+        android:name="com.xianyu.yixian_client.Frame.FriendSystem.Friend_Fragment"
+        android:label="Friend_Fragment" />
+    <fragment
+        android:id="@+id/personal_Fragment"
+        android:name="com.xianyu.yixian_client.Frame.PersonalInformation.PersonalProfile_Fragment"
+        android:label="Personal_Fragment" />
+    <fragment
+        android:id="@+id/repositoryFragment"
+        android:name="com.xianyu.yixian_client.Frame.Repository.RepositoryFragment"
+        android:label="repository_fragment"
+        tools:layout="@layout/repository_fragment" />
 
 
 </navigation>

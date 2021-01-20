@@ -1,4 +1,4 @@
-package com.xianyu.yixian_client.Frame.FriendSystem.Adapt;
+package com.xianyu.yixian_client.Frame.Main.Adapt;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +32,7 @@ public class Friend_Adapt extends RecyclerView.Adapter<Friend_Adapt.ViewHolder> 
         origin_data = list;
         filter_data = new ArrayList<User>(list);
     }
-    public void refreshData(ArrayList<User> list){
+    public void refreshData(List<User> list){
         origin_data = list;
         filter_data = new ArrayList<>(list);
         notifyDataSetChanged();
@@ -43,14 +43,6 @@ public class Friend_Adapt extends RecyclerView.Adapter<Friend_Adapt.ViewHolder> 
         User friend = filter_data.get(position);
         holder.nickname_text.setText(friend.getNickName());
         holder.level_text.setText(Integer.toString(friend.getLv()));
-        holder.deleteFriend_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                origin_data.remove(friend);//这步没有同步到数据库
-                filter_data = new ArrayList<>(origin_data);
-                notifyDataSetChanged();
-            }
-        });
         holder.active_text.setText(friend.getActive().toString());
     }
 

@@ -15,11 +15,7 @@
     <string name="skillCard_disable">禁用</string>
     <string name="skillCard_normal">普通</string>
     <string name="skillCard_shopping">商城</string>
-    <string name="skillCard_physics">物理</string>
-    <string name="skillCard_magic">魔法</string>
-    <string name="skillCard_cure">治疗</string>
-    <string name="skillCard_attack">攻击</string>
-    <string name="skillCard_eternal">永恒</string>
+    <string name="skillCard_enemy_hp">伤害量</string>
     <string name="skillCard_enemy_mp">损魔量</string>
     <string name="skillCard_auxiliary_hp">治疗量</string>
     <string name="skillCard_auxiliary_mp">回魔量</string>
@@ -28,6 +24,14 @@
     <string name="skillCard_max_auxiliary">灵命数</string>
     <string name="skillCard_mp">仙气值</string>
 
+    <string name="attribute_physics">物理</string>
+    <string name="attribute_magic">魔法</string>
+    <string name="attribute_cure">治疗</string>
+    <string name="attribute_attack">攻击</string>
+    <string name="attribute_eternal">永恒</string>
+
+
+    <string name="buff_freeze">冻结</string>
 
     <string name="user_log">用户头像</string>
     <string name="game_notice">公告</string>
@@ -43,7 +47,7 @@
     <string name="user_username">昵称</string>
 
     <string name="history_result">胜负</string>
-    <string name="history_title">游戏境界</string>
+    <string name="history_title">玩家境界</string>
     <string name="history_lv">玩家等级</string>
     <string name="history_time">游戏时间</string>
     <string name="history_exp">经验值</string>
@@ -66,4 +70,9 @@
     <string name="screen">筛选</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="skin">皮肤</string>
+    <string name="repository">魂海</string>
+    <string name="battle_repository">战备</string>
+    <string name="task">任务</string>
+    <string name="wiki">百科</string>
 </resources>

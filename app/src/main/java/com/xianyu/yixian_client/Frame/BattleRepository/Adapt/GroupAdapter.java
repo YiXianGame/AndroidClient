@@ -10,15 +10,13 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.textview.MaterialTextView;
 import com.xianyu.yixian_client.Model.Room.Entity.CardGroup;
-import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GroupAdapter extends BaseExpandableListAdapter {
-    private ArrayList<Pair<CardGroup,ArrayList<SkillCard>>> groups;
-    public GroupAdapter(ArrayList<Pair<CardGroup,ArrayList<SkillCard>>> groups){
+    private ArrayList<CardGroup> groups;
+    public GroupAdapter(ArrayList<CardGroup> groups){
         this.groups = groups;
     }
     @Override
@@ -28,7 +26,7 @@ public class GroupAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return groups.get(groupPosition).second.size();
+        return groups.get(groupPosition).getCards().size();
     }
 
     @Override
@@ -38,7 +36,7 @@ public class GroupAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return groups.get(groupPosition).second.get(childPosition);
+        return groups.get(groupPosition).getCards().get(childPosition);
     }
 
     @Override
@@ -48,7 +46,7 @@ public class GroupAdapter extends BaseExpandableListAdapter {
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return groups.get(groupPosition).second.get(childPosition).getId();
+        return groups.get(groupPosition).getCards().get(childPosition).first;
     }
 
     @Override
@@ -67,13 +65,12 @@ public class GroupAdapter extends BaseExpandableListAdapter {
         else {
             groupViewHolder = (GroupViewHolder)convertView.getTag();
         }
-        groupViewHolder.name_text.setText(groups.get(groupPosition).first.getName());
+        groupViewHolder.name_text.setText(groups.get(groupPosition).getName());
         return convertView;
     }
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        SkillCard child = groups.get(groupPosition).second.get(childPosition);
         GroupChildrenViewHolder groupChildrenViewHolder;
         if(convertView == null){
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.battle_repository_groupshow_item,parent,false);
@@ -83,7 +80,7 @@ public class GroupAdapter extends BaseExpandableListAdapter {
         else {
             groupChildrenViewHolder = (GroupChildrenViewHolder)convertView.getTag();
         }
-        groupChildrenViewHolder.name_text.setText(child.getName());
+        groupChildrenViewHolder.name_text.setText(groups.get(groupPosition).getCards().get(childPosition).second);
         return convertView;
     }
 

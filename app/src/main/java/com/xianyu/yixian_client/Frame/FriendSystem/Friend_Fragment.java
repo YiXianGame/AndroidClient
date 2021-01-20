@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.FriendSystem.Adapt.Friend_Adapt;
 import com.xianyu.yixian_client.Model.Repository.Repository;
@@ -49,32 +51,34 @@ public class Friend_Fragment extends Fragment {
     }
 
     void init(){
-        ArrayList<User> friends_data = new ArrayList<>();
-        Friend_Adapt adapt = new Friend_Adapt(friends_data);
-        RecyclerView recyclerView = binding.getRoot().findViewById(R.id.friends);
-        recyclerView.setAdapter(adapt);
-        TextInputEditText textInputEditText = binding.getRoot().findViewById(R.id.search_textInput);
-        textInputEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        viewModel.queryFriendUsers(12345).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(users -> {
+                    Friend_Adapt adapt = new Friend_Adapt(users);
+                    RecyclerView recyclerView = binding.getRoot().findViewById(R.id.friends);
+                    recyclerView.setAdapter(adapt);
+                    TextInputEditText textInputEditText = binding.getRoot().findViewById(R.id.search_textInput);
+                    textInputEditText.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
+                        }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapt.bluePrint.setNickName(s.toString());
-            }
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            adapt.bluePrint.setNickName(s.toString());
+                        }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+                        @Override
+                        public void afterTextChanged(Editable s) {
 
-            }
-        });
-        CheckBox checkBox = binding.getRoot().findViewById(R.id.levelSort_check);
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> adapt.bluePrint.setLevel(isChecked));
-        checkBox = binding.getRoot().findViewById(R.id.activeSort_check);
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> adapt.bluePrint.setActive(isChecked));
-        checkBox = binding.getRoot().findViewById(R.id.reverseSort_check);
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> adapt.bluePrint.setReverse(isChecked));
+                        }
+                    });
+                    CheckBox checkBox = binding.getRoot().findViewById(R.id.levelSort_check);
+                    checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> adapt.bluePrint.setLevel(isChecked));
+                    checkBox = binding.getRoot().findViewById(R.id.activeSort_check);
+                    checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> adapt.bluePrint.setActive(isChecked));
+                    checkBox = binding.getRoot().findViewById(R.id.reverseSort_check);
+                    checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> adapt.bluePrint.setReverse(isChecked));
+                });
     }
 }

@@ -14,6 +14,8 @@ import com.xianyu.yixian_client.Frame.PersonalInformation.PersonalProfileViewMod
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.PersonalProfilePersonalFragmentBinding;
 
+import java.util.Locale;
+
 /**
  * @ProjectName: YiXian_Client
  * @Package: com.xianyu.yixian_client.Frame.Login
@@ -40,31 +42,17 @@ public class Personal_Fragment extends Fragment {
     }
 
     private void init(View view) {
-        TextView textView = view.findViewById(R.id.kills_text);
-        textView.setText(Core.liveUser.getValue().getKills());
+        Core.liveUser.observe(getViewLifecycleOwner(), user -> {
+            TextView kills_text = view.findViewById(R.id.kills_text_num);
+            kills_text.setText(String.format(Locale.getDefault(),"%d",user.getKills()));
 
-        TextView textView1 = view.findViewById(R.id.battle_text);
-        textView.setText(Core.liveUser.getValue().getBattle_Count());
+            TextView battle_text = view.findViewById(R.id.battle_count_text);
+            battle_text.setText(String.format(Locale.getDefault(),"$d",user.getBattle_Count()));
 
-        TextView textView2 = view.findViewById(R.id.textView8);
-        textView.setText(Core.liveUser.getValue().getDeaths());
+            TextView deaths_text = view.findViewById(R.id.deaths_num_text);
+            deaths_text.setText(String.format(Locale.getDefault(),"$d",user.getDeaths()));
 
-        TextView textView3 = view.findViewById(R.id.title_text);
-        textView.setText(Core.liveUser.getValue().getTitle());
-
-        TextView textView4 = view.findViewById(R.id.lv_text);
-        textView.setText(Core.liveUser.getValue().getLv());
-
-        TextView textView5 = view.findViewById(R.id.history_exp);
-        textView.setText(Core.liveUser.getValue().getExp());
-
-        TextView textView6 = view.findViewById(R.id.time_text);
-        textView.setText((int) Core.liveUser.getValue().getRegistration_date());
-
-
-
-
-
+        });
     }
 
     @Override

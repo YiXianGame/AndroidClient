@@ -10,16 +10,15 @@
         <TableRow>
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/kills_text"
                 android:layout_width="170dp"
                 android:layout_height="50dp"
                 android:fontFamily="@font/ziti"
                 android:text="@string/history_kills"
                 android:textColor="#492D55"
                 android:textSize="20sp" />
-
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/battle_count_text"
                 android:layout_width="170dp"
                 android:layout_height="50dp"
                 android:fontFamily="@font/ziti"
@@ -28,7 +27,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/deaths_text"
                 android:layout_width="170dp"
                 android:layout_height="50dp"
                 android:fontFamily="@font/ziti"
@@ -41,7 +40,7 @@
         <TableRow>
 
             <TextView
-                android:id="@+id/kills_text"
+                android:id="@+id/kills_text_num"
                 android:layout_width="170dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
@@ -51,17 +50,17 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/battle_count_num_text"
                 android:layout_width="170dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/ziti"
-                android:text="胜率"
+                android:text="数值"
                 android:textColor="#7C2C2C"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/deaths_num_text"
                 android:layout_width="170dp"
                 android:layout_height="46dp"
                 android:layout_gravity="center_horizontal"

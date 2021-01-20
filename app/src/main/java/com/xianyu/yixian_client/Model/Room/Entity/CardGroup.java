@@ -1,6 +1,7 @@
 package com.xianyu.yixian_client.Model.Room.Entity;
 
-import androidx.room.Ignore;
+import android.util.Pair;
+
 import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
@@ -25,19 +26,13 @@ public class CardGroup {
     String name;
     @Expose
     @TypeConverters(ArrayList.class)
-    ArrayList<Long> cards_id = new ArrayList<>();
-    @Ignore
-    ArrayList<SkillCard> cards  = new ArrayList<>();
+    ArrayList<Pair<Long,String>> cards = new ArrayList<>();
 
-    public ArrayList<Long> getCards_id() {
-        return cards_id;
+    public ArrayList<Pair<Long, String>> getCards() {
+        return cards;
     }
 
-    public void setCards_id(ArrayList<Long> cards_id) {
-        this.cards_id = cards_id;
-    }
-
-    public void setCards(ArrayList<SkillCard> cards) {
+    public void setCards(ArrayList<Pair<Long, String>> cards) {
         this.cards = cards;
     }
 

@@ -1,4 +1,4 @@
-package com.xianyu.yixian_client.Frame.BattleRepository.Adapt;
+package com.xianyu.yixian_client.Frame.Repository.Adapt;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,14 +24,13 @@ public class BuffAdapt extends RecyclerView.Adapter<BuffAdapt.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //用来创建ViewHolder实例，再将加载好的布局传入构造函数，最后返回ViewHolder实例
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.battle_repository_buff_item,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.repository_buff_item,parent,false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         Buff.Category category = buffs.get(position).getCategory();
         if(category == Buff.Category.Freeze){
             //用于对RecyclerView的子项进行赋值，会在每个子项滚动到屏幕内的时候执行
@@ -41,8 +40,7 @@ public class BuffAdapt extends RecyclerView.Adapter<BuffAdapt.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        if(buffs != null)return buffs.size();
-        else return 0;
+        return buffs.size();
     }
 
 

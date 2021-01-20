@@ -1,8 +1,10 @@
 package com.xianyu.yixian_client;
 
 import android.app.Application;
+import android.util.Pair;
 
 import com.xianyu.yixian_client.Model.Repository.Repository;
+import com.xianyu.yixian_client.Model.Room.Entity.Attribute;
 import com.xianyu.yixian_client.Model.Room.Entity.Buff;
 import com.xianyu.yixian_client.Model.Room.Entity.CardGroup;
 import com.xianyu.yixian_client.Model.Room.Entity.Friend;
@@ -72,11 +74,11 @@ public class XYApplication extends Application {
         for(int i=0;i<30;i++){
             skillCard = new SkillCard();
             skillCard.setName(getRandomChineseString(random.nextInt(3)));
-            if(random.nextInt(10) > 5) skillCard.setAttack(true);
-            if(random.nextInt(10) > 5) skillCard.setEternal(true);
-            if(random.nextInt(10) > 5) skillCard.setCure(true);
-            if(random.nextInt(10) > 5) skillCard.setPhysics(true);
-            if(random.nextInt(10) > 5) skillCard.setMagic(true);
+            if(random.nextInt(10) > 5) skillCard.getAttributes().put(Attribute.Category.Attack,new Attribute(Attribute.Category.Attack));
+            if(random.nextInt(10) > 5) skillCard.getAttributes().put(Attribute.Category.Cure,new Attribute(Attribute.Category.Cure));
+            if(random.nextInt(10) > 5) skillCard.getAttributes().put(Attribute.Category.Magic,new Attribute(Attribute.Category.Magic));
+            if(random.nextInt(10) > 5) skillCard.getAttributes().put(Attribute.Category.Physics,new Attribute(Attribute.Category.Physics));
+            if(random.nextInt(10) > 5) skillCard.getAttributes().put(Attribute.Category.Eternal,new Attribute(Attribute.Category.Eternal));
             skillCard.setAuthor_id(owner.getId());
             skillCard.setId(i);
             skillCard.setMp(random.nextInt(20));
@@ -85,12 +87,11 @@ public class XYApplication extends Application {
             skillCard.setEnemy_hp(random.nextInt(20));
             skillCard.setEnemy_mp(random.nextInt(20));
             skillCard.setProbability(random.nextInt(100));
-            skillCard.setDescription(getRandomChineseString(100));
+            skillCard.setDescription("卡牌描述");
             for(int j=0;j<random.nextInt(5);j++){
                 buff = new Buff();
-                buff.setName(getRandomChineseString(2));
                 buff.setCategory(Buff.Category.Freeze);
-                skillCard.getBuffs().add(buff);
+                skillCard.getBuffs().put(Buff.Category.Freeze,buff);
             }
             repository.insertSkillCard(skillCard);
         }
@@ -98,12 +99,12 @@ public class XYApplication extends Application {
             cardGroup = new CardGroup();
             cardGroup.setName(getRandomChineseString(2));
             for(int j=0;j<random.nextInt(10)+10;j++){
-                cardGroup.getCards_id().add((long)random.nextInt(30));
+                cardGroup.getCards().add(new Pair<>((long)random.nextInt(30),getRandomChineseString(3)));
             }
             owner.getCardGroups().add(cardGroup);
         }
         repository.insertUser(owner);
-
+        Thread.sleep(100);
         for(int i=1;i<5;i++){
             user = new User();
             user.setId(i);

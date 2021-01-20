@@ -23,7 +23,7 @@ import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Model.Repository.Repository;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.R;
-import com.xianyu.yixian_client.databinding.BattleRepositoryActivityBinding;
+import com.xianyu.yixian_client.databinding.BattleRepositoryFragmentBinding;
 
 import java.util.ArrayList;
 
@@ -35,21 +35,21 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class BattleRepository_Fragment extends Fragment {
     @Inject
     Repository repository;
-    BattleRepositoryActivityBinding binding;
+    BattleRepositoryFragmentBinding binding;
     BattleRepository_ViewModel viewModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        binding = BattleRepositoryActivityBinding.inflate(getLayoutInflater());
+        binding = BattleRepositoryFragmentBinding.inflate(getLayoutInflater());
         viewModel = new ViewModelProvider(this).get(BattleRepository_ViewModel.class);
         viewModel.initialization(repository);
         ExpandableListView expandableListView = binding.getRoot().findViewById(R.id.group_layout);
         expandableListView.setAdapter(new GroupAdapter(new ArrayList<>()));
-        RecyclerView recyclerView = binding.getRoot().findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = binding.getRoot().findViewById(R.id.skillcards_recycle);
         recyclerView.setAdapter(new SkillCardAdapt(new ArrayList<>()));
         viewModel.refreshAllSkillCards();
-        viewModel.refreshCardGroups();
+        viewModel.refreshUser();
         //初始化
         init();
         return binding.getRoot();
@@ -59,10 +59,10 @@ public class BattleRepository_Fragment extends Fragment {
     private void init() {
         viewModel.cardGroups_live.observe(requireActivity(), lists -> {
             ExpandableListView expandableListView = binding.getRoot().findViewById(R.id.group_layout);
-            expandableListView.setAdapter(new GroupAdapter(viewModel.cardGroups_live.getValue()));
+            expandableListView.setAdapter(new GroupAdapter(lists));
         });
         viewModel.skillcards_live.observe(requireActivity(), skillCards -> {
-            RecyclerView recyclerView = binding.getRoot().findViewById(R.id.recycler_view);
+            RecyclerView recyclerView = binding.getRoot().findViewById(R.id.skillcards_recycle);
             SkillCardAdapt cardAdapt = (SkillCardAdapt) recyclerView.getAdapter();
             cardAdapt.refresh(skillCards);
             TextInputEditText editText = binding.getRoot().findViewById(R.id.searchName_textInput);
@@ -84,15 +84,15 @@ public class BattleRepository_Fragment extends Fragment {
                 }
             });
             Chip physics_chip = binding.getRoot().findViewById(R.id.physics_chip);
-            physics_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {cardAdapt.bluePrint.setPhysics(isChecked);cardAdapt.filter();});
+            physics_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {cardAdapt.bluePrint.setPhysics(isChecked);});
             Chip magic_chip = binding.getRoot().findViewById(R.id.magic_chip);
-            magic_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {cardAdapt.bluePrint.setMagic(isChecked);cardAdapt.filter();});
+            magic_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {cardAdapt.bluePrint.setMagic(isChecked);});
             Chip cure_chip = binding.getRoot().findViewById(R.id.cure_chip);
-            cure_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {cardAdapt.bluePrint.setCure(isChecked);cardAdapt.filter();});
+            cure_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {cardAdapt.bluePrint.setCure(isChecked);});
             Chip attack_chip = binding.getRoot().findViewById(R.id.attack_chip);
-            attack_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {cardAdapt.bluePrint.setAttack(isChecked);cardAdapt.filter();});
+            attack_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {cardAdapt.bluePrint.setAttack(isChecked);});
             Chip eternal_chip = binding.getRoot().findViewById(R.id.eternal_chip);
-            eternal_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {cardAdapt.bluePrint.setEternal(isChecked);cardAdapt.filter();});
+            eternal_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {cardAdapt.bluePrint.setEternal(isChecked);});
         });
     }
 }

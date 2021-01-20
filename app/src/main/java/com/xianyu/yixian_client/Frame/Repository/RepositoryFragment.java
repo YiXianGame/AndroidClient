@@ -1,6 +1,5 @@
 package com.xianyu.yixian_client.Frame.Repository;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,9 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.xianyu.yixian_client.Frame.Repository.Adapt.CardAdapt;
 import com.xianyu.yixian_client.Model.Repository.Repository;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.RepositoryFragmentBinding;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -35,8 +37,10 @@ public class RepositoryFragment extends Fragment {
     }
 
     private void init() {
-        CardAdapt cardAdapt = new CardAdapt(viewModel.getCards());
+        CardAdapt cardAdapt = new CardAdapt(new ArrayList<>());
         RecyclerView recyclerView = binding.getRoot().findViewById(R.id.card_frame);
         recyclerView.setAdapter(cardAdapt);
+        viewModel.skillcards_live.observe(getViewLifecycleOwner(), cardAdapt::setOrigin_data);
+        viewModel.refreshSkillCards();
     }
 }

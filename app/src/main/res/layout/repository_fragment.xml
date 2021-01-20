@@ -30,6 +30,7 @@
         app:layout_constraintRight_toLeftOf="@id/Select_card"
         app:layout_constraintTop_toTopOf="parent"
         app:spanCount="3"
+        tools:itemCount="10"
         tools:listitem="@layout/repository_card_item">
 
     </androidx.recyclerview.widget.RecyclerView>

@@ -22,6 +22,7 @@ import io.reactivex.Single;
  * @Version: 1.0
  */
 public class LocalRepository implements ILocalRepository{
+    
     private DataBase_Room db;
 
     public LocalRepository(DataBase_Room db){
@@ -73,7 +74,7 @@ public class LocalRepository implements ILocalRepository{
         db.friendDao().update(friends);
     }
     @Override
-    public Single<List<Friend>> queryFriend(long user_id) {
+    public Single<List<Friend>> queryFriends(long user_id) {
         return db.friendDao().query(user_id);
     }
 
@@ -105,6 +106,11 @@ public class LocalRepository implements ILocalRepository{
     @Override
     public Single<List<SkillCard>> queryAllSkillCards() {
         return db.skillCardDao().queryAllSkillCards();
+    }
+
+    @Override
+    public Single<List<User>> queryAllFriendUsers(long user_id) {
+        return db.friendDao().queryWithUsers(user_id);
     }
 
 }

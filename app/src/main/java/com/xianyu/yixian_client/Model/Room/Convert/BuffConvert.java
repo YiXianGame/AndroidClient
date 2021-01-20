@@ -7,14 +7,15 @@ import com.google.gson.reflect.TypeToken;
 import com.xianyu.yixian_client.Model.Room.Entity.Buff;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BuffConvert {
     @TypeConverter
-    public String arrayListToString(ArrayList<Buff> buffs){
+    public String arrayListToString(HashMap<Buff.Category,Buff> buffs){
         return new Gson().toJson(buffs);
     }
     @TypeConverter
-    public ArrayList<Buff> stringToArrayList(String buffs){
-        return new Gson().fromJson(buffs, new TypeToken<ArrayList<Buff>>(){}.getType());
+    public HashMap<Buff.Category,Buff> stringToArrayList(String buffs){
+        return new Gson().fromJson(buffs, new TypeToken<HashMap<Buff.Category,Buff>>(){}.getType());
     }
 }

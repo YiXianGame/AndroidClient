@@ -7,9 +7,11 @@ public class History {
     int kills = 0;
     @Expose
     boolean result = false;
+    @Expose
     int time = 0;
-    int battle = 0;
-
+    @Expose
+    int death = 0;
+    
     public int getKills() {
         return kills;
     }
@@ -20,7 +22,7 @@ public class History {
 
     public int getTime(){ return time;}
 
-    public  int getBattle(){ return battle;}
+    public  int getDeath(){ return death;}
 
 
     public boolean isResult() {

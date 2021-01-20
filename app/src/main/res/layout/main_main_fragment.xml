@@ -18,7 +18,27 @@
         android:contentDescription="@string/user_log"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/friends_recycle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/menu_tab"
+        app:layout_constraintTop_toBottomOf="@id/head_image"
+        tools:listitem="@layout/main_friend_item"
+        />
+    <Button
+        android:id="@+id/friends_button"
+        android:layout_width="20dp"
+        android:layout_height="30dp"
+        app:layout_constraintLeft_toRightOf="@id/friends_recycle"
+        app:layout_constraintTop_toTopOf="@id/friends_recycle"
+        app:layout_constraintBottom_toBottomOf="@id/friends_recycle"
+        android:background="@drawable/triangle"
+        >
+    </Button>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -172,24 +192,24 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="皮肤" />
+            android:text="@string/skin" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="魂海" />
+            android:text="@string/repository" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="战备" />
+            android:text="@string/battle_repository" />
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="任务" />
+            android:text="@string/task" />
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="百科" />
+            android:text="@string/wiki" />
     </com.google.android.material.tabs.TabLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -79,8 +79,8 @@ public class Repository{
         RxNoneOne(arg -> local.updateFriend(friends), friends);
     }
 
-    public Single<List<Friend>> queryFriend(long user_id) {
-        return local.queryFriend(user_id);
+    public Single<List<Friend>> queryFriends(long user_id) {
+        return local.queryFriends(user_id);
     }
 
     public void insertSkillCard(SkillCard... skillCards) {
@@ -108,6 +108,9 @@ public class Repository{
         return local.queryAllSkillCards();
     }
 
+    public Single<List<User>> queryAllFriendUsers(long user_id) {
+        return local.queryAllFriendUsers(user_id);
+    }
     //RxJava2的异步方法封装
     @SuppressLint("CheckResult")
     public <T> void RxNoneOne(Consumer<T> functions,T arg){

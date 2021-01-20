@@ -33,7 +33,7 @@ interface ILocalRepository {
     public void insertFriend(Friend... friends);
     public void deleteFriend(Friend... friends);
     public void updateFriend(Friend... friends);
-    public Single<List<Friend>> queryFriend(long user_id);
+    public Single<List<Friend>> queryFriends(long user_id);
 
     public void insertSkillCard(SkillCard... skillCards);
     public void deleteSkillCard(SkillCard... skillCards);
@@ -41,4 +41,5 @@ interface ILocalRepository {
     public Single<List<SkillCard>> querySkillCardByAuthor(long user_id);
     public Single<SkillCard> querySkillCardById(long id);
     public Single<List<SkillCard>> queryAllSkillCards();
+    public Single<List<User>> queryAllFriendUsers(long user_id);
 }

@@ -7,18 +7,18 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/skillcards_recycle"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintVertical_weight="6"
-        app:layout_constraintHorizontal_weight="5"
+        android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_weight="5"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/filter_layout"
         app:layout_constraintRight_toLeftOf="@id/group_layout"
-        android:orientation="vertical"
-        app:spanCount="3"
+        app:layout_constraintTop_toBottomOf="@id/filter_layout"
+        app:layout_constraintVertical_weight="6"
+        app:spanCount="5"
         tools:itemCount="10"
         tools:listitem="@layout/battle_repository_card_item">
 
@@ -32,15 +32,15 @@
         app:layout_constraintHorizontal_weight="5"
         app:layout_constraintVertical_weight="1"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/recycler_view"
+        app:layout_constraintBottom_toTopOf="@id/skillcards_recycle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/group_layout"
         app:layout_constraintTop_toTopOf="parent">
         <Button
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="返"
             />
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
@@ -67,32 +67,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
-                android:text="@string/skillCard_physics"/>
+                android:text="@string/attribute_attack"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/magic_chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
-                android:text="@string/skillCard_magic"/>
+                android:text="@string/attribute_cure"/>
             <com.google.android.material.chip.Chip
                 android:id="@+id/attack_chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
-                android:text="@string/skillCard_attack"/>
+                android:text="@string/attribute_physics"/>
             <com.google.android.material.chip.Chip
                 android:id="@+id/cure_chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
-                android:text="@string/skillCard_cure"/>
+                android:text="@string/attribute_magic"/>
             <com.google.android.material.chip.Chip
                 android:id="@+id/eternal_chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
-                android:text="@string/skillCard_eternal"/>
+                android:text="@string/attribute_eternal"/>
         </com.google.android.material.chip.ChipGroup>
     </LinearLayout>
 
@@ -102,11 +102,13 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/recycler_view"
+        app:layout_constraintLeft_toRightOf="@id/skillcards_recycle"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintVertical_weight="1"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/battle_repository_group_item"
+        >
     </ExpandableListView>
 
 

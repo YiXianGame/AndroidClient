@@ -5,9 +5,11 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
+import com.xianyu.yixian_client.Model.Room.Convert.AttributeConvert;
 import com.xianyu.yixian_client.Model.Room.Convert.BuffConvert;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @ProjectName: YiXian_Client
@@ -45,33 +47,38 @@ public class SkillCard {
     @Expose
     long author_id;//作者ID-
     @Expose
-    boolean magic;//是否魔法类
-    @Expose
-    boolean physics;//是否物理类
-    @Expose
-    boolean cure;//是否治疗类
-    @Expose
-    boolean attack;//是否攻击类
-    @Expose
-    boolean eternal;//是否永恒类
-    @Expose
     long update;//卡牌最新版本-
     @Expose
     int max_enemy;//最大锁定敌人数 魂命
     @Expose
     int max_auxiliary;//最大锁定友军数 灵命
+    @Expose
     @TypeConverters(BuffConvert.class)
-    ArrayList<Buff> buffs = new ArrayList<>();
-    public SkillCard(){
+    HashMap<Buff.Category,Buff> buffs = new HashMap<>();
+    @Expose
+    @TypeConverters(AttributeConvert.class)
+    HashMap<Attribute.Category,Attribute> attributes = new HashMap<>();
 
-    }
-    public ArrayList<Buff> getBuffs() {
+    public HashMap<Buff.Category, Buff> getBuffs() {
         return buffs;
     }
 
-    public void setBuffs(ArrayList<Buff> buffs) {
+    public void setBuffs(HashMap<Buff.Category, Buff> buffs) {
         this.buffs = buffs;
     }
+
+    public HashMap<Attribute.Category, Attribute> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(HashMap<Attribute.Category, Attribute> attributes) {
+        this.attributes = attributes;
+    }
+
+    public SkillCard(){
+
+    }
+
 
     public long getId() {
         return id;
@@ -149,46 +156,6 @@ public class SkillCard {
 
     public void setAuthor_id(long author_id) {
         this.author_id = author_id;
-    }
-
-    public boolean isMagic() {
-        return magic;
-    }
-
-    public void setMagic(boolean magic) {
-        this.magic = magic;
-    }
-
-    public boolean isPhysics() {
-        return physics;
-    }
-
-    public void setPhysics(boolean physics) {
-        this.physics = physics;
-    }
-
-    public boolean isCure() {
-        return cure;
-    }
-
-    public void setCure(boolean cure) {
-        this.cure = cure;
-    }
-
-    public boolean isAttack() {
-        return attack;
-    }
-
-    public void setAttack(boolean attack) {
-        this.attack = attack;
-    }
-
-    public boolean isEternal() {
-        return eternal;
-    }
-
-    public void setEternal(boolean eternal) {
-        this.eternal = eternal;
     }
 
     public long getUpdate() {

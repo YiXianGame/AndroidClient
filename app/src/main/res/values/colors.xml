@@ -25,4 +25,7 @@
     <color name="magic">#0288d1</color>
     <color name="physics">#FF3700B3</color>
     <color name="eternal">#FFFF00</color>
+    <color name="auxiliary">#66BB6A</color>
+    <color name="enemy">#EF5350</color>
+    <color name="card">#9926C6DA</color>
 </resources>
