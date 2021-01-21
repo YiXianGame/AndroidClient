@@ -106,4 +106,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.uber.autodispose/autodispose-android-archcomponents
     implementation 'com.uber.autodispose:autodispose-android-archcomponents:1.4.0'
+
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
 }

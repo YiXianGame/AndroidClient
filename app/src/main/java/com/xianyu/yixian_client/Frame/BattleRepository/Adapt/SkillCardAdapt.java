@@ -43,13 +43,6 @@ public class SkillCardAdapt extends RecyclerView.Adapter<SkillCardAdapt.ViewHold
         SkillCard skillCard = skillCards.get(position);
         holder.name_text.setText(skillCard.getName());
         holder.mp_text.setText(String.format(Locale.CHINESE,"%d",skillCard.getMp()));
-        holder.enemyHp_text.setText(String.format(Locale.CHINESE,"%d",skillCard.getEnemy_hp()));
-        holder.enemyMp_text.setText(String.format(Locale.CHINESE,"%d",skillCard.getEnemy_mp()));
-        holder.auxiliaryHp_text.setText(String.format(Locale.CHINESE,"%d",skillCard.getAuxiliary_hp()));
-        holder.auxiliaryMp_text.setText(String.format(Locale.CHINESE,"%d",skillCard.getAuxiliary_mp()));
-        holder.probability_text.setText(String.format(Locale.CHINESE,"%d",skillCard.getProbability()));
-        holder.max_enemy_num_text.setText(String.format(Locale.CHINESE,"%d",skillCard.getMax_enemy()));
-        holder.max_auxiliary_num_text.setText(String.format(Locale.CHINESE,"%d",skillCard.getMax_auxiliary()));
         holder.buffs_recycle.setAdapter(new BuffAdapt(new ArrayList<>(skillCard.getBuffs().values())));
         holder.attributes_recycle.setAdapter(new AttributeAdapt(new ArrayList<>(skillCard.getAttributes().values())));
     }
@@ -145,26 +138,12 @@ public class SkillCardAdapt extends RecyclerView.Adapter<SkillCardAdapt.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder{
         MaterialTextView name_text;
         MaterialTextView mp_text;
-        MaterialTextView enemyHp_text;
-        MaterialTextView enemyMp_text;
-        MaterialTextView auxiliaryHp_text;
-        MaterialTextView auxiliaryMp_text;
-        MaterialTextView probability_text;
-        MaterialTextView max_enemy_num_text;
-        MaterialTextView max_auxiliary_num_text;
         RecyclerView buffs_recycle;
         RecyclerView attributes_recycle;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name_text = itemView.findViewById(R.id.name_text);
             mp_text = itemView.findViewById(R.id.mp_num_text);
-            enemyHp_text = itemView.findViewById(R.id.enemyHp_num_text);
-            enemyMp_text = itemView.findViewById(R.id.enemyMp_num_text);
-            auxiliaryMp_text = itemView.findViewById(R.id.auxiliaryHp_num_text);
-            auxiliaryHp_text = itemView.findViewById(R.id.auxiliaryMp_num_text);
-            probability_text = itemView.findViewById(R.id.probability_num_text);
-            max_enemy_num_text = itemView.findViewById(R.id.max_enemy_num_text);
-            max_auxiliary_num_text = itemView.findViewById(R.id.max_auxiliary_num_text);
             buffs_recycle = itemView.findViewById(R.id.buffs_recycle);
             attributes_recycle = itemView.findViewById(R.id.attributes_recycle);
         }

@@ -9,5 +9,7 @@
         android:id="@+id/name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.YiXian.Body2" />
+        android:fontFamily="@font/ziti"
+        android:textColor="@color/white"
+        android:textAppearance="@style/TextAppearance.YiXian.Body3" />
 </LinearLayout>

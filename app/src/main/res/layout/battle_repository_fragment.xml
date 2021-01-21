@@ -18,7 +18,7 @@
         app:layout_constraintRight_toLeftOf="@id/group_layout"
         app:layout_constraintTop_toBottomOf="@id/filter_layout"
         app:layout_constraintVertical_weight="6"
-        app:spanCount="5"
+        app:spanCount="4"
         tools:itemCount="10"
         tools:listitem="@layout/battle_repository_card_item">
 

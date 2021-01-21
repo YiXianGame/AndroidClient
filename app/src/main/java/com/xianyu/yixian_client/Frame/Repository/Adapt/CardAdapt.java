@@ -8,58 +8,28 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.module.LoadMoreModule;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.material.textview.MaterialTextView;
 import com.xianyu.yixian_client.Model.Room.Entity.Attribute;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class CardAdapt extends RecyclerView.Adapter<CardAdapt.ViewHolder> {
-    private List<SkillCard> origin_data;
-    private ArrayList<SkillCard> skillCards;
-    public  CardAdapt(List<SkillCard> origin_data){
-        this.origin_data = origin_data;
-        skillCards = new ArrayList<>(origin_data);
-    }
+public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> implements LoadMoreModule {
     public BluePrint bluePrint = new BluePrint();
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //用来创建ViewHolder实例，再将加载好的布局传入构造函数，最后返回ViewHolder实例
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.repository_card_item,parent,false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+    public  CardAdapt(List<SkillCard> origin_data){
+        super(R.layout.repository_card_item,origin_data);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        SkillCard skillCard = skillCards.get(position);
-        holder.buffs_recycle.setAdapter(new BuffAdapt(new ArrayList<>(skillCard.getBuffs().values())));
-        holder.attributes_recycle.setAdapter(new AttributeAdapt(new ArrayList<Attribute>(skillCard.getAttributes().values())));
-        holder.name_text.setText(skillCard.getName());
-        holder.description.setText(skillCard.getDescription());
-        holder.mp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getMp()));
-        holder.enemyHp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getEnemy_hp()));
-        holder.enemyMp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getEnemy_mp()));
-        holder.auxiliaryHp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getAuxiliary_hp()));
-        holder.auxiliaryMp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getAuxiliary_mp()));
-        holder.probability_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getProbability()));
-        holder.max_enemy_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getMax_enemy()));
-        holder.max_auxiliary.setText(String.format(Locale.getDefault(),"%d",skillCard.getMax_auxiliary()));
-    }
-
-    @Override
-    public int getItemCount() {
-            return skillCards.size();
-    }
-    public void setOrigin_data(List<SkillCard> origin_data){
-        this.origin_data = origin_data;
-        filter();
-    }
     public void filter() {
+        List<SkillCard> origin_data = null;
         ArrayList<SkillCard> newValues = new ArrayList<>(origin_data);
         for (SkillCard value : origin_data) {
             if (!bluePrint.getName().equals("") && !value.getName().contains(bluePrint.getName())) {
@@ -76,9 +46,26 @@ public class CardAdapt extends RecyclerView.Adapter<CardAdapt.ViewHolder> {
                 newValues.remove(value);
             }
         }
-        skillCards = newValues;
+        //skillCards = newValues;
         notifyDataSetChanged();
     }
+
+    @Override
+    protected void convert(@NotNull ViewHolder viewHolder, SkillCard skillCard) {
+        viewHolder.buffs_recycle.setAdapter(new BuffAdapt(new ArrayList<>(skillCard.getBuffs().values())));
+        viewHolder.attributes_recycle.setAdapter(new AttributeAdapt(new ArrayList<Attribute>(skillCard.getAttributes().values())));
+        viewHolder.name_text.setText(skillCard.getName());
+        viewHolder.description.setText(skillCard.getDescription());
+        viewHolder.mp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getMp()));
+        viewHolder.enemyHp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getEnemy_hp()));
+        viewHolder.enemyMp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getEnemy_mp()));
+        viewHolder.auxiliaryHp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getAuxiliary_hp()));
+        viewHolder.auxiliaryMp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getAuxiliary_mp()));
+        viewHolder.probability_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getProbability()));
+        viewHolder.max_enemy_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getMax_enemy()));
+        viewHolder.max_auxiliary.setText(String.format(Locale.getDefault(),"%d",skillCard.getMax_auxiliary()));
+    }
+
     public class BluePrint{
         public String name = "";
         public boolean cure = false;
@@ -141,7 +128,7 @@ public class CardAdapt extends RecyclerView.Adapter<CardAdapt.ViewHolder> {
             filter();
         }
     }
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends BaseViewHolder {
         MaterialTextView name_text;
         MaterialTextView description;
         MaterialTextView enemyHp_text;

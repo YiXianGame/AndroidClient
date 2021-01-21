@@ -10,8 +10,8 @@
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:alpha="0.3"
-        android:background="@drawable/repositorycard_bg"
+        android:alpha="0.8"
+        android:background="@drawable/shape_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -21,6 +21,8 @@
         android:id="@+id/name_text"
         android:layout_width="0dp"
         android:layout_height="30dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/ziti"
         android:text="@string/skillCard_name"
         android:textAppearance="@style/TextAppearance.YiXian.Headline5"
         app:layout_constraintBottom_toTopOf="@id/attributes_recycle"
@@ -47,7 +49,6 @@
         android:id="@+id/buffs_recycle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="horizontal"
         app:layout_constraintVertical_weight="1"
@@ -63,8 +64,10 @@
         android:id="@+id/description"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/ziti"
         android:text="@string/skillCard_description"
-        android:textAppearance="@style/TextAppearance.YiXian.Body2"
+        android:textAppearance="@style/TextAppearance.YiXian.Body3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/mp_layout"
         app:layout_constraintVertical_weight="4"
@@ -79,23 +82,23 @@
         app:layout_constraintLeft_toRightOf="@id/name_text"
         app:layout_constraintBottom_toTopOf="@id/probability_layout"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintVertical_weight="1"
         app:layout_constraintTop_toTopOf="parent">
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/mp_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="7sp"
+            android:fontFamily="@font/ziti"
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
             android:layout_marginRight="3dp"
-            android:textColor="@color/black"
+            android:textColor="@color/light_blue_400"
             android:text="@string/skillCard_mp"/>
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/mp_num_text"
-            android:layout_width="wrap_content"
+            android:layout_width="25dp"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
-            android:textSize="7sp"
-            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
+            android:textColor="@color/white"
             android:text="0"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -106,31 +109,29 @@
         app:layout_constraintLeft_toRightOf="@id/name_text"
         app:layout_constraintBottom_toTopOf="@id/enemyHp_layout"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintVertical_weight="1"
         app:layout_constraintTop_toBottomOf="@id/mp_layout">
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/probability_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="3dp"
-            android:textSize="7sp"
-            android:textColor="@color/black"
+            android:fontFamily="@font/ziti"
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
+            android:textColor="@color/light_blue_400"
             android:text="@string/skillCard_probability"/>
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/probability_num_text"
-            android:layout_width="wrap_content"
+            android:layout_width="25dp"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
-            android:textSize="7sp"
-            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
+            android:textColor="@color/white"
             android:text="0"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/enemyHp_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintVertical_weight="1"
         app:layout_constraintLeft_toRightOf="@id/name_text"
         app:layout_constraintBottom_toTopOf="@id/enemyMp_layout"
         app:layout_constraintRight_toRightOf="parent"
@@ -140,7 +141,8 @@
             android:id="@+id/enemyHp_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="7sp"
+            android:fontFamily="@font/ziti"
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
             android:textColor="@color/enemy"
             android:layout_marginRight="3dp"
             android:text="@string/skillCard_enemy_hp">
@@ -148,10 +150,11 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/enemyHp_num_text"
-            android:layout_width="wrap_content"
+            android:layout_width="25dp"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
-            android:textSize="7sp"
-            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
+            android:textColor="@color/white"
             android:text="0">
         </com.google.android.material.textview.MaterialTextView>
 
@@ -161,8 +164,6 @@
         android:id="@+id/enemyMp_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintVertical_weight="1"
         app:layout_constraintLeft_toRightOf="@id/name_text"
         app:layout_constraintBottom_toTopOf="@id/auxiliaryHp_layout"
         app:layout_constraintRight_toRightOf="parent"
@@ -173,17 +174,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="3dp"
-            android:textSize="7sp"
+            android:fontFamily="@font/ziti"
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
             android:textColor="@color/enemy"
             android:text="@string/skillCard_enemy_mp">
         </com.google.android.material.textview.MaterialTextView>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/enemyMp_num_text"
-            android:layout_width="wrap_content"
+            android:layout_width="25dp"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
-            android:textSize="7sp"
-            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
+            android:textColor="@color/white"
             android:text="0">
         </com.google.android.material.textview.MaterialTextView>
 
@@ -193,8 +196,6 @@
         android:id="@+id/auxiliaryHp_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintVertical_weight="1"
         app:layout_constraintLeft_toRightOf="@id/name_text"
         app:layout_constraintBottom_toTopOf="@id/auxiliaryMp_layout"
         app:layout_constraintRight_toRightOf="parent"
@@ -205,17 +206,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="3dp"
-            android:textSize="7sp"
+            android:fontFamily="@font/ziti"
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
             android:textColor="@color/auxiliary"
             android:text="@string/skillCard_auxiliary_hp">
         </com.google.android.material.textview.MaterialTextView>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/auxiliaryHp_num_text"
-            android:layout_width="wrap_content"
+            android:layout_width="25dp"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
-            android:textSize="7sp"
-            android:textColor="@color/cardview_dark_background"
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
+            android:textColor="@color/white"
             android:text="0">
         </com.google.android.material.textview.MaterialTextView>
 
@@ -228,24 +231,24 @@
         app:layout_constraintLeft_toRightOf="@id/name_text"
         app:layout_constraintBottom_toTopOf="@id/max_enemy_layout"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintVertical_weight="1"
         app:layout_constraintTop_toBottomOf="@id/auxiliaryHp_layout">
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/auxiliaryMp_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="3dp"
-            android:textSize="7sp"
+            android:fontFamily="@font/ziti"
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
             android:textColor="@color/auxiliary"
             android:text="@string/skillCard_auxiliary_mp"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/auxiliaryMp_num_text"
-            android:layout_width="wrap_content"
+            android:layout_width="25dp"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
-            android:textSize="7sp"
-            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
+            android:textColor="@color/white"
             android:text="0"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -257,24 +260,24 @@
         app:layout_constraintLeft_toRightOf="@id/name_text"
         app:layout_constraintBottom_toTopOf="@id/max_auxiliary_layout"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintVertical_weight="1"
         app:layout_constraintTop_toBottomOf="@id/auxiliaryMp_layout">
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/max_enemy_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="7sp"
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
             android:layout_marginRight="3dp"
-            android:textColor="@color/black"
+            android:textColor="@color/teal_200"
+            android:fontFamily="@font/ziti"
             android:text="@string/skillCard_max_enemy"/>
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/max_enemy_num_text"
-            android:layout_width="wrap_content"
+            android:layout_width="25dp"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
-            android:textSize="7sp"
-            android:textColor="@color/black"
-            android:text="0"/>
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
+            android:textColor="@color/white"
+            android:text="@string/num"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -284,23 +287,23 @@
         app:layout_constraintLeft_toRightOf="@id/name_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintVertical_weight="1"
         app:layout_constraintTop_toBottomOf="@id/max_enemy_layout">
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/max_auxiliary_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="7sp"
-            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
+            android:textColor="@color/teal_200"
             android:layout_marginRight="3dp"
+            android:fontFamily="@font/ziti"
             android:text="@string/skillCard_max_auxiliary"/>
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/max_auxiliary_num_text"
-            android:layout_width="wrap_content"
+            android:layout_width="25dp"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
-            android:textSize="7sp"
-            android:textColor="@color/black"
+            android:textAppearance="@style/TextAppearance.YiXian.Body3"
+            android:textColor="@color/white"
             android:text="0"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>

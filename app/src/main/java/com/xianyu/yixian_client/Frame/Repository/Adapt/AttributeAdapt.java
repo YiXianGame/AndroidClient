@@ -35,18 +35,23 @@ public class AttributeAdapt extends RecyclerView.Adapter<AttributeAdapt.ViewHold
         //用于对RecyclerView的子项进行赋值，会在每个子项滚动到屏幕内的时候执行
         if(category == Attribute.Category.Attack){
             holder.name_text.setText(String.format(Locale.getDefault(),"%s",holder.name_text.getContext().getResources().getString(R.string.attribute_attack)));
+            holder.name_text.setTextColor(holder.name_text.getContext().getResources().getColor(R.color.attack,holder.name_text.getContext().getTheme()));
         }
         else if(category == Attribute.Category.Cure){
             holder.name_text.setText(String.format(Locale.getDefault(),"%s",holder.name_text.getContext().getResources().getString(R.string.attribute_cure)));
+            holder.name_text.setTextColor(holder.name_text.getContext().getResources().getColor(R.color.cure,holder.name_text.getContext().getTheme()));
         }
         else if(category == Attribute.Category.Physics){
             holder.name_text.setText(String.format(Locale.getDefault(),"%s",holder.name_text.getContext().getResources().getString(R.string.attribute_physics)));
+            holder.name_text.setTextColor(holder.name_text.getContext().getResources().getColor(R.color.physics,holder.name_text.getContext().getTheme()));
         }
         else if(category == Attribute.Category.Magic){
             holder.name_text.setText(String.format(Locale.getDefault(),"%s",holder.name_text.getContext().getResources().getString(R.string.attribute_magic)));
+            holder.name_text.setTextColor(holder.name_text.getContext().getResources().getColor(R.color.magic,holder.name_text.getContext().getTheme()));
         }
         else if(category == Attribute.Category.Eternal){
             holder.name_text.setText(String.format(Locale.getDefault(),"%s",holder.name_text.getContext().getResources().getString(R.string.attribute_eternal)));
+            holder.name_text.setTextColor(holder.name_text.getContext().getResources().getColor(R.color.eternal,holder.name_text.getContext().getTheme()));
         }
     }
 

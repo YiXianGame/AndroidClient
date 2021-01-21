@@ -35,6 +35,7 @@ public class BuffAdapt extends RecyclerView.Adapter<BuffAdapt.ViewHolder> {
         if(category == Buff.Category.Freeze){
             //用于对RecyclerView的子项进行赋值，会在每个子项滚动到屏幕内的时候执行
             holder.name_text.setText(String.format(Locale.getDefault(),"%s",holder.name_text.getContext().getResources().getString(R.string.buff_freeze)));
+            holder.name_text.setTextColor(holder.name_text.getContext().getResources().getColor(R.color.light_blue_400,holder.name_text.getContext().getTheme()));
         }
     }
 

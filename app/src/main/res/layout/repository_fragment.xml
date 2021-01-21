@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.3"
-        android:background="@drawable/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintCircleAngle="15"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -32,7 +31,6 @@
         app:spanCount="3"
         tools:itemCount="10"
         tools:listitem="@layout/repository_card_item">
-
     </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -23,6 +23,8 @@
     <string name="skillCard_max_enemy">魂命数</string>
     <string name="skillCard_max_auxiliary">灵命数</string>
     <string name="skillCard_mp">仙气值</string>
+    <string name="num">0</string>
+
 
     <string name="attribute_physics">物理</string>
     <string name="attribute_magic">魔法</string>
@@ -32,6 +34,7 @@
 
 
     <string name="buff_freeze">冻结</string>
+
 
     <string name="user_log">用户头像</string>
     <string name="game_notice">公告</string>

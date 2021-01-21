@@ -53,6 +53,27 @@ public class SkillCard {
     @Expose
     int max_auxiliary;//最大锁定友军数 灵命
     @Expose
+    int register_data;//卡牌注册日期
+    @Expose
+    int update_data;//卡牌更新日期
+
+    public int getRegister_data() {
+        return register_data;
+    }
+
+    public void setRegister_data(int register_data) {
+        this.register_data = register_data;
+    }
+
+    public int getUpdate_data() {
+        return update_data;
+    }
+
+    public void setUpdate_data(int update_data) {
+        this.update_data = update_data;
+    }
+
+    @Expose
     @TypeConverters(BuffConvert.class)
     HashMap<Buff.Category,Buff> buffs = new HashMap<>();
     @Expose

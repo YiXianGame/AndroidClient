@@ -71,7 +71,7 @@ public class XYApplication extends Application {
         }
         SkillCard skillCard;
         Buff buff;
-        for(int i=0;i<30;i++){
+        for(int i=0;i<200;i++){
             skillCard = new SkillCard();
             skillCard.setName(getRandomChineseString(random.nextInt(3)));
             if(random.nextInt(10) > 5) skillCard.getAttributes().put(Attribute.Category.Attack,new Attribute(Attribute.Category.Attack));
