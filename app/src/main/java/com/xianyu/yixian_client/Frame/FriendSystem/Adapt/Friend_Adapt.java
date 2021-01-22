@@ -7,61 +7,30 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.module.LoadMoreModule;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.R;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Friend_Adapt extends RecyclerView.Adapter<Friend_Adapt.ViewHolder> {
-    List<User> origin_data;
-    ArrayList<User> filter_data;
+public class Friend_Adapt extends BaseQuickAdapter<User,Friend_Adapt.ViewHolder> implements LoadMoreModule {
     public Filter_BluePrint bluePrint = new Filter_BluePrint();
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //用来创建ViewHolder实例，再将加载好的布局传入构造函数，最后返回ViewHolder实例
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_item,parent,false);
-        ViewHolder holder=new ViewHolder(view);
-        return holder;
+    public Friend_Adapt(){
+        super(R.layout.friend_item);
+        setDiffCallback(new DiffCallBack());
     }
-    public Friend_Adapt(List<User> list){
-        origin_data = list;
-        filter_data = new ArrayList<User>(list);
-    }
-    public void refreshData(ArrayList<User> list){
-        origin_data = list;
-        filter_data = new ArrayList<>(list);
-        notifyDataSetChanged();
-    }
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //用于对RecyclerView的子项进行赋值，会在每个子项滚动到屏幕内的时候执行
-        User friend = filter_data.get(position);
-        holder.nickname_text.setText(friend.getNickName());
-        holder.level_text.setText(Integer.toString(friend.getLv()));
-        holder.deleteFriend_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                origin_data.remove(friend);//这步没有同步到数据库
-                filter_data = new ArrayList<>(origin_data);
-                notifyDataSetChanged();
-            }
-        });
-        holder.active_text.setText(friend.getActive().toString());
-    }
-
-    @Override
-    public int getItemCount() {
-        return filter_data.size();
-    }
-
-    protected void Filter() {
-        ArrayList<User> friends = new ArrayList<>();
-        for(User item : origin_data){
+    public List<User> filter(List<User> friends) {
+        for(User item : friends){
             if(item.getNickName().contains(bluePrint.getNickName()) || bluePrint.getNickName().equals(""))friends.add(item);
         }
         //sort遵循稳定排序规则
@@ -74,11 +43,22 @@ public class Friend_Adapt extends RecyclerView.Adapter<Friend_Adapt.ViewHolder> 
         if(bluePrint.isReverse()){
             Collections.reverse(friends);
         }
-        filter_data = friends;
-        notifyDataSetChanged();
+        return friends;
+    }
+    @Override
+    protected void convert(@NotNull ViewHolder holder, User friend) {
+        holder.nickname_text.setText(friend.getNickName());
+        holder.level_text.setText(Integer.toString(friend.getLv()));
+        holder.deleteFriend_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                remove(friend);//这步没有同步到数据库
+            }
+        });
+        holder.active_text.setText(friend.getActive().toString());
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends BaseViewHolder {
         static int d;
         TextView nickname_text;
         TextView level_text;
@@ -104,7 +84,6 @@ public class Friend_Adapt extends RecyclerView.Adapter<Friend_Adapt.ViewHolder> 
 
         public void setReverse(boolean reverse) {
             this.reverse = reverse;
-            Filter();
         }
 
         public String getNickName() {
@@ -113,7 +92,6 @@ public class Friend_Adapt extends RecyclerView.Adapter<Friend_Adapt.ViewHolder> 
 
         public void setNickName(String nickName) {
             this.nickName = nickName;
-            Filter();
         }
 
         public boolean isActive() {
@@ -122,7 +100,6 @@ public class Friend_Adapt extends RecyclerView.Adapter<Friend_Adapt.ViewHolder> 
 
         public void setActive(boolean active) {
             this.active = active;
-            Filter();
         }
 
         public boolean isLevel() {
@@ -131,7 +108,16 @@ public class Friend_Adapt extends RecyclerView.Adapter<Friend_Adapt.ViewHolder> 
 
         public void setLevel(boolean level) {
             this.level = level;
-            Filter();
+        }
+    }
+    protected class DiffCallBack extends DiffUtil.ItemCallback<User>{
+        @Override
+        public boolean areItemsTheSame(@NonNull User oldItem, @NonNull User newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+        @Override
+        public boolean areContentsTheSame(@NonNull User oldItem, @NonNull User newItem) {
+            return oldItem.getUpdate() == newItem.getUpdate();
         }
     }
 }

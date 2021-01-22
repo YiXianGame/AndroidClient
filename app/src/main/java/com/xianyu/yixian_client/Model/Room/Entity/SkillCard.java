@@ -47,30 +47,28 @@ public class SkillCard {
     @Expose
     long author_id;//作者ID-
     @Expose
-    long update;//卡牌最新版本-
-    @Expose
     int max_enemy;//最大锁定敌人数 魂命
     @Expose
     int max_auxiliary;//最大锁定友军数 灵命
     @Expose
-    int register_data;//卡牌注册日期
+    int registerDate;//卡牌注册日期
     @Expose
-    int update_data;//卡牌更新日期
+    int update;//卡牌更新日期
 
-    public int getRegister_data() {
-        return register_data;
+    public int getRegisterDate() {
+        return registerDate;
     }
 
-    public void setRegister_data(int register_data) {
-        this.register_data = register_data;
+    public void setRegisterDate(int register_data) {
+        this.registerDate = register_data;
     }
 
-    public int getUpdate_data() {
-        return update_data;
+    public int getUpdate() {
+        return update;
     }
 
-    public void setUpdate_data(int update_data) {
-        this.update_data = update_data;
+    public void setUpdate(int update_data) {
+        this.update = update_data;
     }
 
     @Expose
@@ -177,14 +175,6 @@ public class SkillCard {
 
     public void setAuthor_id(long author_id) {
         this.author_id = author_id;
-    }
-
-    public long getUpdate() {
-        return update;
-    }
-
-    public void setUpdate(long update) {
-        this.update = update;
     }
 
     public int getMax_enemy() {

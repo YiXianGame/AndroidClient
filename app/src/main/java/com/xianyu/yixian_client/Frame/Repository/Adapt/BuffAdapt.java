@@ -5,51 +5,53 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.material.textview.MaterialTextView;
 import com.xianyu.yixian_client.Model.Room.Entity.Buff;
+import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.R;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Locale;
 
-public class BuffAdapt extends RecyclerView.Adapter<BuffAdapt.ViewHolder> {
-    private List<Buff> buffs;
-    public BuffAdapt(List<Buff> buffs){
-        this.buffs = buffs;
-    }
+public class BuffAdapt extends BaseQuickAdapter<Buff,BuffAdapt.ViewHolder> {
 
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //用来创建ViewHolder实例，再将加载好的布局传入构造函数，最后返回ViewHolder实例
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.repository_buff_item,parent,false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+    public BuffAdapt() {
+        super(R.layout.repository_buff_item);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Buff.Category category = buffs.get(position).getCategory();
-        if(category == Buff.Category.Freeze){
+    protected void convert(@NotNull ViewHolder viewHolder, Buff buff) {
+        if(buff.getCategory() == Buff.Category.Freeze){
             //用于对RecyclerView的子项进行赋值，会在每个子项滚动到屏幕内的时候执行
-            holder.name_text.setText(String.format(Locale.getDefault(),"%s",holder.name_text.getContext().getResources().getString(R.string.buff_freeze)));
-            holder.name_text.setTextColor(holder.name_text.getContext().getResources().getColor(R.color.light_blue_400,holder.name_text.getContext().getTheme()));
+            viewHolder.name_text.setText(String.format(Locale.getDefault(),"%s",R.string.buff_freeze));
+            viewHolder.name_text.setTextColor(viewHolder.name_text.getContext().getResources().getColor(R.color.light_blue_400,viewHolder.name_text.getContext().getTheme()));
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return buffs.size();
-    }
 
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public  class ViewHolder extends BaseViewHolder {
         MaterialTextView name_text;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name_text = itemView.findViewById(R.id.name_text);
+        }
+    }
+
+    public class DiffCallBack extends DiffUtil.ItemCallback<Buff>{
+        @Override
+        public boolean areItemsTheSame(@NonNull Buff oldItem, @NonNull Buff newItem) {
+            return oldItem.getCategory().equals(newItem.getCategory());
+        }
+        @Override
+        public boolean areContentsTheSame(@NonNull Buff oldItem, @NonNull Buff newItem) {
+            return oldItem.getCategory().equals(newItem.getCategory());
         }
     }
 }

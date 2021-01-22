@@ -61,7 +61,27 @@ public class User
     @Expose
     private int deaths;//死亡数
     @Expose
-    private long registration_date;//注册时间
+    int registerDate;//卡牌注册日期
+
+    public int getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(int registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    @Expose
+    int update;//卡牌更新日期
+
+
+    public int getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(int update_data) {
+        this.update = update_data;
+    }
     @Expose
     @TypeConverters(GroupConvert.class)
     ArrayList<CardGroup> cardGroups = new ArrayList<>();
@@ -97,7 +117,6 @@ public class User
                 ", active=" + active +
                 ", kills=" + kills +
                 ", deaths=" + deaths +
-                ", registration_date=" + registration_date +
                 '}';
     }
 
@@ -220,14 +239,6 @@ public class User
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getRegistration_date() {
-        return registration_date;
-    }
-
-    public void setRegistration_date(long registration_date) {
-        this.registration_date = registration_date;
     }
 
     public ArrayList<CardGroup> getCardGroups() {

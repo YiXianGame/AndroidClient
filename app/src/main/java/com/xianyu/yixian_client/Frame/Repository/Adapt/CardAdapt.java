@@ -1,11 +1,10 @@
 package com.xianyu.yixian_client.Frame.Repository.Adapt;
 
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -26,6 +25,7 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
     public BluePrint bluePrint = new BluePrint();
     public  CardAdapt(List<SkillCard> origin_data){
         super(R.layout.repository_card_item,origin_data);
+        this.setDiffCallback(new DiffCallBack());
     }
 
     public void filter() {
@@ -52,8 +52,12 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
 
     @Override
     protected void convert(@NotNull ViewHolder viewHolder, SkillCard skillCard) {
-        viewHolder.buffs_recycle.setAdapter(new BuffAdapt(new ArrayList<>(skillCard.getBuffs().values())));
-        viewHolder.attributes_recycle.setAdapter(new AttributeAdapt(new ArrayList<Attribute>(skillCard.getAttributes().values())));
+        BuffAdapt buff_adapter = new BuffAdapt();
+        buff_adapter.setDiffNewData(new ArrayList<>(skillCard.getBuffs().values()));
+        viewHolder.buffs_recycle.setAdapter(buff_adapter);
+        AttributeAdapt attribute_adapt = new AttributeAdapt();
+        attribute_adapt.setDiffNewData(new ArrayList<>(skillCard.getAttributes().values()));
+        viewHolder.attributes_recycle.setAdapter(attribute_adapt);
         viewHolder.name_text.setText(skillCard.getName());
         viewHolder.description.setText(skillCard.getDescription());
         viewHolder.mp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getMp()));
@@ -155,6 +159,16 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
             mp_text =itemView.findViewById(R.id.mp_num_text);
             attributes_recycle = itemView.findViewById(R.id.attributes_recycle);
             buffs_recycle = itemView.findViewById(R.id.buffs_recycle);
+        }
+    }
+    protected class DiffCallBack extends DiffUtil.ItemCallback<SkillCard>{
+        @Override
+        public boolean areItemsTheSame(@NonNull SkillCard oldItem, @NonNull SkillCard newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+        @Override
+        public boolean areContentsTheSame(@NonNull SkillCard oldItem, @NonNull SkillCard newItem) {
+            return oldItem.getUpdate() == newItem.getUpdate();
         }
     }
 }

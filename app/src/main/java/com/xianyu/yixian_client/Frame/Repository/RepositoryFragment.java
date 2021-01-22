@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.chad.library.adapter.base.module.LoadMoreModule;
+import com.xianyu.yixian_client.Frame.Repository.Adapt.BuffAdapt;
 import com.xianyu.yixian_client.Frame.Repository.Adapt.CardAdapt;
 import com.xianyu.yixian_client.Model.Repository.Repository;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
@@ -48,17 +49,7 @@ public class RepositoryFragment extends Fragment {
         RecyclerView recyclerView = binding.getRoot().findViewById(R.id.card_frame);
         recyclerView.setAdapter(cardAdapt);
         cardAdapt.setAnimationFirstOnly(false);
-        cardAdapt.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
-        cardAdapt.setDiffCallback(new DiffUtil.ItemCallback<SkillCard>() {
-            @Override
-            public boolean areItemsTheSame(@NonNull SkillCard oldItem, @NonNull SkillCard newItem) {
-                return oldItem.getId() == newItem.getId();
-            }
-            @Override
-            public boolean areContentsTheSame(@NonNull SkillCard oldItem, @NonNull SkillCard newItem) {
-                return oldItem.getUpdate() == newItem.getUpdate();
-            }
-        });
+        cardAdapt.setAnimationWithDefault(BaseQuickAdapter.AnimationType.ScaleIn);
         BaseLoadMoreModule loadMoreModule = cardAdapt.getLoadMoreModule();
         loadMoreModule.setAutoLoadMore(true);
         loadMoreModule.setEnableLoadMoreEndClick(false);

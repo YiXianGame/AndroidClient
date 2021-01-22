@@ -13,20 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApp">
-        <activity android:name=".Frame.PersonalInformation.PersonalProfile_Fragment" android:screenOrientation="landscape">
 
-        </activity>
         <activity android:name=".Frame.Main.Main_Activity" android:screenOrientation="landscape">
-
-        </activity>
-        <activity android:name=".Frame.FriendSystem.Friend_Fragment" android:screenOrientation="landscape">
-
-        </activity>
-        <activity android:name=".Frame.Repository.RepositoryFragment" android:screenOrientation="landscape">
-
-        </activity>
-
-        <activity android:name=".Frame.BattleRepository.BattleRepository_Fragment" android:screenOrientation="landscape">
 
         </activity>
 

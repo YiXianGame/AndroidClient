@@ -32,6 +32,12 @@ import io.reactivex.schedulers.Schedulers;
 public class RepositoryViewModel extends ViewModel {
     MutableLiveData<String> message = new MutableLiveData<>();
     MutableLiveData<List<SkillCard>> skillcards_live = new MutableLiveData<>();
+    public void refreshSkillCards(){
+        disposable.add(repository.queryAllSkillCards().observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                .subscribe(skillCards -> {
+                    skillcards_live.postValue(skillCards);
+                }));
+    }
     private final CompositeDisposable disposable = new CompositeDisposable();
     private Repository repository;
     public RepositoryViewModel(){
@@ -40,12 +46,7 @@ public class RepositoryViewModel extends ViewModel {
     public void initialization(Repository repository){
         this.repository = repository;
     }
-    public void refreshSkillCards(){
-        disposable.add(repository.queryAllSkillCards().observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                .subscribe(skillCards -> {
-                    skillcards_live.postValue(skillCards);
-                }));
-    }
+
 
     @Override
     protected void onCleared() {

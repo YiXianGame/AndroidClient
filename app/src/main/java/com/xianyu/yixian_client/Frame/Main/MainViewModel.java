@@ -8,6 +8,7 @@ import com.xianyu.yixian_client.Model.Repository.Repository;
 import com.xianyu.yixian_client.Model.Room.Entity.Friend;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,6 +19,7 @@ import io.reactivex.Single;
 
 public class MainViewModel extends ViewModel {
     public MutableLiveData<String> message = new MutableLiveData<>();
+    public MutableLiveData<List<User>> users_live = new MutableLiveData<>();
     private Repository repository;
     public MainViewModel(){
 
@@ -32,4 +34,5 @@ public class MainViewModel extends ViewModel {
     public Single<List<User>> queryFriendUsers(long user_id){
         return repository.queryAllFriendUsers(user_id);
     }
+
 }

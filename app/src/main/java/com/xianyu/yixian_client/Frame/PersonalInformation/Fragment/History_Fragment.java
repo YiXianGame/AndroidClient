@@ -41,7 +41,8 @@ public class History_Fragment extends Fragment  {
 
     private void init(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.history_list);
-        HistoryAdapt historyAdapt = new HistoryAdapt(Core.liveUser.getValue().getHistory());
+        HistoryAdapt historyAdapt = new HistoryAdapt();
+        historyAdapt.setDiffNewData(Core.liveUser.getValue().getHistory());
         recyclerView.setAdapter(historyAdapt);
     }
 
