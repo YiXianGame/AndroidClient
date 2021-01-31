@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.xianyu.yixian_client.Frame.PersonalInformation.PersonalProfileViewModel;
-import com.xianyu.yixian_client.databinding.PersonalProfileGameFragmentBinding;
+import com.xianyu.yixian_client.databinding.PersonalProfilePersonalSignatureFragmentBinding;
 
 /**
  * @ProjectName: YiXian_Client
@@ -28,7 +28,7 @@ public class GameInformation_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        PersonalProfileGameFragmentBinding binding = PersonalProfileGameFragmentBinding.inflate(inflater,container,false);
+        PersonalProfilePersonalSignatureFragmentBinding binding = PersonalProfilePersonalSignatureFragmentBinding.inflate(inflater,container,false);
         viewModel = new ViewModelProvider(requireActivity()).get(PersonalProfileViewModel.class);
         return binding.getRoot();
     }

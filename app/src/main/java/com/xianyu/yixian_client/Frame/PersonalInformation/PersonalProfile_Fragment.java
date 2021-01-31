@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.DepthPageTransformer;
@@ -34,7 +35,7 @@ public class PersonalProfile_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = PersonalProfileFragmentBinding.inflate(getLayoutInflater());
-        viewModel = new ViewModelProvider(this).get(PersonalProfileViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(PersonalProfileViewModel.class);
         viewModel.initialization(repository);
         init();
         return binding.getRoot();
@@ -45,17 +46,23 @@ public class PersonalProfile_Fragment extends Fragment {
         paper = binding.getRoot().findViewById(R.id.paper);
         paper.setPageTransformer(new DepthPageTransformer());
         paper.setAdapter(new PersonalInformation_Fragment_Adapter(requireActivity()));
+        Button personal_signature = binding.getRoot().findViewById(R.id.personal_signature_button);
+        personal_signature.setOnClickListener(this::personal_signature_Click);
+        Button game_history_button = binding.getRoot().findViewById(R.id.game_history_button);
+        game_history_button.setOnClickListener(this::history_Click);
+        Button personal_profile_button = binding.getRoot().findViewById(R.id.personal_profile_button);
+        personal_profile_button.setOnClickListener(this::personal_Click);
     }
 
     public void personal_Click(View view) {
-        paper.setCurrentItem(1);
-    }
-
-    public void history_Click(View view) {
         paper.setCurrentItem(0);
     }
 
-    public void information_Click(View view) {
+    public void history_Click(View view) {
+        paper.setCurrentItem(1);
+    }
+
+    public void personal_signature_Click(View view) {
         paper.setCurrentItem(2);
     }
 }

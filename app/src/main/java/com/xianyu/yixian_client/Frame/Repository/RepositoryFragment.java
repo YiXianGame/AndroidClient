@@ -45,15 +45,14 @@ public class RepositoryFragment extends Fragment {
     }
 
     private void init() {
-        CardAdapt cardAdapt = new CardAdapt(new ArrayList<>());
+        CardAdapt cardAdapt = new CardAdapt();
         RecyclerView recyclerView = binding.getRoot().findViewById(R.id.card_frame);
-        recyclerView.setAdapter(cardAdapt);
         cardAdapt.setAnimationFirstOnly(false);
         cardAdapt.setAnimationWithDefault(BaseQuickAdapter.AnimationType.ScaleIn);
         BaseLoadMoreModule loadMoreModule = cardAdapt.getLoadMoreModule();
         loadMoreModule.setAutoLoadMore(true);
+        loadMoreModule.setPreLoadNumber(10);
         loadMoreModule.setEnableLoadMoreEndClick(false);
-        loadMoreModule.setPreLoadNumber(4);
         loadMoreModule.setOnLoadMoreListener(() -> {
             if(viewModel.skillcards_live.getValue() == null)loadMoreModule.loadMoreFail();
             int last_index = viewModel.skillcards_live.getValue().lastIndexOf(cardAdapt.getData().get(cardAdapt.getData().size() - 1));
@@ -71,13 +70,15 @@ public class RepositoryFragment extends Fragment {
         });
         viewModel.skillcards_live.observe(getViewLifecycleOwner(), list -> {
             if (viewModel.skillcards_live.getValue() != null){
-                if(viewModel.skillcards_live.getValue().size() >= 9){
-                    cardAdapt.setDiffNewData(new ArrayList<>(viewModel.skillcards_live.getValue().subList(0,9)));
+                if(viewModel.skillcards_live.getValue().size() >= 20){
+                    cardAdapt.setDiffNewData(new ArrayList<>(viewModel.skillcards_live.getValue().subList(0,20)));
                 }
                 else cardAdapt.setDiffNewData(new ArrayList<>(viewModel.skillcards_live.getValue()));
             }
             else cardAdapt.setDiffNewData(new ArrayList<>());
         });
+        recyclerView.setAdapter(cardAdapt);
         viewModel.refreshSkillCards();
+
     }
 }

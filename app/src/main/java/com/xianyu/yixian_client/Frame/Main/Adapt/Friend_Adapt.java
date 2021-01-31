@@ -1,14 +1,12 @@
 package com.xianyu.yixian_client.Frame.Main.Adapt;
 
-import android.view.LayoutInflater;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
@@ -23,49 +21,47 @@ import java.util.Collections;
 import java.util.List;
 
 public class Friend_Adapt extends BaseQuickAdapter<User,Friend_Adapt.ViewHolder> implements LoadMoreModule {
-
     public Filter_BluePrint bluePrint = new Filter_BluePrint();
     public Friend_Adapt(){
-        super(R.layout.friend_item);
+        super(R.layout.main_friend_item);
         setDiffCallback(new DiffCallBack());
     }
-
-    protected void Filter() {
-        List<User> friends = this.getData();
-        ArrayList<User> filter_data = new ArrayList<>();
+    public List<User> filter(List<User> friends) {
+        ArrayList<User> filters = new ArrayList<>();
         for(User item : friends){
-            if(item.getNickName().contains(bluePrint.getNickName()) || bluePrint.getNickName().equals(""))filter_data.add(item);
+            if(item.getNickName().contains(bluePrint.getNickName()) || bluePrint.getNickName().equals(""))filters.add(item);
         }
         //sort遵循稳定排序规则
         if(bluePrint.isLevel()){
-            filter_data.sort((o1, o2) -> o1.getLv() - o2.getLv());
+            filters.sort((o1, o2) -> o1.getLv() - o2.getLv());
         }
         if(bluePrint.isActive()){
-            filter_data.sort((o1, o2) -> o1.getActive().compareTo((User.State) o2.getActive()));
+            filters.sort((o1, o2) -> o1.getActive().compareTo((User.State) o2.getActive()));
         }
         if(bluePrint.isReverse()){
-            Collections.reverse(filter_data);
+            Collections.reverse(filters);
         }
+        return filters;
     }
-
     @Override
-    protected void convert(@NotNull ViewHolder holder, User user) {
-        holder.nickname_text.setText(user.getNickName());
-        holder.level_text.setText(Integer.toString(user.getLv()));
-        holder.active_text.setText(user.getActive().toString());
+    protected void convert(@NotNull ViewHolder holder, User friend) {
+        holder.nickname_text.setText(friend.getNickName());
+        holder.level_text.setText(Integer.toString(friend.getLv()));
+        holder.active_text.setText(friend.getActive().toString());
+        holder.head_image.setImageResource(R.drawable.touxiang);
     }
 
     public static class ViewHolder extends BaseViewHolder {
         TextView nickname_text;
         TextView level_text;
         TextView active_text;
-        Button deleteFriend_button;
+        ImageView head_image;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            nickname_text = itemView.findViewById(R.id.nickname);
+            nickname_text = itemView.findViewById(R.id.nickname_text);
             level_text = itemView.findViewById(R.id.level);
             active_text = itemView.findViewById(R.id.active_text);
-            deleteFriend_button = itemView.findViewById(R.id.deleteFriend_button);
+            head_image = itemView.findViewById(R.id.head_image);
         }
     }
     public class Filter_BluePrint{
@@ -80,7 +76,6 @@ public class Friend_Adapt extends BaseQuickAdapter<User,Friend_Adapt.ViewHolder>
 
         public void setReverse(boolean reverse) {
             this.reverse = reverse;
-            Filter();
         }
 
         public String getNickName() {
@@ -89,7 +84,6 @@ public class Friend_Adapt extends BaseQuickAdapter<User,Friend_Adapt.ViewHolder>
 
         public void setNickName(String nickName) {
             this.nickName = nickName;
-            Filter();
         }
 
         public boolean isActive() {
@@ -98,7 +92,6 @@ public class Friend_Adapt extends BaseQuickAdapter<User,Friend_Adapt.ViewHolder>
 
         public void setActive(boolean active) {
             this.active = active;
-            Filter();
         }
 
         public boolean isLevel() {
@@ -107,7 +100,6 @@ public class Friend_Adapt extends BaseQuickAdapter<User,Friend_Adapt.ViewHolder>
 
         public void setLevel(boolean level) {
             this.level = level;
-            Filter();
         }
     }
     protected class DiffCallBack extends DiffUtil.ItemCallback<User>{

@@ -2,14 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="65dp"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="8dp"
+    tools:background="@color/teal_200"
+    >
 
   <ImageView
-      android:layout_width="65dp"
-      android:layout_height="match_parent"
+      android:id="@+id/head_image"
+      android:layout_width="50dp"
+      android:layout_height="50dp"
       tools:srcCompat="@tools:sample/avatars[0]" />
 
 
@@ -17,15 +20,22 @@
       android:layout_width="wrap_content"
       android:layout_height="match_parent"
       android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/nickname"
+    <Space
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_height="8dp">
+    </Space>
+    <TextView
+        android:id="@+id/nickname_text"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="5dp"
+        android:singleLine="true"
         android:fontFamily="@font/mashanzheng"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:text="@string/nickname"
-        android:textAppearance="@style/TextAppearance.YiXian.Headline6" />
+        android:textAppearance="@style/TextAppearance.YiXian.Body3" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -35,19 +45,24 @@
       <TextView
           android:id="@+id/level"
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          android:layout_height="10dp"
           android:fontFamily="@font/mashanzheng"
-          android:layout_marginRight="10dp"
+          android:layout_marginEnd="10dp"
+          android:layout_marginStart="3dp"
+          android:textColor="@color/white"
+          android:textStyle="bold"
           android:text="@string/level"
-          android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+          android:textAppearance="@style/TextAppearance.YiXian.Body4" />
 
       <TextView
           android:id="@+id/active_text"
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          android:layout_height="10dp"
           android:fontFamily="@font/mashanzheng"
+          android:textColor="@color/white"
+          android:textStyle="bold"
           android:text="@string/active"
-          android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+          android:textAppearance="@style/TextAppearance.YiXian.Body4" />
 
     </LinearLayout>
   </LinearLayout>

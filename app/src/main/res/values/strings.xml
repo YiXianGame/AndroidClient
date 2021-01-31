@@ -50,8 +50,7 @@
     <string name="user_username">昵称</string>
 
     <string name="history_result">胜负</string>
-    <string name="history_title">玩家境界</string>
-    <string name="history_lv">玩家等级</string>
+    <string name="history_title">平均境界</string>
     <string name="history_time">游戏时间</string>
     <string name="history_exp">经验值</string>
     <string name="history_battle">战斗场次</string>
@@ -78,4 +77,8 @@
     <string name="battle_repository">战备</string>
     <string name="task">任务</string>
     <string name="wiki">百科</string>
+    <string name="personal_profile">个人信息</string>
+    <string name="game_history">游戏战绩</string>
+    <string name="personal_signature">个性签名</string>
+    <string name="history_score">得分</string>
 </resources>

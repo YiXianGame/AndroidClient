@@ -24,5 +24,5 @@ import java.util.ArrayList;
 public class Core {
     public static MutableLiveData<User> liveUser = new MutableLiveData<User>();
     public static MutableLiveData<ArrayList<SkillCard>> liveSkillcards = new MutableLiveData<>();
-    public static Gson gson = new Gson().newBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).excludeFieldsWithoutExposeAnnotation().create();;
+    public static Gson gson = new Gson().newBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).excludeFieldsWithoutExposeAnnotation().create();
 }

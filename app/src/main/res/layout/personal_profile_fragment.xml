@@ -19,86 +19,57 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <EditText
-        android:id="@+id/nickName"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintHorizontal_weight="3"
-        app:layout_constraintVertical_weight="1"
-        app:layout_constraintLeft_toRightOf="@id/head_image"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/head_image"
-        android:ems="10"
-        android:inputType="textPassword" />
-
-    <ImageView
-        android:id="@+id/head_image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:src="@drawable/touxiang"
-        app:layout_constraintVertical_weight="1"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintBottom_toTopOf="@id/paper"
-        app:layout_constraintLeft_toLeftOf="@id/paper"
-        app:layout_constraintRight_toLeftOf="@id/nickName"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/select_group_button"
         android:layout_width="0dp"
-        android:layout_height="210dp"
+        android:layout_height="wrap_content"
+
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/personal_profile_button"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="#983B3B"
             android:fontFamily="@font/ziti"
-            android:onClick="personal_Click"
-            android:text="个人信息"
+            android:text="@string/personal_profile"
             android:textColor="#A57D04"
-            android:textSize="30dp" />
+            android:textSize="30sp" />
 
         <Button
-            android:id="@+id/button5"
-            android:onClick="history_Click"
+            android:id="@+id/game_history_button"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/ziti"
             android:background="#983B3B"
-            android:text="战斗记录"
+            android:text="@string/game_history"
             android:textColor="#A57D04"
-            android:textSize="30dp" />
+            android:textSize="30sp" />
 
         <Button
-            android:id="@+id/button7"
-            android:onClick="information_Click"
+            android:id="@+id/personal_signature_button"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/ziti"
-            android:text="仙域大陆"
+            android:text="@string/personal_signature"
             android:background="#983B3B"
             android:textColor="#A57D04"
-            android:textSize="30dp" />
+            android:textSize="30sp" />
     </LinearLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/paper"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintLeft_toRightOf="@id/select_group_button"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/head_image"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_weight="3" />
 
 

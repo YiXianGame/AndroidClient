@@ -24,13 +24,14 @@ public class BuffAdapt extends BaseQuickAdapter<Buff,BuffAdapt.ViewHolder> {
 
     public BuffAdapt() {
         super(R.layout.repository_buff_item);
+        setDiffCallback(new DiffCallBack());
     }
 
     @Override
     protected void convert(@NotNull ViewHolder viewHolder, Buff buff) {
         if(buff.getCategory() == Buff.Category.Freeze){
             //用于对RecyclerView的子项进行赋值，会在每个子项滚动到屏幕内的时候执行
-            viewHolder.name_text.setText(String.format(Locale.getDefault(),"%s",R.string.buff_freeze));
+            viewHolder.name_text.setText(String.format(Locale.getDefault(),"%s",viewHolder.name_text.getContext().getResources().getString(R.string.buff_freeze)));
             viewHolder.name_text.setTextColor(viewHolder.name_text.getContext().getResources().getColor(R.color.light_blue_400,viewHolder.name_text.getContext().getTheme()));
         }
     }

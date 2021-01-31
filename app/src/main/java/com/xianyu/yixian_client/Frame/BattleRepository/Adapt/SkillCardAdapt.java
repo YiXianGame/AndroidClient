@@ -1,59 +1,47 @@
 package com.xianyu.yixian_client.Frame.BattleRepository.Adapt;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.module.DraggableModule;
+import com.chad.library.adapter.base.module.LoadMoreModule;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.material.textview.MaterialTextView;
 import com.xianyu.yixian_client.Model.Room.Entity.Attribute;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class SkillCardAdapt extends RecyclerView.Adapter<SkillCardAdapt.ViewHolder> {
-    private List<SkillCard> origin_data;
-    private List<SkillCard> skillCards;
+public class SkillCardAdapt extends BaseQuickAdapter<SkillCard, SkillCardAdapt.ViewHolder > implements LoadMoreModule{
     public BluePrint bluePrint = new BluePrint();
-    public SkillCardAdapt(List<SkillCard> skillCards){
-        this.origin_data = skillCards;
-        this.skillCards = new ArrayList<>(origin_data);
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //用来创建ViewHolder实例，再将加载好的布局传入构造函数，最后返回ViewHolder实例
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.battle_repository_card_item,parent,false);
-        ViewHolder holder =new ViewHolder(view);
-        return holder;
-    }
-    public void refresh(List<SkillCard> skillCards){
-        origin_data = skillCards;
-        filter();
+    public List<SkillCard> skillCards_filters;
+    public SkillCardAdapt(){
+        super(R.layout.battle_repository_card_item);
+        setDiffCallback(new DiffCallBack());
     }
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //用于对RecyclerView的子项进行赋值，会在每个子项滚动到屏幕内的时候执行
-        SkillCard skillCard = skillCards.get(position);
+    protected void convert(@NotNull SkillCardAdapt.ViewHolder holder, SkillCard skillCard) {
         holder.name_text.setText(skillCard.getName());
         holder.mp_text.setText(String.format(Locale.CHINESE,"%d",skillCard.getMp()));
-        holder.buffs_recycle.setAdapter(new BuffAdapt(new ArrayList<>(skillCard.getBuffs().values())));
-        holder.attributes_recycle.setAdapter(new AttributeAdapt(new ArrayList<>(skillCard.getAttributes().values())));
+        BuffAdapt buff_adapter = new BuffAdapt();
+        buff_adapter.setDiffNewData(new ArrayList<>(skillCard.getBuffs().values()));
+        holder.buffs_recycle.setAdapter(buff_adapter);
+        AttributeAdapt attribute_adapt = new AttributeAdapt();
+        attribute_adapt.setDiffNewData(new ArrayList<>(skillCard.getAttributes().values()));
+        holder.attributes_recycle.setAdapter(attribute_adapt);
     }
-
-    @Override
-    public int getItemCount() {
-        if(skillCards != null)return skillCards.size();
-        else return 0;
-    }
-
-    public void filter() {
+    public void filter(List<SkillCard> origin_data) {
+        getData().removeAll(getData());
+        notifyDataSetChanged();
         ArrayList<SkillCard> newValues = new ArrayList<>(origin_data);
         for (SkillCard value : origin_data) {
             if (!bluePrint.getName().equals("") && !value.getName().contains(bluePrint.getName())) {
@@ -70,9 +58,16 @@ public class SkillCardAdapt extends RecyclerView.Adapter<SkillCardAdapt.ViewHold
                 newValues.remove(value);
             }
         }
-        skillCards = newValues;
-        notifyDataSetChanged();
+        skillCards_filters = newValues;
+        if(skillCards_filters.size() >= 9){
+            setDiffNewData(new ArrayList<>(skillCards_filters.subList(0,10)));
+        }
+        else {
+            setDiffNewData(new ArrayList<>(skillCards_filters));
+        }
     }
+
+
     public class BluePrint{
         public String name = "";
         public boolean cure = false;
@@ -87,7 +82,6 @@ public class SkillCardAdapt extends RecyclerView.Adapter<SkillCardAdapt.ViewHold
 
         public void setName(String name) {
             this.name = name;
-            filter();
         }
 
         public boolean isCure() {
@@ -96,7 +90,6 @@ public class SkillCardAdapt extends RecyclerView.Adapter<SkillCardAdapt.ViewHold
 
         public void setCure(boolean cure) {
             this.cure = cure;
-            filter();
         }
 
         public boolean isAttack() {
@@ -105,7 +98,6 @@ public class SkillCardAdapt extends RecyclerView.Adapter<SkillCardAdapt.ViewHold
 
         public void setAttack(boolean attack) {
             this.attack = attack;
-            filter();
         }
 
         public boolean isMagic() {
@@ -114,7 +106,6 @@ public class SkillCardAdapt extends RecyclerView.Adapter<SkillCardAdapt.ViewHold
 
         public void setMagic(boolean magic) {
             this.magic = magic;
-            filter();
         }
 
         public boolean isPhysics() {
@@ -123,7 +114,6 @@ public class SkillCardAdapt extends RecyclerView.Adapter<SkillCardAdapt.ViewHold
 
         public void setPhysics(boolean physics) {
             this.physics = physics;
-            filter();
         }
 
         public boolean isEternal() {
@@ -132,10 +122,9 @@ public class SkillCardAdapt extends RecyclerView.Adapter<SkillCardAdapt.ViewHold
 
         public void setEternal(boolean eternal) {
             this.eternal = eternal;
-            filter();
         }
     }
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends BaseViewHolder {
         MaterialTextView name_text;
         MaterialTextView mp_text;
         RecyclerView buffs_recycle;
@@ -146,6 +135,16 @@ public class SkillCardAdapt extends RecyclerView.Adapter<SkillCardAdapt.ViewHold
             mp_text = itemView.findViewById(R.id.mp_num_text);
             buffs_recycle = itemView.findViewById(R.id.buffs_recycle);
             attributes_recycle = itemView.findViewById(R.id.attributes_recycle);
+        }
+    }
+    protected class DiffCallBack extends DiffUtil.ItemCallback<SkillCard>{
+        @Override
+        public boolean areItemsTheSame(@NonNull SkillCard oldItem, @NonNull SkillCard newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+        @Override
+        public boolean areContentsTheSame(@NonNull SkillCard oldItem, @NonNull SkillCard newItem) {
+            return oldItem.getUpdate() == newItem.getUpdate();
         }
     }
 }

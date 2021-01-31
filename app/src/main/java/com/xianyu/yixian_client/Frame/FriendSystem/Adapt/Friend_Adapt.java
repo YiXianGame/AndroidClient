@@ -30,43 +30,40 @@ public class Friend_Adapt extends BaseQuickAdapter<User,Friend_Adapt.ViewHolder>
         setDiffCallback(new DiffCallBack());
     }
     public List<User> filter(List<User> friends) {
+        ArrayList<User> filters = new ArrayList<>();
         for(User item : friends){
-            if(item.getNickName().contains(bluePrint.getNickName()) || bluePrint.getNickName().equals(""))friends.add(item);
+            if(item.getNickName().contains(bluePrint.getNickName()) || bluePrint.getNickName().equals(""))filters.add(item);
         }
         //sort遵循稳定排序规则
         if(bluePrint.isLevel()){
-            friends.sort((o1, o2) -> o1.getLv() - o2.getLv());
+            filters.sort((o1, o2) -> o1.getLv() - o2.getLv());
         }
         if(bluePrint.isActive()){
-            friends.sort((o1, o2) -> o1.getActive().compareTo((User.State) o2.getActive()));
+            filters.sort((o1, o2) -> o1.getActive().compareTo((User.State) o2.getActive()));
         }
         if(bluePrint.isReverse()){
-            Collections.reverse(friends);
+            Collections.reverse(filters);
         }
-        return friends;
+        return filters;
     }
     @Override
     protected void convert(@NotNull ViewHolder holder, User friend) {
         holder.nickname_text.setText(friend.getNickName());
         holder.level_text.setText(Integer.toString(friend.getLv()));
-        holder.deleteFriend_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                remove(friend);//这步没有同步到数据库
-            }
+        holder.deleteFriend_button.setOnClickListener(v -> {
+            remove(friend);//这步没有同步到数据库
         });
         holder.active_text.setText(friend.getActive().toString());
     }
 
     public static class ViewHolder extends BaseViewHolder {
-        static int d;
         TextView nickname_text;
         TextView level_text;
         TextView active_text;
         Button deleteFriend_button;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            nickname_text = itemView.findViewById(R.id.nickname);
+            nickname_text = itemView.findViewById(R.id.nickname_text);
             level_text = itemView.findViewById(R.id.level);
             active_text = itemView.findViewById(R.id.active_text);
             deleteFriend_button = itemView.findViewById(R.id.deleteFriend_button);

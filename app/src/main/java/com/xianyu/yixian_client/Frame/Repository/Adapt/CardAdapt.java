@@ -23,8 +23,8 @@ import java.util.Locale;
 
 public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> implements LoadMoreModule {
     public BluePrint bluePrint = new BluePrint();
-    public  CardAdapt(List<SkillCard> origin_data){
-        super(R.layout.repository_card_item,origin_data);
+    public  CardAdapt(){
+        super(R.layout.repository_card_item);
         this.setDiffCallback(new DiffCallBack());
     }
 
@@ -46,12 +46,10 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
                 newValues.remove(value);
             }
         }
-        //skillCards = newValues;
-        notifyDataSetChanged();
     }
 
     @Override
-    protected void convert(@NotNull ViewHolder viewHolder, SkillCard skillCard) {
+    protected void convert(@NotNull CardAdapt.ViewHolder  viewHolder, SkillCard skillCard) {
         BuffAdapt buff_adapter = new BuffAdapt();
         buff_adapter.setDiffNewData(new ArrayList<>(skillCard.getBuffs().values()));
         viewHolder.buffs_recycle.setAdapter(buff_adapter);

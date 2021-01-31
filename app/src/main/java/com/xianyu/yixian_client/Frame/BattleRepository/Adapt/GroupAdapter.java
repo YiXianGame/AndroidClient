@@ -1,103 +1,69 @@
 package com.xianyu.yixian_client.Frame.BattleRepository.Adapt;
 
-import android.util.Pair;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 
-import com.google.android.material.textview.MaterialTextView;
+import com.chad.library.adapter.base.BaseNodeAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.entity.node.BaseNode;
+import com.chad.library.adapter.base.module.BaseDraggableModule;
+import com.chad.library.adapter.base.module.DraggableModule;
+import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionFirst;
+import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionFirstNode;
+import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionSecond;
+import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionSecondNode;
 import com.xianyu.yixian_client.Model.Room.Entity.CardGroup;
-import com.xianyu.yixian_client.R;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class GroupAdapter extends BaseExpandableListAdapter {
+public class GroupAdapter extends BaseNodeAdapter implements DraggableModule {
     private ArrayList<CardGroup> groups;
-    public GroupAdapter(ArrayList<CardGroup> groups){
-        this.groups = groups;
-    }
-    @Override
-    public int getGroupCount() {
-        return groups.size();
-    }
-
-    @Override
-    public int getChildrenCount(int groupPosition) {
-        return groups.get(groupPosition).getCards().size();
+    public GroupAdapter() {
+        super();
+        // 需要占满一行的，使用此方法（例如section）
+        addFullSpanNodeProvider(new CardGroupSectionFirst());
+        // 普通的item provider
+        addNodeProvider(new CardGroupSectionSecond());
+        setDiffCallback(new DiffCallBack());
     }
 
     @Override
-    public Object getGroup(int groupPosition) {
-        return groups.get(groupPosition);
-    }
-
-    @Override
-    public Object getChild(int groupPosition, int childPosition) {
-        return groups.get(groupPosition).getCards().get(childPosition);
-    }
-
-    @Override
-    public long getGroupId(int groupPosition) {
-        return groupPosition;
-    }
-
-    @Override
-    public long getChildId(int groupPosition, int childPosition) {
-        return groups.get(groupPosition).getCards().get(childPosition).first;
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return false;
-    }
-
-    @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        GroupViewHolder groupViewHolder;
-        if(convertView == null){
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.battle_repository_group_item,parent,false);
-            groupViewHolder = new GroupViewHolder(convertView);
-            convertView.setTag(groupViewHolder);
+    protected int getItemType(@NotNull List<? extends BaseNode> data, int i) {
+        BaseNode node = data.get(i);
+        if(node instanceof CardGroupSectionFirstNode){
+            return 0;
         }
-        else {
-            groupViewHolder = (GroupViewHolder)convertView.getTag();
+        else if(node instanceof CardGroupSectionSecondNode){
+            return 1;
         }
-        groupViewHolder.name_text.setText(groups.get(groupPosition).getName());
-        return convertView;
+        return -1;
     }
-
-    @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        GroupChildrenViewHolder groupChildrenViewHolder;
-        if(convertView == null){
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.battle_repository_groupshow_item,parent,false);
-            groupChildrenViewHolder = new GroupChildrenViewHolder(convertView);
-            convertView.setTag(groupChildrenViewHolder);
+    protected class DiffCallBack extends DiffUtil.ItemCallback<BaseNode>{
+        @Override
+        public boolean areItemsTheSame(@NonNull BaseNode oldItem, @NonNull BaseNode newItem) {
+            if(oldItem instanceof CardGroupSectionFirstNode && newItem instanceof CardGroupSectionFirstNode){
+                return ((CardGroupSectionFirstNode)(oldItem)).getCardGroup().getName() == ((CardGroupSectionFirstNode)(newItem)).getCardGroup().getName();
+            }
+            else if(oldItem instanceof CardGroupSectionSecondNode && newItem instanceof CardGroupSectionSecondNode){
+                return ((CardGroupSectionSecondNode)(oldItem)).getSkillcard().first == ((CardGroupSectionSecondNode)(newItem)).getSkillcard().first;
+            }
+            return false;
         }
-        else {
-            groupChildrenViewHolder = (GroupChildrenViewHolder)convertView.getTag();
-        }
-        groupChildrenViewHolder.name_text.setText(groups.get(groupPosition).getCards().get(childPosition).second);
-        return convertView;
-    }
-
-    @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
-    }
-    public class GroupViewHolder{
-        MaterialTextView name_text;
-        public GroupViewHolder(@NonNull View itemView) {
-            name_text = itemView.findViewById(R.id.name_text);
+        @Override
+        public boolean areContentsTheSame(@NonNull BaseNode oldItem, @NonNull BaseNode newItem) {
+            if(oldItem instanceof CardGroupSectionFirstNode && newItem instanceof CardGroupSectionFirstNode){
+                return ((CardGroupSectionFirstNode)(oldItem)).getCardGroup().getUpdate() == ((CardGroupSectionFirstNode)(newItem)).getCardGroup().getUpdate();
+            }
+            else if(oldItem instanceof CardGroupSectionSecondNode && newItem instanceof CardGroupSectionSecondNode){
+                return ((CardGroupSectionSecondNode)(oldItem)).getSkillcard().second.equals(((CardGroupSectionSecondNode)(newItem)).getSkillcard().second);
+            }
+            return false;
         }
     }
-    public class GroupChildrenViewHolder{
-        MaterialTextView name_text;
-        public GroupChildrenViewHolder(@NonNull View itemView) {
-            name_text = itemView.findViewById(R.id.name_text);
-        }
-    }
+
 }

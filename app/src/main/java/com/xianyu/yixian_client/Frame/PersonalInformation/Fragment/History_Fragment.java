@@ -4,16 +4,27 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.PersonalInformation.Fragment.Adapt.HistoryAdapt;
 import com.xianyu.yixian_client.Frame.PersonalInformation.PersonalProfileViewModel;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.PersonalProfileHistoryFragmentBinding;
+import com.xianyu.yixian_client.databinding.PersonalProfileHistoryItemBinding;
+
+import java.util.Locale;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @ProjectName: YiXian_Client
@@ -30,20 +41,28 @@ import com.xianyu.yixian_client.databinding.PersonalProfileHistoryFragmentBindin
 public class History_Fragment extends Fragment  {
 
     private PersonalProfileViewModel viewModel;
+    PersonalProfileHistoryFragmentBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        PersonalProfileHistoryFragmentBinding binding = PersonalProfileHistoryFragmentBinding.inflate(inflater,container,false);
+        binding = PersonalProfileHistoryFragmentBinding.inflate(inflater,container,false);
         viewModel = new ViewModelProvider(requireActivity()).get(PersonalProfileViewModel.class);
-        init(binding.getRoot());
+        init(Core.liveUser.getValue().getId());
         return binding.getRoot();
     }
 
-    private void init(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.history_list);
+    private void init(long user_id) {
+        RecyclerView recyclerView = binding.getRoot().findViewById(R.id.history_list);
         HistoryAdapt historyAdapt = new HistoryAdapt();
-        historyAdapt.setDiffNewData(Core.liveUser.getValue().getHistory());
+        historyAdapt.setAnimationEnable(true);
+        historyAdapt.setAnimationFirstOnly(false);
+        historyAdapt.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInLeft);
+        historyAdapt.setHeaderView(PersonalProfileHistoryItemBinding.inflate(getLayoutInflater(),binding.getRoot(),false).getRoot());
         recyclerView.setAdapter(historyAdapt);
+        viewModel.queryUserByID(user_id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(user -> {
+                    historyAdapt.setDiffNewData(user.getHistory());
+                });
     }
 
     @Override

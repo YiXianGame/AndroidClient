@@ -7,17 +7,21 @@
     android:rotationX="0">
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.3"
         android:background="@drawable/friendsystem_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintCircleAngle="15"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:alpha="0.6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
     <Button
         android:id="@+id/return_main"
         android:layout_width="50dp"
@@ -55,7 +59,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_weight="5"
         app:layout_constraintTop_toBottomOf="@id/return_main"
-        app:layout_constraintBottom_toTopOf="@id/friends"
+        app:layout_constraintBottom_toTopOf="@id/friends_recycle"
         android:id="@+id/group_layout"
         android:layout_width="0dp"
         android:orientation="horizontal"
@@ -84,7 +88,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/friends"
+        android:id="@+id/friends_recycle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

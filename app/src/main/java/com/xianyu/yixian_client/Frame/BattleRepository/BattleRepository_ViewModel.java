@@ -19,7 +19,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BattleRepository_ViewModel extends ViewModel {
     public MutableLiveData<List<SkillCard>> skillcards_live = new MutableLiveData<>();
-    public MutableLiveData<ArrayList<CardGroup>> cardGroups_live = new MutableLiveData<>();
     private final CompositeDisposable disposable = new CompositeDisposable();
     private Repository repository;
     public BattleRepository_ViewModel(){
@@ -34,14 +33,19 @@ public class BattleRepository_ViewModel extends ViewModel {
     public Single<SkillCard> querySkillCardById(long id){
         return repository.querySkillCardById(id);
     }
-    public void refreshAllSkillCards(){
-        disposable.add(repository.queryAllSkillCards().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(skillCards -> skillcards_live.postValue(skillCards)));
-    }
     public void refreshUser(){
         disposable.add(repository.queryUserById(Core.liveUser.getValue().getId()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(user -> cardGroups_live.postValue(user.getCardGroups()))
+                        .subscribe(user -> Core.liveUser.postValue(user))
         );
+    }
+    public void updateUser(User user){
+        repository.updateUser(user);
+    }
+    public void refreshSkillCards(){
+        disposable.add(repository.queryAllSkillCards().observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
+                .subscribe(skillCards -> {
+                    skillcards_live.postValue(skillCards);
+                }));
     }
     @Override
     protected void onCleared() {

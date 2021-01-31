@@ -8,7 +8,7 @@ public class History {
     @Expose
     boolean result = false;
     @Expose
-    int time = 0;
+    long time = 0;
     @Expose
     int death = 0;
     
@@ -20,10 +20,17 @@ public class History {
         this.kills = kills;
     }
 
-    public int getTime(){ return time;}
+    public long getTime(){ return time;}
 
     public  int getDeath(){ return death;}
 
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public void setDeath(int death) {
+        this.death = death;
+    }
 
     public boolean isResult() {
         return result;

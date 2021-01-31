@@ -4,6 +4,7 @@ import android.util.Pair;
 
 import androidx.room.TypeConverters;
 
+import com.chad.library.adapter.base.entity.SectionEntity;
 import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
@@ -21,12 +22,22 @@ import java.util.ArrayList;
  * @Version: 1.0
  */
 
-public class CardGroup {
+public class CardGroup{
     @Expose
     String name;
     @Expose
     @TypeConverters(ArrayList.class)
     ArrayList<Pair<Long,String>> cards = new ArrayList<>();
+    @Expose
+    long update;
+
+    public long getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(long update) {
+        this.update = update;
+    }
 
     public ArrayList<Pair<Long, String>> getCards() {
         return cards;

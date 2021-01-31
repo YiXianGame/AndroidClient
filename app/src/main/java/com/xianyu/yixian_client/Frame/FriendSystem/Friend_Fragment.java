@@ -1,6 +1,8 @@
 package com.xianyu.yixian_client.Frame.FriendSystem;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
+import com.google.android.material.textfield.TextInputEditText;
 import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.FriendSystem.Adapt.Friend_Adapt;
 import com.xianyu.yixian_client.Model.Repository.Repository;
@@ -45,41 +49,59 @@ public class Friend_Fragment extends Fragment {
         RecyclerView recyclerView = binding.getRoot().findViewById(R.id.friends_recycle);
         Friend_Adapt friend_adapt = new Friend_Adapt();
         BaseLoadMoreModule loadMoreModule = friend_adapt.getLoadMoreModule();
+        friend_adapt.setAnimationEnable(true);
+        friend_adapt.setAnimationWithDefault(BaseQuickAdapter.AnimationType.AlphaIn);
+        friend_adapt.setAnimationFirstOnly(false);
         loadMoreModule.setAutoLoadMore(true);
         loadMoreModule.setEnableLoadMoreEndClick(false);
-        loadMoreModule.setPreLoadNumber(4);
+        loadMoreModule.setPreLoadNumber(1 );
         loadMoreModule.setOnLoadMoreListener(() -> {
-            List<User> users = friend_adapt.filter(new ArrayList<>(viewModel.users_live.getValue()));
+            List<User> users = friend_adapt.filter(viewModel.friends_live.getValue());
             if(users == null)loadMoreModule.loadMoreFail();
             int last_index = users.lastIndexOf(friend_adapt.getData().get(friend_adapt.getData().size() - 1));
-            if(last_index + 4 <= users.size()){
-                friend_adapt.addData(new ArrayList<>(users.subList(last_index + 1,last_index + 4)));
-                loadMoreModule.loadMoreComplete();
-            }
-            else if(last_index + 1 != users.size()){
-                friend_adapt.addData(new ArrayList<>(users.subList(last_index + 1,users.size())));
+            if(last_index + 1 < users.size()){
+                friend_adapt.addData(new ArrayList<>(users.subList(last_index + 1,last_index + 2)));
                 loadMoreModule.loadMoreComplete();
             }
             else{
                 loadMoreModule.loadMoreEnd();
             }
         });
-        viewModel.users_live.observe(getViewLifecycleOwner(), list -> {
-            List<User> users = friend_adapt.filter(new ArrayList<>(new ArrayList<>(viewModel.users_live.getValue())));
+        viewModel.friends_live.observe(getViewLifecycleOwner(), list -> {
+            List<User> users = friend_adapt.filter(viewModel.friends_live.getValue());
             if (users != null){
                 if(users.size() >= 9){
-                    friend_adapt.setDiffNewData(friend_adapt.filter(users.subList(0,9)));
+                    friend_adapt.setDiffNewData(users.subList(0,9));
                 }
-                else friend_adapt.setDiffNewData(friend_adapt.filter(users));
+                else friend_adapt.setDiffNewData(users);
             }
             else friend_adapt.setDiffNewData(new ArrayList<>());
         });
-        viewModel.refreshSkillCards(Core.liveUser.getValue().getId());
+        viewModel.refreshFriends(Core.liveUser.getValue().getId());
         CheckBox checkBox = binding.getRoot().findViewById(R.id.levelSort_check);
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {friend_adapt.bluePrint.setLevel(isChecked);friend_adapt.setDiffNewData(friend_adapt.filter(new ArrayList<>(viewModel.users_live.getValue())));});
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {friend_adapt.bluePrint.setLevel(isChecked);friend_adapt.setDiffNewData(friend_adapt.filter(viewModel.friends_live.getValue()));});
         checkBox = binding.getRoot().findViewById(R.id.activeSort_check);
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {friend_adapt.bluePrint.setActive(isChecked);friend_adapt.setDiffNewData(friend_adapt.filter(new ArrayList<>(viewModel.users_live.getValue())));});
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {friend_adapt.bluePrint.setActive(isChecked);friend_adapt.setDiffNewData(friend_adapt.filter(viewModel.friends_live.getValue()));});
         checkBox = binding.getRoot().findViewById(R.id.reverseSort_check);
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {friend_adapt.bluePrint.setReverse(isChecked);friend_adapt.setDiffNewData(friend_adapt.filter(new ArrayList<>(viewModel.users_live.getValue())));});
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {friend_adapt.bluePrint.setReverse(isChecked);friend_adapt.setDiffNewData(friend_adapt.filter(viewModel.friends_live.getValue()));});
+        TextInputEditText name_textInput = binding.getRoot().findViewById(R.id.search_textInput);
+        name_textInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                friend_adapt.bluePrint.setNickName(s.toString());
+                friend_adapt.setDiffNewData(friend_adapt.filter(new ArrayList<>(viewModel.friends_live.getValue())));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        recyclerView.setAdapter(friend_adapt);
     }
 }

@@ -1,6 +1,7 @@
 package com.xianyu.yixian_client;
 
 import android.app.Application;
+import android.provider.ContactsContract;
 import android.util.Pair;
 
 import com.xianyu.yixian_client.Model.Repository.Repository;
@@ -13,6 +14,8 @@ import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -47,8 +50,6 @@ public class XYApplication extends Application {
 
     private void init_data() throws InterruptedException {
         Random random = new Random();
-        User user;
-        Friend friend;
         CardGroup cardGroup;
         User owner = new User();
         owner.setNickName("涯丶");
@@ -60,20 +61,21 @@ public class XYApplication extends Application {
         owner.setActive(User.State.Leisure);
         owner.setId(123456);
         Core.liveUser.setValue(owner);
-        History history;
         for(int i = 0;i<5;i++){
-            history = new History(random.nextInt(20),true);
+            History history = new History(random.nextInt(20),true);
+            history.setTime(System.currentTimeMillis());
             owner.getHistory().add(history);
         }
         for(int i = 0;i<5;i++){
-            history = new History(random.nextInt(20),false);
+            History history = new History(random.nextInt(20),false);
+            history.setTime(System.currentTimeMillis());
             owner.getHistory().add(history);
         }
         SkillCard skillCard;
         Buff buff;
         for(int i=0;i<2000;i++){
             skillCard = new SkillCard();
-            skillCard.setName(getRandomChineseString(random.nextInt(3)));
+            skillCard.setName(getRandomChineseString(6));
             if(random.nextInt(10) > 5) skillCard.getAttributes().put(Attribute.Category.Attack,new Attribute(Attribute.Category.Attack));
             if(random.nextInt(10) > 5) skillCard.getAttributes().put(Attribute.Category.Cure,new Attribute(Attribute.Category.Cure));
             if(random.nextInt(10) > 5) skillCard.getAttributes().put(Attribute.Category.Magic,new Attribute(Attribute.Category.Magic));
@@ -104,9 +106,11 @@ public class XYApplication extends Application {
             owner.getCardGroups().add(cardGroup);
         }
         repository.insertUser(owner);
-        Thread.sleep(100);
-        for(int i=1;i<5;i++){
-            user = new User();
+
+        Thread.sleep(1000);
+        ArrayList<Friend> friends = new ArrayList<>();
+        for(int i=1;i<50;i++){
+            User user = new User();
             user.setId(i);
             user.setNickName("用户" + random.nextInt());
             user.setMoney(random.nextInt(1000));
@@ -115,15 +119,14 @@ public class XYApplication extends Application {
             user.setLv(random.nextInt(10));
             user.setUserName("" + random.nextInt());
             user.setActive(User.State.Leisure);
-            friend = new Friend();
+            Friend friend = new Friend();
             friend.setUser_1(owner.getId());
             friend.setUser_2(user.getId());
             repository.insertUser(user);
-            Thread.sleep(200);
-            repository.insertFriend(friend);
+            friends.add(friend);
         }
-        for(int i=5;i<10;i++){
-            user = new User();
+        for(int i=50;i<100;i++){
+            User user = new User();
             user.setId(i);
             user.setNickName("用户" + random.nextInt());
             user.setMoney(random.nextInt(1000));
@@ -132,15 +135,14 @@ public class XYApplication extends Application {
             user.setLv(random.nextInt(10));
             user.setUserName("" + random.nextInt());
             user.setActive(User.State.Gaming);
-            friend = new Friend();
+            Friend friend = new Friend();
             friend.setUser_1(owner.getId());
             friend.setUser_2(user.getId());
             repository.insertUser(user);
-            Thread.sleep(200);
-            repository.insertFriend(friend);
+            friends.add(friend);
         }
-        for(int i=10;i<15;i++){
-            user = new User();
+        for(int i=100;i<150;i++){
+            User user = new User();
             user.setId(i);
             user.setNickName("用户" + random.nextInt(30));
             user.setMoney(random.nextInt(1000));
@@ -149,12 +151,15 @@ public class XYApplication extends Application {
             user.setLv(random.nextInt(10));
             user.setUserName("" + random.nextInt());
             user.setActive(User.State.Offline);
-            friend = new Friend();
+            Friend friend = new Friend();
             friend.setUser_1(owner.getId());
             friend.setUser_2(user.getId());
             repository.insertUser(user);
-            Thread.sleep(200);
-            repository.insertFriend(friend);
+            friends.add(friend);
+        }
+        Thread.sleep(1000);
+        for(int i=0;i<friends.size();i++){
+            repository.insertFriend(friends.get(i));
         }
     }
     public String getRandomChineseString(int n)  {

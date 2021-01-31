@@ -2,10 +2,12 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    >
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/result_text"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/history_result"
@@ -16,7 +18,7 @@
     </com.google.android.material.textview.MaterialTextView>
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title_text"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/history_title"
@@ -28,12 +30,12 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/lv_text"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/history_lv"
+        android:text="@string/history_score"
         android:fontFamily="@font/ziti"
-        android:textAppearance="@style/TextAppearance.YiXian.Headline6"
+        android:textAppearance="@style/TextAppearance.YiXian.Body1"
         >
 
     </com.google.android.material.textview.MaterialTextView>
@@ -42,10 +44,10 @@
         android:id="@+id/kills_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
         android:text="@string/history_kills"
         android:fontFamily="@font/ziti"
-        android:textAppearance="@style/TextAppearance.YiXian.Headline6"
+        android:textAppearance="@style/TextAppearance.YiXian.Body1"
         >
 
     </com.google.android.material.textview.MaterialTextView>
@@ -53,20 +55,20 @@
         android:id="@+id/deaths_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
         android:text="@string/history_death"
         android:fontFamily="@font/ziti"
-        android:textAppearance="@style/TextAppearance.YiXian.Headline6"
+        android:textAppearance="@style/TextAppearance.YiXian.Body1"
         >
     </com.google.android.material.textview.MaterialTextView>
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/time_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
         android:text="@string/history_time"
         android:fontFamily="@font/ziti"
-        android:textAppearance="@style/TextAppearance.YiXian.Headline6"
+        android:textAppearance="@style/TextAppearance.YiXian.Body1"
         >
     </com.google.android.material.textview.MaterialTextView>
 </LinearLayout>

@@ -56,7 +56,7 @@ public class Repository{
     }
 
     public void updateUser(User user) {
-        RxNoneOne(arg -> local.insertUser(arg), user);
+        RxNoneOne(arg -> local.updateUser(arg), user);
     }
 
     public Single<User> queryUserByUserName(String userName) {

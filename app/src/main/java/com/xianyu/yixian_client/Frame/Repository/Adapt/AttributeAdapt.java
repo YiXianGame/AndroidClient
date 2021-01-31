@@ -6,12 +6,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.material.textview.MaterialTextView;
 import com.xianyu.yixian_client.Model.Room.Entity.Attribute;
+import com.xianyu.yixian_client.Model.Room.Entity.Buff;
 import com.xianyu.yixian_client.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +26,7 @@ public class AttributeAdapt extends BaseQuickAdapter<Attribute,AttributeAdapt.Vi
 
     public AttributeAdapt() {
         super(R.layout.repository_attribute_item);
+        setDiffCallback(new DiffCallBack());
     }
 
     @Override
@@ -58,6 +61,16 @@ public class AttributeAdapt extends BaseQuickAdapter<Attribute,AttributeAdapt.Vi
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name_text = itemView.findViewById(R.id.name_text);
+        }
+    }
+    public class DiffCallBack extends DiffUtil.ItemCallback<Attribute>{
+        @Override
+        public boolean areItemsTheSame(@NonNull Attribute oldItem, @NonNull Attribute newItem) {
+            return oldItem.getCategory().equals(newItem.getCategory());
+        }
+        @Override
+        public boolean areContentsTheSame(@NonNull Attribute oldItem, @NonNull Attribute newItem) {
+            return oldItem.getCategory().equals(newItem.getCategory());
         }
     }
 }
