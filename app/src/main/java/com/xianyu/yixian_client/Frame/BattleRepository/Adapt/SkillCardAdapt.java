@@ -32,9 +32,14 @@ public class SkillCardAdapt extends BaseQuickAdapter<SkillCard, SkillCardAdapt.V
     protected void convert(@NotNull SkillCardAdapt.ViewHolder holder, SkillCard skillCard) {
         holder.name_text.setText(skillCard.getName());
         holder.mp_text.setText(String.format(Locale.CHINESE,"%d",skillCard.getMp()));
-        BuffAdapt buff_adapter = new BuffAdapt();
-        buff_adapter.setDiffNewData(new ArrayList<>(skillCard.getBuffs().values()));
-        holder.buffs_recycle.setAdapter(buff_adapter);
+        BuffAdapt auxiliary_buff_adapt = new BuffAdapt();
+        auxiliary_buff_adapt.setDiffNewData(new ArrayList<>(skillCard.getAuxiliary_buffs().values()));
+        holder.auxiliary_buffs_recycle.setAdapter(auxiliary_buff_adapt);
+
+        BuffAdapt enemy_buff_adapt = new BuffAdapt();
+        enemy_buff_adapt.setDiffNewData(new ArrayList<>(skillCard.getEnemy_buffs().values()));
+        holder.enemy_buffs_recycle.setAdapter(enemy_buff_adapt);
+
         AttributeAdapt attribute_adapt = new AttributeAdapt();
         attribute_adapt.setDiffNewData(new ArrayList<>(skillCard.getAttributes().values()));
         holder.attributes_recycle.setAdapter(attribute_adapt);
@@ -127,13 +132,16 @@ public class SkillCardAdapt extends BaseQuickAdapter<SkillCard, SkillCardAdapt.V
     public static class ViewHolder extends BaseViewHolder {
         MaterialTextView name_text;
         MaterialTextView mp_text;
-        RecyclerView buffs_recycle;
         RecyclerView attributes_recycle;
+        RecyclerView enemy_buffs_recycle;
+        RecyclerView auxiliary_buffs_recycle;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name_text = itemView.findViewById(R.id.name_text);
             mp_text = itemView.findViewById(R.id.mp_num_text);
-            buffs_recycle = itemView.findViewById(R.id.buffs_recycle);
+            auxiliary_buffs_recycle = itemView.findViewById(R.id.auxiliary_buffs_recycle);
+            enemy_buffs_recycle = itemView.findViewById(R.id.enemy_buffs_recycle);
             attributes_recycle = itemView.findViewById(R.id.attributes_recycle);
         }
     }

@@ -1,24 +1,23 @@
 package com.xianyu.yixian_client.Frame.Repository;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnLoadMoreListener;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
-import com.chad.library.adapter.base.module.LoadMoreModule;
-import com.xianyu.yixian_client.Frame.Repository.Adapt.BuffAdapt;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.textfield.TextInputEditText;
 import com.xianyu.yixian_client.Frame.Repository.Adapt.CardAdapt;
 import com.xianyu.yixian_client.Model.Repository.Repository;
-import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.R;
+import com.xianyu.yixian_client.databinding.BattleRepositoryHeadBinding;
 import com.xianyu.yixian_client.databinding.RepositoryFragmentBinding;
 
 import java.util.ArrayList;
@@ -45,39 +44,78 @@ public class RepositoryFragment extends Fragment {
     }
 
     private void init() {
-        CardAdapt cardAdapt = new CardAdapt();
+        CardAdapt skillCardAdapt = new CardAdapt();
         RecyclerView recyclerView = binding.getRoot().findViewById(R.id.card_frame);
-        cardAdapt.setAnimationFirstOnly(false);
-        cardAdapt.setAnimationWithDefault(BaseQuickAdapter.AnimationType.ScaleIn);
-        BaseLoadMoreModule loadMoreModule = cardAdapt.getLoadMoreModule();
+        skillCardAdapt.setAnimationFirstOnly(false);
+        skillCardAdapt.setAnimationWithDefault(BaseQuickAdapter.AnimationType.ScaleIn);
+        View head = BattleRepositoryHeadBinding.inflate(getLayoutInflater()).getRoot();
+        skillCardAdapt.addHeaderView(head);
+        BaseLoadMoreModule loadMoreModule = skillCardAdapt.getLoadMoreModule();
         loadMoreModule.setAutoLoadMore(true);
         loadMoreModule.setPreLoadNumber(10);
         loadMoreModule.setEnableLoadMoreEndClick(false);
         loadMoreModule.setOnLoadMoreListener(() -> {
-            if(viewModel.skillcards_live.getValue() == null)loadMoreModule.loadMoreFail();
-            int last_index = viewModel.skillcards_live.getValue().lastIndexOf(cardAdapt.getData().get(cardAdapt.getData().size() - 1));
-            if(last_index + 4 <= viewModel.skillcards_live.getValue().size()){
-                cardAdapt.addData(new ArrayList<>(viewModel.skillcards_live.getValue().subList(last_index + 1,last_index + 4)));
+            if(skillCardAdapt.skillCards_filters == null)loadMoreModule.loadMoreFail();
+            int last_index = skillCardAdapt.getData().size()-1;
+            if(last_index + 4 <= skillCardAdapt.skillCards_filters.size()){
+                skillCardAdapt.addData(new ArrayList<>(skillCardAdapt.skillCards_filters.subList(last_index + 1,last_index + 4)));
                 loadMoreModule.loadMoreComplete();
             }
-            else if(last_index + 1 != viewModel.skillcards_live.getValue().size()){
-                cardAdapt.addData(new ArrayList<>(viewModel.skillcards_live.getValue().subList(last_index + 1,viewModel.skillcards_live.getValue().size())));
+            else if(last_index + 1 < skillCardAdapt.skillCards_filters.size()){
+                skillCardAdapt.addData(new ArrayList<>(skillCardAdapt.skillCards_filters.subList(last_index + 1,skillCardAdapt.skillCards_filters.size())));
                 loadMoreModule.loadMoreComplete();
             }
             else{
                 loadMoreModule.loadMoreEnd();
             }
         });
-        viewModel.skillcards_live.observe(getViewLifecycleOwner(), list -> {
-            if (viewModel.skillcards_live.getValue() != null){
-                if(viewModel.skillcards_live.getValue().size() >= 20){
-                    cardAdapt.setDiffNewData(new ArrayList<>(viewModel.skillcards_live.getValue().subList(0,20)));
-                }
-                else cardAdapt.setDiffNewData(new ArrayList<>(viewModel.skillcards_live.getValue()));
-            }
-            else cardAdapt.setDiffNewData(new ArrayList<>());
+        viewModel.skillcards_live.observe(requireActivity(), skillCards -> {
+            viewModel.skillcards_live.observe(getViewLifecycleOwner(), skillCardAdapt::filter);
         });
-        recyclerView.setAdapter(cardAdapt);
+        TextInputEditText editText = head.findViewById(R.id.searchName_textInput);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                skillCardAdapt.bluePrint.setName(s.toString());
+                skillCardAdapt.filter(viewModel.skillcards_live.getValue());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        Chip physics_chip = head.findViewById(R.id.physics_chip);
+        physics_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            skillCardAdapt.bluePrint.setPhysics(isChecked);
+            skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
+
+        Chip magic_chip = head.findViewById(R.id.magic_chip);
+        magic_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            skillCardAdapt.bluePrint.setMagic(isChecked);
+            skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
+
+        Chip cure_chip = head.findViewById(R.id.cure_chip);
+        cure_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            skillCardAdapt.bluePrint.setCure(isChecked);
+            skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
+
+        Chip attack_chip = head.findViewById(R.id.attack_chip);
+        attack_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            skillCardAdapt.bluePrint.setAttack(isChecked);
+            skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
+
+        Chip eternal_chip = head.findViewById(R.id.eternal_chip);
+        eternal_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            skillCardAdapt.bluePrint.setEternal(isChecked);
+            skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
+
+        recyclerView.setAdapter(skillCardAdapt);
         viewModel.refreshSkillCards();
 
     }

@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@color/teal_200"
     android:layout_margin="5dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -20,7 +21,7 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/name_text"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="25dp"
         android:textColor="@color/black"
         android:fontFamily="@font/ziti"
         android:text="@string/skillCard_name"
@@ -36,7 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/buffs_recycle"
+        app:layout_constraintBottom_toTopOf="@id/enemy_buffs_recycle"
         app:layout_constraintVertical_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/mp_layout"
@@ -46,7 +47,22 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/buffs_recycle"
+        android:id="@+id/auxiliary_buffs_recycle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintBottom_toTopOf="@id/enemy_buffs_recycle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/enemyHp_layout"
+        app:layout_constraintTop_toBottomOf="@id/attributes_recycle"
+        tools:listitem="@layout/repository_buff_item"
+        >
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/enemy_buffs_recycle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -55,7 +71,7 @@
         app:layout_constraintBottom_toTopOf="@id/description"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/enemyHp_layout"
-        app:layout_constraintTop_toBottomOf="@id/attributes_recycle"
+        app:layout_constraintTop_toBottomOf="@id/auxiliary_buffs_recycle"
         tools:listitem="@layout/repository_buff_item"
         >
     </androidx.recyclerview.widget.RecyclerView>
@@ -72,7 +88,7 @@
         app:layout_constraintRight_toLeftOf="@id/mp_layout"
         app:layout_constraintVertical_weight="4"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buffs_recycle">
+        app:layout_constraintTop_toBottomOf="@id/enemy_buffs_recycle">
     </com.google.android.material.textview.MaterialTextView>
 
     <androidx.appcompat.widget.LinearLayoutCompat

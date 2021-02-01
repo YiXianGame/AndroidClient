@@ -23,13 +23,15 @@ import java.util.Locale;
 
 public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> implements LoadMoreModule {
     public BluePrint bluePrint = new BluePrint();
+    public List<SkillCard> skillCards_filters;
     public  CardAdapt(){
         super(R.layout.repository_card_item);
         this.setDiffCallback(new DiffCallBack());
     }
 
-    public void filter() {
-        List<SkillCard> origin_data = null;
+    public void filter(List<SkillCard> origin_data){
+        getData().removeAll(getData());
+        notifyDataSetChanged();
         ArrayList<SkillCard> newValues = new ArrayList<>(origin_data);
         for (SkillCard value : origin_data) {
             if (!bluePrint.getName().equals("") && !value.getName().contains(bluePrint.getName())) {
@@ -46,16 +48,29 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
                 newValues.remove(value);
             }
         }
+        skillCards_filters = newValues;
+        if(skillCards_filters.size() >= 9){
+            setDiffNewData(new ArrayList<>(skillCards_filters.subList(0,10)));
+        }
+        else {
+            setDiffNewData(new ArrayList<>(skillCards_filters));
+        }
     }
 
     @Override
     protected void convert(@NotNull CardAdapt.ViewHolder  viewHolder, SkillCard skillCard) {
-        BuffAdapt buff_adapter = new BuffAdapt();
-        buff_adapter.setDiffNewData(new ArrayList<>(skillCard.getBuffs().values()));
-        viewHolder.buffs_recycle.setAdapter(buff_adapter);
+        BuffAdapt auxiliary_buff_adapt = new BuffAdapt();
+        auxiliary_buff_adapt.setDiffNewData(new ArrayList<>(skillCard.getAuxiliary_buffs().values()));
+        viewHolder.auxiliary_buffs_recycle.setAdapter(auxiliary_buff_adapt);
+
+        BuffAdapt enemy_buff_adapter = new BuffAdapt();
+        enemy_buff_adapter.setDiffNewData(new ArrayList<>(skillCard.getEnemy_buffs().values()));
+        viewHolder.enemy_buffs_recycle.setAdapter(enemy_buff_adapter);
+
         AttributeAdapt attribute_adapt = new AttributeAdapt();
         attribute_adapt.setDiffNewData(new ArrayList<>(skillCard.getAttributes().values()));
         viewHolder.attributes_recycle.setAdapter(attribute_adapt);
+
         viewHolder.name_text.setText(skillCard.getName());
         viewHolder.description.setText(skillCard.getDescription());
         viewHolder.mp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getMp()));
@@ -82,7 +97,6 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
 
         public void setName(String name) {
             this.name = name;
-            filter();
         }
 
         public boolean isCure() {
@@ -91,7 +105,6 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
 
         public void setCure(boolean cure) {
             this.cure = cure;
-            filter();
         }
 
         public boolean isAttack() {
@@ -100,7 +113,6 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
 
         public void setAttack(boolean attack) {
             this.attack = attack;
-            filter();
         }
 
         public boolean isMagic() {
@@ -109,7 +121,6 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
 
         public void setMagic(boolean magic) {
             this.magic = magic;
-            filter();
         }
 
         public boolean isPhysics() {
@@ -118,7 +129,6 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
 
         public void setPhysics(boolean physics) {
             this.physics = physics;
-            filter();
         }
 
         public boolean isEternal() {
@@ -127,7 +137,6 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
 
         public void setEternal(boolean eternal) {
             this.eternal = eternal;
-            filter();
         }
     }
     public class ViewHolder extends BaseViewHolder {
@@ -142,7 +151,8 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
         MaterialTextView max_auxiliary;
         MaterialTextView mp_text;
         RecyclerView attributes_recycle;
-        RecyclerView buffs_recycle;
+        RecyclerView enemy_buffs_recycle;
+        RecyclerView auxiliary_buffs_recycle;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name_text = itemView.findViewById(R.id.name_text);
@@ -156,7 +166,8 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
             max_auxiliary =itemView.findViewById(R.id.max_auxiliary_num_text);
             mp_text =itemView.findViewById(R.id.mp_num_text);
             attributes_recycle = itemView.findViewById(R.id.attributes_recycle);
-            buffs_recycle = itemView.findViewById(R.id.buffs_recycle);
+            auxiliary_buffs_recycle = itemView.findViewById(R.id.auxiliary_buffs_recycle);
+            enemy_buffs_recycle = itemView.findViewById(R.id.enemy_buffs_recycle);
         }
     }
     protected class DiffCallBack extends DiffUtil.ItemCallback<SkillCard>{

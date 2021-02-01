@@ -30,7 +30,6 @@ import io.reactivex.schedulers.Schedulers;
  * @Version: 1.0
  */
 public class RepositoryViewModel extends ViewModel {
-    MutableLiveData<String> message = new MutableLiveData<>();
     MutableLiveData<List<SkillCard>> skillcards_live = new MutableLiveData<>();
     public void refreshSkillCards(){
         disposable.add(repository.queryAllSkillCards().observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())

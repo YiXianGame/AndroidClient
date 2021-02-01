@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
         android:name=".XYApplication"
         android:allowBackup="true"
@@ -24,6 +24,7 @@
         <activity
             android:name=".Frame.Login.Login_Activity"
             android:screenOrientation="landscape">
+
         </activity>
     </application>
 

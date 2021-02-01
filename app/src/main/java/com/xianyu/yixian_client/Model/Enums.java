@@ -14,7 +14,7 @@ package com.xianyu.yixian_client.Model;
  */
 
 public class Enums {
-    public enum Room_Type { Solo,Team, Battle_Royale};
+    public enum Room_Type { Round_Solo,Round_Team, Round_BattleRoyale,RealTime_Solo,RealTime_Team,RealTime_BattleRoyale};
     public enum Room {  Wait, Raise, Action, Result };
     public enum Power { Human, Monster, Neutral};//所属势力
     public enum Player_Active { Round,Immediate,Map };

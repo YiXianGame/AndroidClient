@@ -73,17 +73,28 @@ public class SkillCard {
 
     @Expose
     @TypeConverters(BuffConvert.class)
-    HashMap<Buff.Category,Buff> buffs = new HashMap<>();
+    HashMap<Buff.Category,Buff> enemy_buffs = new HashMap<>();
+    @Expose
+    @TypeConverters(BuffConvert.class)
+    HashMap<Buff.Category,Buff> auxiliary_buffs = new HashMap<>();
     @Expose
     @TypeConverters(AttributeConvert.class)
     HashMap<Attribute.Category,Attribute> attributes = new HashMap<>();
 
-    public HashMap<Buff.Category, Buff> getBuffs() {
-        return buffs;
+    public HashMap<Buff.Category, Buff> getEnemy_buffs() {
+        return enemy_buffs;
     }
 
-    public void setBuffs(HashMap<Buff.Category, Buff> buffs) {
-        this.buffs = buffs;
+    public void setEnemy_buffs(HashMap<Buff.Category, Buff> enemy_buffs) {
+        this.enemy_buffs = enemy_buffs;
+    }
+
+    public HashMap<Buff.Category, Buff> getAuxiliary_buffs() {
+        return auxiliary_buffs;
+    }
+
+    public void setAuxiliary_buffs(HashMap<Buff.Category, Buff> auxiliary_buffs) {
+        this.auxiliary_buffs = auxiliary_buffs;
     }
 
     public HashMap<Attribute.Category, Attribute> getAttributes() {

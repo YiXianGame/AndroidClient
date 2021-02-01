@@ -34,6 +34,7 @@ import com.xianyu.yixian_client.Model.Room.Entity.CardGroup;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.BattleRepositoryFragmentBinding;
+import com.xianyu.yixian_client.databinding.BattleRepositoryHeadBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +67,8 @@ public class BattleRepository_Fragment extends Fragment {
         SkillCardAdapt skillCardAdapt = new SkillCardAdapt();
         skillCardAdapt.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInLeft);
         skillCardAdapt.setAnimationFirstOnly(false);
+        View head = BattleRepositoryHeadBinding.inflate(getLayoutInflater()).getRoot();
+        skillCardAdapt.addHeaderView(head);
         BaseLoadMoreModule loadMoreModule = skillCardAdapt.getLoadMoreModule();
         loadMoreModule.setAutoLoadMore(true);
         loadMoreModule.setPreLoadNumber(10);
@@ -90,7 +93,7 @@ public class BattleRepository_Fragment extends Fragment {
             viewModel.skillcards_live.observe(getViewLifecycleOwner(), skillCardAdapt::filter);
         });
 
-        TextInputEditText editText = binding.getRoot().findViewById(R.id.searchName_textInput);
+        TextInputEditText editText = head.findViewById(R.id.searchName_textInput);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -108,30 +111,31 @@ public class BattleRepository_Fragment extends Fragment {
 
             }
         });
-        Chip physics_chip = binding.getRoot().findViewById(R.id.physics_chip);
+        Chip physics_chip = head.findViewById(R.id.physics_chip);
         physics_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             skillCardAdapt.bluePrint.setPhysics(isChecked);
             skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
 
-        Chip magic_chip = binding.getRoot().findViewById(R.id.magic_chip);
+        Chip magic_chip = head.findViewById(R.id.magic_chip);
         magic_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             skillCardAdapt.bluePrint.setMagic(isChecked);
             skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
 
-        Chip cure_chip = binding.getRoot().findViewById(R.id.cure_chip);
+        Chip cure_chip = head.findViewById(R.id.cure_chip);
         cure_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             skillCardAdapt.bluePrint.setCure(isChecked);
             skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
 
-        Chip attack_chip = binding.getRoot().findViewById(R.id.attack_chip);
+        Chip attack_chip = head.findViewById(R.id.attack_chip);
         attack_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             skillCardAdapt.bluePrint.setAttack(isChecked);
             skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
 
-        Chip eternal_chip = binding.getRoot().findViewById(R.id.eternal_chip);
+        Chip eternal_chip = head.findViewById(R.id.eternal_chip);
         eternal_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             skillCardAdapt.bluePrint.setEternal(isChecked);
             skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
+
         viewModel.refreshSkillCards();
 
         RecyclerView group_recycle = binding.getRoot().findViewById(R.id.group_layout);

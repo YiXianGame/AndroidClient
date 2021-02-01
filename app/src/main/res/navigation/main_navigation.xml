@@ -31,9 +31,12 @@
         android:name="com.xianyu.yixian_client.Frame.Main.Fragment.ChooseMode_Fragment"
         android:label="ChooseMode_Fragment" >
         <argument
-            android:name="roomMode"
-            app:argType="com.xianyu.yixian_client.Model.Enums$Room_Type"
-            android:defaultValue="Solo" />
+            android:name="gameMode"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_chooseMode_dest_to_readyFragment"
+            app:destination="@id/readyFragment" />
     </fragment>
     <fragment
         android:id="@+id/battleRepository_Fragment"
@@ -52,6 +55,15 @@
         android:name="com.xianyu.yixian_client.Frame.Repository.RepositoryFragment"
         android:label="repository_fragment"
         tools:layout="@layout/repository_fragment" />
-
+    <fragment
+    android:id="@+id/readyFragment"
+    android:name="com.xianyu.yixian_client.Frame.Main.Fragment.Ready_Fragment"
+    android:label="ready_fragment"
+    tools:layout="@layout/main_ready_fragment" >
+        <argument
+            android:name="roomMode"
+            app:argType="com.xianyu.yixian_client.Model.Enums$Room_Type"
+            android:defaultValue="Round_Solo" />
+    </fragment>
 
 </navigation>

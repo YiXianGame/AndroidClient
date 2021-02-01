@@ -1,19 +1,15 @@
-package com.xianyu.yixian_client.Frame.FriendSystem.Adapt;
+package com.xianyu.yixian_client.Frame.Main.Adapt;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.R;
 
@@ -23,14 +19,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Friend_Adapt extends BaseQuickAdapter<User,Friend_Adapt.ViewHolder> implements LoadMoreModule {
-    public List<User> friends_filters;
+public class ReadyInvite_Adapt extends BaseQuickAdapter<User, ReadyInvite_Adapt.ViewHolder> implements LoadMoreModule {
     public Filter_BluePrint bluePrint = new Filter_BluePrint();
-    public Friend_Adapt(){
-        super(R.layout.friend_item);
+    public ReadyInvite_Adapt(){
+        super(R.layout.main_ready_invite_item);
         setDiffCallback(new DiffCallBack());
     }
-    public void filter(List<User> friends) {
+    public List<User> filter(List<User> friends) {
         ArrayList<User> filters = new ArrayList<>();
         for(User item : friends){
             if(item.getNickName().contains(bluePrint.getNickName()) || bluePrint.getNickName().equals(""))filters.add(item);
@@ -42,42 +37,45 @@ public class Friend_Adapt extends BaseQuickAdapter<User,Friend_Adapt.ViewHolder>
         if(bluePrint.isActive()){
             filters.sort((o1, o2) -> o1.getActive().compareTo((User.State) o2.getActive()));
         }
-        setDiffNewData(filters);
-        friends_filters = filters;
-        if(friends_filters.size() >= 9){
-            setDiffNewData(new ArrayList<>(friends_filters.subList(0,10)));
+        if(bluePrint.isReverse()){
+            Collections.reverse(filters);
         }
-        else {
-            setDiffNewData(new ArrayList<>(friends_filters));
-        }
+        return filters;
     }
     @Override
     protected void convert(@NotNull ViewHolder holder, User friend) {
         holder.nickname_text.setText(friend.getNickName());
         holder.level_text.setText(Integer.toString(friend.getLv()));
-        holder.deleteFriend_button.setOnClickListener(v -> {
-            remove(friend);//这步没有同步到数据库
-        });
         holder.active_text.setText(friend.getActive().toString());
+        holder.head_image.setImageResource(R.drawable.touxiang);
     }
 
     public static class ViewHolder extends BaseViewHolder {
         TextView nickname_text;
         TextView level_text;
         TextView active_text;
-        Button deleteFriend_button;
+        ImageView head_image;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nickname_text = itemView.findViewById(R.id.nickname_text);
             level_text = itemView.findViewById(R.id.level);
             active_text = itemView.findViewById(R.id.active_text);
-            deleteFriend_button = itemView.findViewById(R.id.deleteFriend_button);
+            head_image = itemView.findViewById(R.id.head_image);
         }
     }
     public class Filter_BluePrint{
         String nickName = "";
         boolean active = false;
         boolean level = false;
+        boolean reverse = false;
+
+        public boolean isReverse() {
+            return reverse;
+        }
+
+        public void setReverse(boolean reverse) {
+            this.reverse = reverse;
+        }
 
         public String getNickName() {
             return nickName;

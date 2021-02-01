@@ -1,12 +1,16 @@
 package com.xianyu.yixian_client.Model.Room.Entity;
 
+import android.graphics.Bitmap;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
 import com.xianyu.yixian_client.Model.Room.Convert.ActiveConvert;
+import com.xianyu.yixian_client.Model.Room.Convert.BytesConvert;
 import com.xianyu.yixian_client.Model.Room.Convert.GroupConvert;
 import com.xianyu.yixian_client.Model.Room.Convert.HistoryConvert;
 
@@ -33,6 +37,9 @@ public class User
     private long id;
     @Expose
     private String userName;
+    @TypeConverters(BytesConvert.class)
+    @Expose
+    private byte[] headImage;
     @Expose
     private String nickName;
     @Expose
@@ -61,25 +68,31 @@ public class User
     @Expose
     private int deaths;//死亡数
     @Expose
-    int registerDate;//卡牌注册日期
+    long registerDate;//注册日期
+    @Expose
+    long update;//卡牌更新日期
 
-    public int getRegisterDate() {
-        return registerDate;
+    public byte[] getHeadImage() {
+        return headImage;
     }
 
-    public void setRegisterDate(int registerDate) {
+    public void setHeadImage(byte[] headImage) {
+        this.headImage = headImage;
+    }
+
+    public void setRegisterDate(long registerDate) {
         this.registerDate = registerDate;
     }
 
-    @Expose
-    int update;//卡牌更新日期
+    public long getRegisterDate() {
+        return registerDate;
+    }
 
-
-    public int getUpdate() {
+    public long getUpdate() {
         return update;
     }
 
-    public void setUpdate(int update_data) {
+    public void setUpdate(long update_data) {
         this.update = update_data;
     }
     @Expose

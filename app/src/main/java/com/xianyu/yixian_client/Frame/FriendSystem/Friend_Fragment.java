@@ -1,5 +1,6 @@
 package com.xianyu.yixian_client.Frame.FriendSystem;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -56,9 +57,9 @@ public class Friend_Fragment extends Fragment {
         loadMoreModule.setEnableLoadMoreEndClick(false);
         loadMoreModule.setPreLoadNumber(1 );
         loadMoreModule.setOnLoadMoreListener(() -> {
-            List<User> users = friend_adapt.filter(viewModel.friends_live.getValue());
+            List<User> users = friend_adapt.friends_filters;
             if(users == null)loadMoreModule.loadMoreFail();
-            int last_index = users.lastIndexOf(friend_adapt.getData().get(friend_adapt.getData().size() - 1));
+            int last_index = friend_adapt.getData().size() - 1;
             if(last_index + 1 < users.size()){
                 friend_adapt.addData(new ArrayList<>(users.subList(last_index + 1,last_index + 2)));
                 loadMoreModule.loadMoreComplete();
@@ -67,23 +68,12 @@ public class Friend_Fragment extends Fragment {
                 loadMoreModule.loadMoreEnd();
             }
         });
-        viewModel.friends_live.observe(getViewLifecycleOwner(), list -> {
-            List<User> users = friend_adapt.filter(viewModel.friends_live.getValue());
-            if (users != null){
-                if(users.size() >= 9){
-                    friend_adapt.setDiffNewData(users.subList(0,9));
-                }
-                else friend_adapt.setDiffNewData(users);
-            }
-            else friend_adapt.setDiffNewData(new ArrayList<>());
-        });
+        viewModel.friends_live.observe(getViewLifecycleOwner(), friend_adapt::filter);
         viewModel.refreshFriends(Core.liveUser.getValue().getId());
         CheckBox checkBox = binding.getRoot().findViewById(R.id.levelSort_check);
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {friend_adapt.bluePrint.setLevel(isChecked);friend_adapt.setDiffNewData(friend_adapt.filter(viewModel.friends_live.getValue()));});
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {friend_adapt.bluePrint.setLevel(isChecked);friend_adapt.filter(viewModel.friends_live.getValue());});
         checkBox = binding.getRoot().findViewById(R.id.activeSort_check);
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {friend_adapt.bluePrint.setActive(isChecked);friend_adapt.setDiffNewData(friend_adapt.filter(viewModel.friends_live.getValue()));});
-        checkBox = binding.getRoot().findViewById(R.id.reverseSort_check);
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {friend_adapt.bluePrint.setReverse(isChecked);friend_adapt.setDiffNewData(friend_adapt.filter(viewModel.friends_live.getValue()));});
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {friend_adapt.bluePrint.setActive(isChecked);friend_adapt.filter(viewModel.friends_live.getValue());});
         TextInputEditText name_textInput = binding.getRoot().findViewById(R.id.search_textInput);
         name_textInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -94,7 +84,7 @@ public class Friend_Fragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 friend_adapt.bluePrint.setNickName(s.toString());
-                friend_adapt.setDiffNewData(friend_adapt.filter(new ArrayList<>(viewModel.friends_live.getValue())));
+                friend_adapt.filter(viewModel.friends_live.getValue());
             }
 
             @Override
@@ -103,5 +93,6 @@ public class Friend_Fragment extends Fragment {
             }
         });
         recyclerView.setAdapter(friend_adapt);
+        viewModel.refreshFriends(Core.liveUser.getValue().getId());
     }
 }

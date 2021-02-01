@@ -48,12 +48,12 @@ public class Main_Fragment extends Fragment {
         Button realTime_button = binding.getRoot().findViewById(R.id.realTime_button);
         round_button.setOnClickListener(v -> {
             Main_FragmentDirections.ActionMainDestToChooseModeDest action = Main_FragmentDirections.actionMainDestToChooseModeDest();
-            action.setRoomMode(Enums.Room_Type.Battle_Royale);
+            action.setGameMode(0);
             Navigation.findNavController(v).navigate(action);
         });
         realTime_button.setOnClickListener(v -> {
             Main_FragmentDirections.ActionMainDestToChooseModeDest action = Main_FragmentDirections.actionMainDestToChooseModeDest();
-            action.setRoomMode(Enums.Room_Type.Battle_Royale);
+            action.setGameMode(1);
             Navigation.findNavController(v).navigate(action);
         });
         TabLayout menu = binding.getRoot().findViewById(R.id.menu_tab);

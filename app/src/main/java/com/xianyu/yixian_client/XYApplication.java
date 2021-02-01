@@ -1,9 +1,15 @@
 package com.xianyu.yixian_client;
 
 import android.app.Application;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.provider.ContactsContract;
 import android.util.Pair;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.load.resource.bitmap.BitmapDrawableEncoder;
+import com.bumptech.glide.module.AppGlideModule;
 import com.xianyu.yixian_client.Model.Repository.Repository;
 import com.xianyu.yixian_client.Model.Room.Entity.Attribute;
 import com.xianyu.yixian_client.Model.Room.Entity.Buff;
@@ -13,14 +19,23 @@ import com.xianyu.yixian_client.Model.Room.Entity.History;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.HiltAndroidApp;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @ProjectName: YiXian_Client
@@ -38,23 +53,30 @@ import dagger.hilt.android.HiltAndroidApp;
 public class XYApplication extends Application {
     @Inject
     Repository repository;
+    @GlideModule
+    public final class MyGlideModule extends AppGlideModule {}
     @Override
     public void onCreate() {
         super.onCreate();
         try {
             init_data();
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }
 
-    private void init_data() throws InterruptedException {
+    private void init_data() throws InterruptedException, ExecutionException {
         Random random = new Random();
         CardGroup cardGroup;
         User owner = new User();
         owner.setNickName("涯丶");
         owner.setMoney(1234);
         owner.setExp(12);
+        Observable.create((ObservableOnSubscribe<byte[]>) emitter -> {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            Glide.with(this).asBitmap().load(R.drawable.touxiang).submit().get().compress(Bitmap.CompressFormat.JPEG,50,out);
+            owner.setHeadImage(out.toByteArray());
+        }).subscribeOn(Schedulers.io()).subscribe();
         owner.setBattle_Count(42);
         owner.setLv(2);
         owner.setUserName("839336369");
@@ -75,7 +97,7 @@ public class XYApplication extends Application {
         Buff buff;
         for(int i=0;i<2000;i++){
             skillCard = new SkillCard();
-            skillCard.setName(getRandomChineseString(6));
+            skillCard.setName(getRandomChineseString(10));
             if(random.nextInt(10) > 5) skillCard.getAttributes().put(Attribute.Category.Attack,new Attribute(Attribute.Category.Attack));
             if(random.nextInt(10) > 5) skillCard.getAttributes().put(Attribute.Category.Cure,new Attribute(Attribute.Category.Cure));
             if(random.nextInt(10) > 5) skillCard.getAttributes().put(Attribute.Category.Magic,new Attribute(Attribute.Category.Magic));
@@ -93,7 +115,12 @@ public class XYApplication extends Application {
             for(int j=0;j<random.nextInt(5);j++){
                 buff = new Buff();
                 buff.setCategory(Buff.Category.Freeze);
-                skillCard.getBuffs().put(Buff.Category.Freeze,buff);
+                skillCard.getAuxiliary_buffs().put(Buff.Category.Freeze,buff);
+            }
+            for(int j=0;j<random.nextInt(5);j++){
+                buff = new Buff();
+                buff.setCategory(Buff.Category.Freeze);
+                skillCard.getEnemy_buffs().put(Buff.Category.Freeze,buff);
             }
             repository.insertSkillCard(skillCard);
         }
@@ -182,4 +209,5 @@ public class XYApplication extends Application {
         }
         return stringBuilder.toString();
     }
+
 }

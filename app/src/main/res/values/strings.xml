@@ -81,4 +81,9 @@
     <string name="game_history">游戏战绩</string>
     <string name="personal_signature">个性签名</string>
     <string name="history_score">得分</string>
+    <string name="main_invite">邀请</string>
+    <string name="solo_mode">单挑模式</string>
+    <string name="team_mode">团队模式</string>
+    <string name="servive_mode">生存模式</string>
+    <string name="main_change_pos">换位</string>
 </resources>

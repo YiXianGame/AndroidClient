@@ -16,6 +16,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.module.AppGlideModule;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.xianyu.yixian_client.Core;
@@ -24,6 +26,7 @@ import com.xianyu.yixian_client.Model.Enums;
 import com.xianyu.yixian_client.Model.Repository.Repository;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.R;
+import com.xianyu.yixian_client.XYApplication;
 import com.xianyu.yixian_client.databinding.MainActivityBinding;
 
 import java.util.ArrayList;
@@ -55,6 +58,7 @@ public class Main_Activity extends AppCompatActivity {
     }
 
     private void init() {
+
         videoView = binding.getRoot().findViewById(R.id.videoView_main);
         videoView.setVideoPath(Uri.parse("android.resource://" + getPackageName() + "/raw/" + R.raw.cg_bg).toString());
         videoView.setOnPreparedListener(mp -> mp.setLooping(true));
@@ -66,7 +70,7 @@ public class Main_Activity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mediaPlayer.start();
+        //mediaPlayer.start();
         videoView.start();
     }
 
