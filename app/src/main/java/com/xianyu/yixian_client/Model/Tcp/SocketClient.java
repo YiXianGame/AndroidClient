@@ -48,7 +48,6 @@ public class SocketClient {
         this.port = port;
     }
     public void start() throws Exception {
-        //客户端写得可能有点花里胡哨,
         NioEventLoopGroup group = new NioEventLoopGroup();
         try {
             bootstrap = new Bootstrap();                //1
@@ -60,7 +59,6 @@ public class SocketClient {
                         public void initChannel(SocketChannel ch)
                                 throws Exception {
                             ch.pipeline().addLast(new CustomDecoder());
-                            ch.pipeline().addLast(new StringDecoder());
 
                             ch.pipeline().addLast(new IdleStateHandler(0,0,5));
                             ch.pipeline().addLast(new CustomHeartbeatHandler(SocketClient.this));

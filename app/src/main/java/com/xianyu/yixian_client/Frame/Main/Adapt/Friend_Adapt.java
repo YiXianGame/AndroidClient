@@ -1,6 +1,5 @@
 package com.xianyu.yixian_client.Frame.Main.Adapt;
 
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -109,7 +108,7 @@ public class Friend_Adapt extends BaseQuickAdapter<User,Friend_Adapt.ViewHolder>
         }
         @Override
         public boolean areContentsTheSame(@NonNull User oldItem, @NonNull User newItem) {
-            return oldItem.getUpdate() == newItem.getUpdate();
+            return (oldItem.getAttribute_update() == newItem.getAttribute_update() && oldItem.getHeadImage_update() == newItem.getHeadImage_update());
         }
     }
 }

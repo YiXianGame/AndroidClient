@@ -14,10 +14,6 @@ public class Attribute {
     public void setCategory(Category category) {
         this.category = category;
     }
-
-    public Attribute(){
-
-    }
     public Attribute(Category category){
         this.category = category;
     }

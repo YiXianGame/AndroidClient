@@ -20,6 +20,6 @@ public class RemoteRepositoryAndroidTest {
     }
     @Test
     public void SendMessage(){
-        Observable.create((ObservableOnSubscribe<Void>) emitter -> repository.userDao.hello("你好")).subscribeOn(Schedulers.io()).subscribe();
+        Observable.create((ObservableOnSubscribe<Void>) emitter -> repository.userRequest.hello("你好")).subscribeOn(Schedulers.io()).subscribe();
     }
 }

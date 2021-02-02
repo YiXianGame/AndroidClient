@@ -17,12 +17,15 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.DepthPageTransformer;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.Login_Fragment_Adapter;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
 import com.xianyu.yixian_client.Frame.Main.MainViewModel;
 import com.xianyu.yixian_client.Model.Log.Log.Tag;
+import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.Model.ShortCode.MessageDialog;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.LoginMainFragmentBinding;
@@ -104,8 +107,12 @@ public class Main_Fragment extends Fragment {
             MessageDialog.Error_Dialog(getContext(),"登录失败","内容不能为空");
         }
         else {
-            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_login_Activity_to_main_navigation);
-            requireActivity().finish();
+            Core.liveUser.getValue().setNickName("涯");
+            viewModel.repository.test(Core.liveUser.getValue()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(result ->{
+                Log.d(Tag.RemoteRepository,"后台修改后新的用户昵称为:" + result.getNickName());
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_login_Activity_to_main_navigation);
+                requireActivity().finish();
+            });
         }
     }
 
@@ -114,7 +121,12 @@ public class Main_Fragment extends Fragment {
             MessageDialog.Error_Dialog(getContext(),"注册失败","内容不能为空");
         }
         else if(Core.liveUser.getValue().getPasswords().equals(viewModel.surePassword.getValue())){
-
+            viewModel.repository.registerUser(Core.liveUser.getValue()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(result->{
+                if(result){
+                    MessageDialog.Confirm_Dialog(getContext(),"注册成功","恭喜您，注册成功！");
+                }
+                else MessageDialog.Confirm_Dialog(getContext(),"注册失败","抱歉，用户可能已存在！");
+            });
         }
         else MessageDialog.Error_Dialog(getContext(),"注册失败","重复密码与密码不一致");
     }

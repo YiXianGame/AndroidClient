@@ -75,7 +75,7 @@ public class XYApplication extends Application {
         Observable.create((ObservableOnSubscribe<byte[]>) emitter -> {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             Glide.with(this).asBitmap().load(R.drawable.touxiang).submit().get().compress(Bitmap.CompressFormat.JPEG,50,out);
-            owner.setHeadImage(out.toByteArray());
+            //owner.setHeadImage(out.toByteArray());
         }).subscribeOn(Schedulers.io()).subscribe();
         owner.setBattle_Count(42);
         owner.setLv(2);

@@ -1,4 +1,4 @@
-package com.xianyu.yixian_client.Model.Repository;
+package com.xianyu.yixian_client.Model.Repository.Interface;
 
 import com.xianyu.yixian_client.Model.Room.Entity.Friend;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
@@ -20,7 +20,7 @@ import io.reactivex.Single;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-interface ILocalRepository {
+public interface ILocalRepository {
 
     public void insertUser(User user);
     public void deleteUser(User user);

@@ -5,6 +5,7 @@ import com.xianyu.yixian_client.Model.RPC.ClientResponseModel;
 import com.xianyu.yixian_client.Model.RPC.ServerRequestModel;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import io.netty.buffer.ByteBuf;
@@ -34,11 +35,11 @@ public class CustomDecoder extends ByteToMessageDecoder {
                     //收到的数据足够成包,开始组包.
                     content.writeBytes(in.array(),readerIndex,needRemain);
                     if(pattern == 0){
-                        out.add(Core.gson.fromJson(content.toString(Charset.forName("UTF-8")), ServerRequestModel.class));
+                        out.add(Core.gson.fromJson(content.toString(StandardCharsets.UTF_8), ServerRequestModel.class));
                     }
                     else {
-                        out.add(Core.gson.fromJson(content.toString(Charset.forName("UTF-8")), ClientResponseModel.class));
-                    }
+                        out.add(Core.gson.fromJson(content.toString(StandardCharsets.UTF_8), ClientResponseModel.class));
+                    }   
                     content.resetWriterIndex();
                     readerIndex += needRemain;
                     needRemain = 0;

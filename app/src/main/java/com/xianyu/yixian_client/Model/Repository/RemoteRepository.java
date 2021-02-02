@@ -3,18 +3,20 @@ package com.xianyu.yixian_client.Model.Repository;
 import android.util.Log;
 
 import com.xianyu.yixian_client.Model.Log.Log.Tag;
-import com.xianyu.yixian_client.Model.RPC.Adapt.Command;
+import com.xianyu.yixian_client.Model.RPC.Server.CommandServer;
 import com.xianyu.yixian_client.Model.RPC.RPCAdaptFactory;
 import com.xianyu.yixian_client.Model.RPC.RPCException;
 import com.xianyu.yixian_client.Model.RPC.RPCRequestProxyFactory;
 import com.xianyu.yixian_client.Model.RPC.RPCType;
-import com.xianyu.yixian_client.Model.RPC.Request.UserDao;
+import com.xianyu.yixian_client.Model.RPC.Request.FriendRequest;
+import com.xianyu.yixian_client.Model.RPC.Request.UserRequest;
+import com.xianyu.yixian_client.Model.Repository.Interface.IRemoteRepository;
+import com.xianyu.yixian_client.Model.Room.Entity.Friend;
+import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
+import com.xianyu.yixian_client.Model.Room.Entity.User;
 
 import java.text.DecimalFormat;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.schedulers.Schedulers;
+import java.util.List;
 
 /**
  * @ProjectName: YiXian_Client
@@ -28,8 +30,10 @@ import io.reactivex.schedulers.Schedulers;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class RemoteRepository {
-    public UserDao userDao;
+public class RemoteRepository implements IRemoteRepository {
+    public UserRequest userRequest;
+    public FriendRequest friendRequest;
+
     public RemoteRepository(){
         boolean test = true;
         if(test){
@@ -39,15 +43,91 @@ public class RemoteRepository {
                 type.add(int.class,"int",obj -> Integer.parseInt(DecimalFormat.getIntegerInstance().format(obj)));
                 type.add(String.class,"string");
                 type.add(boolean.class,"bool");
+                type.add(long.class,"long",obj -> Double.valueOf((double)obj).longValue());
+                type.add(SkillCard.class,"skillCard");
+                type.add(User.class,"user");
             }
             catch (RPCException e){
                 Log.e(Tag.RemoteRepository,e.getMessage());
                 e.printStackTrace();
             }
             //每一个Service都可以拥有自己的TypeConvert.
-            userDao = RPCRequestProxyFactory.Register(UserDao.class,"User","192.168.0.105","28015",type);
-            RPCAdaptFactory.Register(Command.class,"Command","192.168.0.105","28015",type);
-            Observable.create((ObservableOnSubscribe<Void>) emitter -> Log.d(Tag.Debug,userDao.hello("你好"))).subscribeOn(Schedulers.io()).subscribe();
+            userRequest = RPCRequestProxyFactory.Register(UserRequest.class,"User","192.168.0.105","28015",type);
+            RPCAdaptFactory.Register(CommandServer.class,"UserCommand","192.168.0.105","28015",type);
+            //Observable.create((ObservableOnSubscribe<Void>) emitter -> Log.d(Tag.Debug,userDao.hello("你好"))).subscribeOn(Schedulers.io()).subscribe();
         }
+    }
+    public User test(User user){
+        return userRequest.test(user);
+    }
+
+    @Override
+    public long registerUser(User user) {
+        return userRequest.RegisterUser(user);
+    }
+
+    @Override
+    public void updateUser(User user) {
+
+    }
+
+    @Override
+    public User queryUserByUserName(String userName) {
+        return null;
+    }
+
+    @Override
+    public User queryUserById(long id) {
+        return null;
+    }
+
+    @Override
+    public void insertFriend(Friend... friends) {
+
+    }
+
+    @Override
+    public void deleteFriend(Friend... friends) {
+
+    }
+
+    @Override
+    public void updateFriend(Friend... friends) {
+
+    }
+
+    @Override
+    public List<Friend> queryFriends(long user_id) {
+        return null;
+    }
+
+    @Override
+    public void insertSkillCard(SkillCard... skillCards) {
+
+    }
+
+    @Override
+    public void deleteSkillCard(SkillCard... skillCards) {
+
+    }
+
+    @Override
+    public void updateSkillCard(SkillCard... skillCards) {
+
+    }
+
+    @Override
+    public List<SkillCard> querySkillCardByAuthor(long user_id) {
+        return null;
+    }
+
+    @Override
+    public SkillCard querySkillCardById(long id) {
+        return null;
+    }
+
+    @Override
+    public List<User> queryAllFriendUsers(long user_id) {
+        return null;
     }
 }

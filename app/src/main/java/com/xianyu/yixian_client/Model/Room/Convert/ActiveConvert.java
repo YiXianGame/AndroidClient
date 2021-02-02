@@ -6,11 +6,11 @@ import com.xianyu.yixian_client.Model.Room.Entity.User;
 
 public class ActiveConvert {
     @TypeConverter
-    public String enumToString(Enum value){
+    public String enumToString(User.State value){
         return value.toString();
     }
     @TypeConverter
-    public Enum stringToEnum(String value){
-        return Enum.valueOf(User.State.class,value);
+    public User.State stringToEnum(String value){
+        return User.State.valueOf(User.State.class,value);
     }
 }

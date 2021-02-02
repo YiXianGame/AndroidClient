@@ -40,6 +40,7 @@ public class Main_Fragment extends Fragment {
 
     @Override
     public void onDestroy() {
+
         onDestroyView();
         super.onDestroy();
     }

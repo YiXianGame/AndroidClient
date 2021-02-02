@@ -1,11 +1,8 @@
 package com.xianyu.yixian_client.Frame.Main.Adapt;
 
-import android.media.Image;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -13,7 +10,6 @@ import androidx.recyclerview.widget.DiffUtil;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.xianyu.yixian_client.Model.Log.Log.Tag;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.R;
 
@@ -37,7 +33,7 @@ public class ReadyUser_Adapt extends BaseQuickAdapter<User,ReadyUser_Adapt.ViewH
         }
         @Override
         public boolean areContentsTheSame(@NonNull User oldItem, @NonNull User newItem) {
-            return oldItem.getUpdate() == newItem.getUpdate();
+            return oldItem.getAttribute_update() == newItem.getAttribute_update();
         }
     }
     public class ViewHolder extends BaseViewHolder {

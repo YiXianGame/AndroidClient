@@ -1,13 +1,26 @@
 package com.xianyu.yixian_client.Frame.Login;
 
+import android.annotation.SuppressLint;
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.xianyu.yixian_client.Model.Log.Log.Tag;
 import com.xianyu.yixian_client.Model.Repository.Repository;
+import com.xianyu.yixian_client.Model.Room.Entity.User;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -25,10 +38,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class LoginViewModel extends ViewModel {
     public MutableLiveData<String> verificationCode = new MutableLiveData<String>();
     public MutableLiveData<String> surePassword = new MutableLiveData<String>();
-    private Repository repository;
-    public LoginViewModel(){
-
-    }
+    public Repository repository;
     public void initialization(Repository repository){
         this.repository = repository;
     }

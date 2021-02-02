@@ -9,19 +9,18 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.Random;
 
 public  class RPCRequestProxy implements InvocationHandler {
     private Random random = new Random();
     private String service;
     private Pair<String,String> clientKey;
-    private HashMap<Class,String> typeToAbstract;
+    private RPCType type;
     public static <T> T Register(Class<T> interface_class,String service,Pair<String,String> key,RPCType type){
         RPCRequestProxy proxy = new RPCRequestProxy();
         proxy.service = service;
         proxy.clientKey = key;
-        proxy.typeToAbstract = type.getTypeToAbstract();
+        proxy.type = type;
         return (T) Proxy.newProxyInstance(interface_class.getClassLoader(),new Class<?>[]{interface_class}, proxy);
     }
     @Override
@@ -29,27 +28,33 @@ public  class RPCRequestProxy implements InvocationHandler {
         try{
             StringBuilder methodId = new StringBuilder(method.getName());
             String type_name;
-            for(Type param_type : method.getParameterTypes()){
-                type_name = typeToAbstract.get(param_type);
+            for(Class<?> param_type : method.getParameterTypes()){
+                type_name = type.getTypeToAbstract().get(param_type);
                 if(type_name != null) {
-                    methodId.append("-" + type_name);
+                    methodId.append("-").append(type_name);
                 }
-                else throw new RPCException(String.format("Java中的%s类型参数尚未注册！", type_name));
+                else throw new RPCException(String.format("Java中的%s类型参数尚未注册！", param_type));
             }
             Object[] obj = new Object[args.length + 1];
-            for(int i=1;i < obj.length;i++){
-                obj[i] = args[i - 1];
-            }
+            System.arraycopy(args, 0, obj, 1, obj.length - 1);
             String a = Core.gson.toJson(args);
             ClientRequestModel request = new ClientRequestModel("2.0", service, methodId.toString(), obj);
             SocketClient socketClient = RPCClientFactory.GetClient(clientKey);
-            if(method.getReturnType() == Void.TYPE){
+            Class<?> return_type = method.getReturnType();
+            if(return_type.equals(Void.TYPE)){
                 socketClient.SendVoid(request);
                 return null;
             }
-            else {
+            else{
                 socketClient.Send(request);
-                return request.getResult();
+                Object result = request.getResult();
+                if(type.getTypeToAbstract().containsKey(return_type)){
+                    if(type.getTypeConvert().containsKey(type.getTypeToAbstract().get(return_type))){
+                        return type.getTypeConvert().get(type.getTypeToAbstract().get(return_type)).convert(result);
+                    }
+                    else throw new RPCException(String.format("Java中的%s类型的转换器尚未注册！", return_type));
+                }
+                else throw new RPCException(String.format("Java中的%s类型的参数尚未注册！", return_type));
             }
         }
         catch (Exception err){

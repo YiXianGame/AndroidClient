@@ -108,7 +108,7 @@ public class ReadyInvite_Adapt extends BaseQuickAdapter<User, ReadyInvite_Adapt.
         }
         @Override
         public boolean areContentsTheSame(@NonNull User oldItem, @NonNull User newItem) {
-            return oldItem.getUpdate() == newItem.getUpdate();
+            return (oldItem.getAttribute_update() == newItem.getAttribute_update() && oldItem.getHeadImage_update() == newItem.getHeadImage_update());
         }
     }
 }

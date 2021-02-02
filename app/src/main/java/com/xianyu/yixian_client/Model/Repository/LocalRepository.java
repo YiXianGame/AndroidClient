@@ -1,5 +1,6 @@
 package com.xianyu.yixian_client.Model.Repository;
 
+import com.xianyu.yixian_client.Model.Repository.Interface.ILocalRepository;
 import com.xianyu.yixian_client.Model.Room.DataBase_Room;
 import com.xianyu.yixian_client.Model.Room.Entity.Friend;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
@@ -21,7 +22,7 @@ import io.reactivex.Single;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class LocalRepository implements ILocalRepository{
+public class LocalRepository implements ILocalRepository {
     
     private DataBase_Room db;
 

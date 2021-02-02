@@ -7,6 +7,8 @@ import android.content.Context;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.xianyu.yixian_client.Model.RPC.RPCRequestProxy;
+import com.xianyu.yixian_client.Model.RPC.Request.UserRequest;
+import com.xianyu.yixian_client.Model.Room.Entity.User;
 
 import org.junit.After;
 import org.junit.Before;
@@ -57,28 +59,42 @@ public class UnitTest_Mock {
         verify(mockedList).add("one");
         verify(mockedList).clear();
     }
-    public class UserDao implements com.xianyu.yixian_client.Model.RPC.Request.UserDao {
+    public class userRequestTest implements UserRequest {
         @Override
-        public String hello(String msg) {
-            return "null";
+        public void insertUser(User user) {
+
         }
 
         @Override
-        public String add(int d) {
+        public void updateUser(User user) {
+
+        }
+
+        @Override
+        public User queryUserByUserName(String userName) {
+            return null;
+        }
+
+        @Override
+        public User queryUserById(long id) {
+            return null;
+        }
+
+        @Override
+        public List<User> queryAllFriendUsers(long user_id) {
             return null;
         }
     }
     @Test
     public void proxy(){
         RPCRequestProxy proxy = new RPCRequestProxy();
-        Class<?>[] d =  UserDao.class.getInterfaces();
-        com.xianyu.yixian_client.Model.RPC.Request.UserDao user = (com.xianyu.yixian_client.Model.RPC.Request.UserDao) Proxy.newProxyInstance(UserDao.class.getClassLoader(), d, new InvocationHandler() {
+        Class<?>[] d =  UserRequest.class.getInterfaces();
+        com.xianyu.yixian_client.Model.RPC.Request.UserRequest user = (com.xianyu.yixian_client.Model.RPC.Request.UserRequest) Proxy.newProxyInstance(UserRequest.class.getClassLoader(), d, new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                 return null;
             }
         });
-        System.out.println(user.hello("asd"));
     }
 
 

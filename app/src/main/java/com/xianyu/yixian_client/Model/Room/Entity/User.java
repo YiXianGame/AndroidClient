@@ -1,11 +1,8 @@
 package com.xianyu.yixian_client.Model.Room.Entity;
 
-import android.graphics.Bitmap;
-
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
@@ -62,7 +59,7 @@ public class User
     private String title = "炼气";//称号
     @Expose
     @TypeConverters(ActiveConvert.class)
-    private Enum<State> active = State.Offline;//玩家当前游戏状态
+    private State active = State.Offline;//玩家当前游戏状态
     @Expose
     private int kills;//击杀数
     @Expose
@@ -70,7 +67,37 @@ public class User
     @Expose
     long registerDate;//注册日期
     @Expose
-    long update;//卡牌更新日期
+    long attribute_update;//个人信息更新日期
+    @Expose
+    long skillCard_update;//卡牌更新日期
+    @Expose
+    long headImage_update;//头像更新日期
+    @Expose
+    long cardGroup_update;//卡组更新日期
+
+    public long getCardGroup_update() {
+        return cardGroup_update;
+    }
+
+    public void setCardGroup_update(long cardGroup_update) {
+        this.cardGroup_update = cardGroup_update;
+    }
+
+    public long getSkillCard_update() {
+        return skillCard_update;
+    }
+
+    public void setSkillCard_update(long skillCard_update) {
+        this.skillCard_update = skillCard_update;
+    }
+
+    public long getHeadImage_update() {
+        return headImage_update;
+    }
+
+    public void setHeadImage_update(long headImage_update) {
+        this.headImage_update = headImage_update;
+    }
 
     public byte[] getHeadImage() {
         return headImage;
@@ -88,12 +115,12 @@ public class User
         return registerDate;
     }
 
-    public long getUpdate() {
-        return update;
+    public long getAttribute_update() {
+        return attribute_update;
     }
 
-    public void setUpdate(long update_data) {
-        this.update = update_data;
+    public void setAttribute_update(long update_data) {
+        this.attribute_update = update_data;
     }
     @Expose
     @TypeConverters(GroupConvert.class)
@@ -223,11 +250,11 @@ public class User
         this.title = title;
     }
 
-    public Enum<State> getActive() {
+    public State getActive() {
         return active;
     }
 
-    public void setActive(Enum<State> active) {
+    public void setActive(State active) {
         this.active = active;
     }
 
