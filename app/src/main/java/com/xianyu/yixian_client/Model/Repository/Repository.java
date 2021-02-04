@@ -12,12 +12,11 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Single;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import kotlin.jvm.functions.Function0;
 
@@ -46,14 +45,30 @@ public class Repository{
     }
     //这里是产生的Observable
     public Single<Long> registerUser(User user,String password) {
-        return Rx(() -> remote.userRequest.RegisterUser(user.getUserName(),user.getNickName(),password));
+        return Rx(() -> remote.userRequest.RegisterUser(user.getUsername(),user.getNickname(),password));
     }
 
     public Single<Long> loginUser(User user,String password){
-        return Rx(()->remote.userRequest.LoginUser(user.getUserName(),password));
+        return Rx(()->remote.userRequest.LoginUser(user.getUsername(),password));
     }
-    public void update_UserAttribute(User user){
-
+    public Single<User> update_UserAttribute(User user){
+        return Rx(()->{
+            //先在远程确认一下更新日期是否相同
+            User value = remote.userRequest.Sync_UserAttribute(user.getId(),user.getAttribute_update());
+            //不相同的话，将新数据插入到本地数据库
+            if(value != null){
+                local.insertOrReplaceUserAttribute(user);
+            }
+            else {
+                //相同的话从本地数据库取数据
+                value = local.queryByIdSync(user.getId());
+                //本地数据库的数据找不到了，从远程取一下.
+                if(value == null){
+                    value = remote.userRequest.QueryUserById(user.getId());
+                }
+            }
+            return value;
+        });
     }
     public Single<List<User>> queryAllUsers() {
         return local.queryAllUsers();
@@ -68,15 +83,15 @@ public class Repository{
     }
 
     public void insertFriend(Friend... friends) {
-        Rx(arg -> local.insertFriend(friends));
+        RxVoid(()->local.insertFriend(friends));
     }
 
     public void deleteFriend(Friend... friends) {
-        Rx(arg -> local.deleteFriend(friends));
+        RxVoid(() -> local.deleteFriend(friends));
     }
 
     public void updateFriend(Friend... friends) {
-        Rx(arg -> local.updateFriend(friends));
+        RxVoid(() -> local.updateFriend(friends));
     }
 
     public Single<List<Friend>> queryFriends(long user_id) {
@@ -84,15 +99,15 @@ public class Repository{
     }
 
     public void insertSkillCard(SkillCard... skillCards) {
-        Rx(arg -> local.insertSkillCard(skillCards));
+        RxVoid(() -> local.insertSkillCard(skillCards));
     }
 
     public void deleteSkillCard(SkillCard... skillCards) {
-        Rx(arg -> local.deleteSkillCard(skillCards));
+        RxVoid(() -> local.deleteSkillCard(skillCards));
     }
 
     public void updateSkillCard(SkillCard... skillCards) {
-        Rx(arg -> local.updateSkillCard(skillCards));
+        RxVoid(() -> local.updateSkillCard(skillCards));
     }
 
     public Single<List<SkillCard>> querySkillCardByAuthor(long user_id) {
@@ -117,5 +132,13 @@ public class Repository{
         return Single.create((SingleOnSubscribe<R>) emitter -> {
             emitter.onSuccess(functions.invoke());
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+    //RxJava2的异步方法封装
+    @SuppressLint("CheckResult")
+    private <T,R> void RxVoid(Action action){
+        Single.create((SingleOnSubscribe<Integer>) emitter -> {
+            action.run();
+            emitter.onSuccess(1);
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe();
     }
 }

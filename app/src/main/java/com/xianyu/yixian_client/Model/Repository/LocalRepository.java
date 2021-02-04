@@ -34,15 +34,17 @@ public class LocalRepository implements ILocalRepository {
         db.userDao().insert(user);
     }
 
-
     @Override
     public void deleteUser(User user) {
         db.userDao().delete(user);
     }
 
     @Override
-    public void updateUser(User user) {
-        db.userDao().update(user);
+    public void insertOrReplaceUserAttribute(User user) {
+        db.userDao().insertOrReplaceUserAttribute(user.getId(),user.getUsername(),user.getNickname(),user.getUpgrade_num(),
+                user.getCreate_num(),user.getMoney(),user.getPersonalSignature(),user.getBattleCount(),
+                user.getExp(),user.getLv(),user.getTitle(),user.getActive(),user.getKills(),user.getDeaths(),user.getRegisterDate(),
+                user.getAttribute_update(),user.getSkillCard_update(),user.getHeadImage_update(),user.getCardGroup_update());
     }
 
     @Override
@@ -50,6 +52,10 @@ public class LocalRepository implements ILocalRepository {
         return db.userDao().queryByUserName(userName);
     }
 
+    @Override
+    public User queryByIdSync(long id) {
+        return db.userDao().queryByIdSync(id);
+    }
     @Override
     public Single<User> queryUserById(long id) {
         return db.userDao().queryById(id);

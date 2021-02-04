@@ -24,9 +24,10 @@ public interface ILocalRepository {
 
     public void insertUser(User user);
     public void deleteUser(User user);
-    public void updateUser(User user);
+    public void insertOrReplaceUserAttribute(User user);
     public Single<User> queryUserByUserName(String userName);
     public Single<User> queryUserById(long id);
+    public User queryByIdSync(long id);
     public Single<List<User>> queryAllUsers();
 
 

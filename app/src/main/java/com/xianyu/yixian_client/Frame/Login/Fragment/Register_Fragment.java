@@ -8,19 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
 import com.xianyu.yixian_client.Core;
-import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.LoginRegisterFragmentBinding;
-
-import javax.inject.Inject;
-
-import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * @ProjectName: YiXian_Client
@@ -46,10 +40,8 @@ public class Register_Fragment extends Fragment  {
         TextInputEditText surePassword_UI = binding.getRoot().findViewById(R.id.sure_password);
         Core.liveUser.observe(getViewLifecycleOwner(), user -> {
             String ui_userName = userName_UI.getText().toString();
-            String ui_password = passWord_UI.getText().toString();
-            String ui_surePassword = surePassword_UI.getText().toString();
-            if(!ui_userName.equals(user.getUserName())){
-                userName_UI.setText(user.getUserName());
+            if(!ui_userName.equals(user.getUsername())){
+                userName_UI.setText(user.getUsername());
             }
         });
         viewModel.password.observe(getViewLifecycleOwner(),s -> {
@@ -71,8 +63,8 @@ public class Register_Fragment extends Fragment  {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals(Core.liveUser.getValue().getUserName())){
-                    Core.liveUser.getValue().setUserName(s.toString());
+                if(!s.toString().equals(Core.liveUser.getValue().getUsername())){
+                    Core.liveUser.getValue().setUsername(s.toString());
                     Core.liveUser.postValue(Core.liveUser.getValue());
                 }
             }
@@ -90,7 +82,7 @@ public class Register_Fragment extends Fragment  {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals(Core.liveUser.getValue().getUserName())){
+                if(!s.toString().equals(Core.liveUser.getValue().getUsername())){
                     viewModel.password.postValue(s.toString());
                 }
             }

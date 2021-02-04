@@ -1,14 +1,11 @@
 package com.xianyu.yixian_client.Frame.Login.Fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
@@ -22,23 +19,10 @@ import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.DepthPageTransformer;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.Login_Fragment_Adapter;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
-import com.xianyu.yixian_client.Model.Log.Log.Tag;
-import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.Utils.ShortCode.MessageDialog;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.Utils.MD5Utils;
 import com.xianyu.yixian_client.databinding.LoginMainFragmentBinding;
-
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
-import io.reactivex.SingleObserver;
-import io.reactivex.SingleOnSubscribe;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 public class Main_Fragment extends Fragment {
     private LoginMainFragmentBinding binding;
@@ -107,7 +91,7 @@ public class Main_Fragment extends Fragment {
     }
 
     public void Login_Click() {
-        if(Core.liveUser == null || viewModel.password.getValue().isEmpty() || Core.liveUser.getValue().getUserName().isEmpty()){
+        if(Core.liveUser == null || viewModel.password.getValue().isEmpty() || Core.liveUser.getValue().getUsername().isEmpty()){
             MessageDialog.Error_Dialog(getContext(),"登录失败","内容不能为空");
         }
         else {
@@ -119,6 +103,7 @@ public class Main_Fragment extends Fragment {
                     MessageDialog.Error_Dialog(getContext(),"登录失败","账户或密码错误");
                 }
                 else {
+                    viewModel.init_User(Core.liveUser);
                     Core.liveUser.getValue().setPassword(viewModel.password.getValue());
                     //viewModel.repository.insertUser(Core.liveUser.getValue());
                     new MaterialAlertDialogBuilder(getContext())
@@ -127,7 +112,6 @@ public class Main_Fragment extends Fragment {
                             .setPositiveButton(R.string.confirm_dialog, (dialog, which) -> {
                                 dialog.dismiss();
                                 Navigation.findNavController(binding.getRoot()).navigate(R.id.action_login_Activity_to_main_navigation);
-                                requireActivity().finish();
                             })
                             .show();
                 }
@@ -135,7 +119,7 @@ public class Main_Fragment extends Fragment {
         }
     }
     public void Register_Click()  {
-        if(Core.liveUser == null || viewModel.password.getValue().isEmpty() || Core.liveUser.getValue().getUserName().isEmpty() || viewModel.surePassword.getValue().isEmpty()){
+        if(Core.liveUser == null || viewModel.password.getValue().isEmpty() || Core.liveUser.getValue().getUsername().isEmpty() || viewModel.surePassword.getValue().isEmpty()){
             MessageDialog.Error_Dialog(getContext(),"注册失败","内容不能为空");
         }
         else if(viewModel.surePassword.getValue().equals(viewModel.surePassword.getValue())){
@@ -149,7 +133,7 @@ public class Main_Fragment extends Fragment {
         else MessageDialog.Error_Dialog(getContext(),"注册失败","重复密码与密码不一致");
     }
     public void Forget_Click() {
-        if(Core.liveUser == null || viewModel.password.getValue().isEmpty() || Core.liveUser.getValue().getUserName().isEmpty() || viewModel.verificationCode.getValue().isEmpty()){
+        if(Core.liveUser == null || viewModel.password.getValue().isEmpty() || Core.liveUser.getValue().getUsername().isEmpty() || viewModel.verificationCode.getValue().isEmpty()){
             MessageDialog.Error_Dialog(getContext(),"找回失败","内容不能为空");
         }
         else{

@@ -36,13 +36,13 @@ public class User
     @PrimaryKey
     private long id;
     @Expose
-    private String userName;
+    private String username;
     @TypeConverters(BytesConvert.class)
     @Expose
     private byte[] headImage;
     @Expose
-    private String nickName;
-
+    private String nickname;
+    @Expose
     private String password;
     @Expose
     private int upgrade_num=0;
@@ -55,7 +55,7 @@ public class User
     @Expose
     private int battleCount;//战斗场次
     @Expose
-    private int exp;//经验
+    private long exp;//经验
     @Expose
     private int lv = 1;//等级
     @Expose
@@ -161,8 +161,8 @@ public class User
     @Override
     public String toString() {
         return "User{" +
-                "userName='" + userName + '\'' +
-                ", nickName='" + nickName + '\'' +
+                "username='" + username + '\'' +
+                ", nickname='" + nickname + '\'' +
                 ", upgrade_num=" + upgrade_num +
                 ", create_num=" + create_num +
                 ", money=" + money +
@@ -178,20 +178,20 @@ public class User
     }
 
     @NonNull
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(@NonNull String userName) {
-        this.userName = userName;
+    public void setUsername(@NonNull String username) {
+        this.username = username;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public int getUpgrade_num() {
@@ -234,11 +234,11 @@ public class User
         this.battleCount = battleCount;
     }
 
-    public int getExp() {
+    public long getExp() {
         return exp;
     }
 
-    public void setExp(int exp) {
+    public void setExp(long exp) {
         this.exp = exp;
     }
 

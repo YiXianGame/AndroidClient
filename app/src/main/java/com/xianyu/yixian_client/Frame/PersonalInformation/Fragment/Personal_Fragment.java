@@ -59,7 +59,7 @@ public class Personal_Fragment extends Fragment {
                 deaths_text.setText(String.format(Locale.getDefault(),"死亡数:%d",user.getDeaths()));
 
                 TextView nickname_text = binding.getRoot().findViewById(R.id.nickname_text);
-                nickname_text.setText(user.getNickName());
+                nickname_text.setText(user.getNickname());
             });
     }
 

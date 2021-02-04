@@ -62,7 +62,7 @@ public class XYApplication extends Application {
         Random random = new Random();
         CardGroup cardGroup;
         User owner = new User();
-        owner.setNickName("涯丶");
+        owner.setNickname("涯丶");
         owner.setMoney(1234);
         owner.setExp(12);
         Observable.create((ObservableOnSubscribe<byte[]>) emitter -> {
@@ -72,7 +72,7 @@ public class XYApplication extends Application {
         }).subscribeOn(Schedulers.io()).subscribe();
         owner.setBattleCount(42);
         owner.setLv(2);
-        owner.setUserName("839336369");
+        owner.setUsername("839336369");
         owner.setActive(User.State.Leisure);
         owner.setId(123456);
         Core.liveUser.setValue(owner);
@@ -132,12 +132,12 @@ public class XYApplication extends Application {
         for(int i=1;i<50;i++){
             User user = new User();
             user.setId(i);
-            user.setNickName("用户" + random.nextInt());
+            user.setNickname("用户" + random.nextInt());
             user.setMoney(random.nextInt(1000));
             user.setExp(random.nextInt(200));
             user.setBattleCount(random.nextInt(100));
             user.setLv(random.nextInt(10));
-            user.setUserName("" + random.nextInt());
+            user.setUsername("" + random.nextInt());
             user.setActive(User.State.Leisure);
             Friend friend = new Friend();
             friend.setUser_1(owner.getId());
@@ -148,12 +148,12 @@ public class XYApplication extends Application {
         for(int i=50;i<100;i++){
             User user = new User();
             user.setId(i);
-            user.setNickName("用户" + random.nextInt());
+            user.setNickname("用户" + random.nextInt());
             user.setMoney(random.nextInt(1000));
             user.setExp(random.nextInt(200));
             user.setBattleCount(random.nextInt(100));
             user.setLv(random.nextInt(10));
-            user.setUserName("" + random.nextInt());
+            user.setUsername("" + random.nextInt());
             user.setActive(User.State.Gaming);
             Friend friend = new Friend();
             friend.setUser_1(owner.getId());
@@ -164,12 +164,12 @@ public class XYApplication extends Application {
         for(int i=100;i<150;i++){
             User user = new User();
             user.setId(i);
-            user.setNickName("用户" + random.nextInt(30));
+            user.setNickname("用户" + random.nextInt(30));
             user.setMoney(random.nextInt(1000));
             user.setExp(random.nextInt(200));
             user.setBattleCount(random.nextInt(100));
             user.setLv(random.nextInt(10));
-            user.setUserName("" + random.nextInt());
+            user.setUsername("" + random.nextInt());
             user.setActive(User.State.Offline);
             Friend friend = new Friend();
             friend.setUser_1(owner.getId());

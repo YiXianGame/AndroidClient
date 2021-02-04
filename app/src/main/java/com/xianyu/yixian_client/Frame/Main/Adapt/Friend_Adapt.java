@@ -28,7 +28,7 @@ public class Friend_Adapt extends BaseQuickAdapter<User,Friend_Adapt.ViewHolder>
     public List<User> filter(List<User> friends) {
         ArrayList<User> filters = new ArrayList<>();
         for(User item : friends){
-            if(item.getNickName().contains(bluePrint.getNickName()) || bluePrint.getNickName().equals(""))filters.add(item);
+            if(item.getNickname().contains(bluePrint.getNickName()) || bluePrint.getNickName().equals(""))filters.add(item);
         }
         //sort遵循稳定排序规则
         if(bluePrint.isLevel()){
@@ -44,7 +44,7 @@ public class Friend_Adapt extends BaseQuickAdapter<User,Friend_Adapt.ViewHolder>
     }
     @Override
     protected void convert(@NotNull ViewHolder holder, User friend) {
-        holder.nickname_text.setText(friend.getNickName());
+        holder.nickname_text.setText(friend.getNickname());
         holder.level_text.setText(Integer.toString(friend.getLv()));
         holder.active_text.setText(friend.getActive().toString());
         holder.head_image.setImageResource(R.drawable.touxiang);

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.ContentView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,10 +17,6 @@ import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.LoginForgetFragmentBinding;
-
-import javax.inject.Inject;
-
-import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * @ProjectName: YiXian_Client
@@ -49,10 +44,8 @@ public class Forget_Fragment extends Fragment {
             @Override
             public void onChanged(User user) {
                 String ui_userName = userName_UI.getText().toString();
-                String ui_password = passWord_UI.getText().toString();
-                String ui_verificationCode = verification_UI.getText().toString();
-                if(!ui_userName.equals(user.getUserName())){
-                    userName_UI.setText(user.getUserName());
+                if(!ui_userName.equals(user.getUsername())){
+                    userName_UI.setText(user.getUsername());
                 }
             }
         });
@@ -75,8 +68,8 @@ public class Forget_Fragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals(Core.liveUser.getValue().getUserName())){
-                    Core.liveUser.getValue().setUserName(s.toString());
+                if(!s.toString().equals(Core.liveUser.getValue().getUsername())){
+                    Core.liveUser.getValue().setUsername(s.toString());
                     Core.liveUser.postValue(Core.liveUser.getValue());
                 }
             }
@@ -94,7 +87,7 @@ public class Forget_Fragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals(Core.liveUser.getValue().getUserName())){
+                if(!s.toString().equals(Core.liveUser.getValue().getUsername())){
                     viewModel.password.postValue(s.toString());
                 }
             }

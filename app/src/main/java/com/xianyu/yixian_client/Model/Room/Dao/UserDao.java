@@ -3,6 +3,7 @@ package com.xianyu.yixian_client.Model.Room.Dao;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -31,8 +32,14 @@ public interface UserDao {
     @Insert
     public void insert(User... user);
 
-    @Update
-    public void update(User... user);
+    @Query("UPDATE OR REPLACE user SET username=:username,nickname=:nickname,upgrade_num=:upgrade_num,create_num=:create_num," +
+            "money=:money,personalSignature=:personalSignature,battleCount=:battleCount,exp=:exp,lv=:lv,title=:title,active=:active," +
+            "kills=:kills,deaths=:deaths,registerDate=:registerDate,attribute_update=:attribute_update,skillCard_update=:skillCard_update," +
+            "headImage_update=:headImage_update,cardGroup_update=:cardGroup_update WHERE id = :id")
+    public void insertOrReplaceUserAttribute(long id,String username,String nickname,int upgrade_num,
+                       int create_num,long money,String personalSignature,
+                       int battleCount,long exp,int lv,String title,User.State active,int kills,int deaths,long registerDate,
+                       long attribute_update,long skillCard_update,long headImage_update,long cardGroup_update);
 
     @Delete
     public void delete(User... user);
@@ -41,7 +48,8 @@ public interface UserDao {
     public Single<User> queryByUserName(String username);
     @Query("SELECT * FROM user WHERE id = :id")
     public Single<User> queryById(long id);
-
+    @Query("SELECT * FROM user WHERE id = :id")
+    public User queryByIdSync(long id);
     @Query("SELECT * FROM user")
     public Single<List<User>> queryAll();
 }
