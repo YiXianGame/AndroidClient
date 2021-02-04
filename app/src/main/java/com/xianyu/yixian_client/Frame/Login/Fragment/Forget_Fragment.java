@@ -54,15 +54,14 @@ public class Forget_Fragment extends Fragment {
                 if(!ui_userName.equals(user.getUserName())){
                     userName_UI.setText(user.getUserName());
                 }
-                if(!ui_password.equals(user.getPasswords())){
-                    passWord_UI.setText(user.getPasswords());
-                }
-                if(!ui_verificationCode.equals(viewModel.verificationCode.getValue())){
-                    verification_UI.setText(viewModel.verificationCode.getValue());
-                }
             }
         });
-
+        viewModel.password.observe(getViewLifecycleOwner(),s -> {
+            if(!s.equals(passWord_UI.getText().toString()))passWord_UI.setText(s);
+        });
+        viewModel.verificationCode.observe(getViewLifecycleOwner(),s -> {
+            if(!s.equals(verification_UI.getText().toString()))verification_UI.setText(s);
+        });
         userName_UI.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -96,8 +95,7 @@ public class Forget_Fragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if(!s.toString().equals(Core.liveUser.getValue().getUserName())){
-                    Core.liveUser.getValue().setPasswords(s.toString());
-                    Core.liveUser.postValue(Core.liveUser.getValue());
+                    viewModel.password.postValue(s.toString());
                 }
             }
         });

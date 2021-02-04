@@ -44,22 +44,19 @@ public class Register_Fragment extends Fragment  {
         TextInputEditText userName_UI = binding.getRoot().findViewById(R.id.username);
         TextInputEditText passWord_UI = binding.getRoot().findViewById(R.id.password);
         TextInputEditText surePassword_UI = binding.getRoot().findViewById(R.id.sure_password);
-        Core.liveUser.observe(getViewLifecycleOwner(), new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                String ui_userName = userName_UI.getText().toString();
-                String ui_password = passWord_UI.getText().toString();
-                String ui_surePassword = surePassword_UI.getText().toString();
-                if(!ui_userName.equals(user.getUserName())){
-                    userName_UI.setText(user.getUserName());
-                }
-                if(!ui_password.equals(user.getPasswords())){
-                    passWord_UI.setText(user.getPasswords());
-                }
-                if(!ui_surePassword.equals(viewModel.surePassword.getValue())){
-                    surePassword_UI.setText(viewModel.surePassword.getValue());
-                }
+        Core.liveUser.observe(getViewLifecycleOwner(), user -> {
+            String ui_userName = userName_UI.getText().toString();
+            String ui_password = passWord_UI.getText().toString();
+            String ui_surePassword = surePassword_UI.getText().toString();
+            if(!ui_userName.equals(user.getUserName())){
+                userName_UI.setText(user.getUserName());
             }
+        });
+        viewModel.password.observe(getViewLifecycleOwner(),s -> {
+            if(!s.equals(passWord_UI.getText().toString()))passWord_UI.setText(s);
+        });
+        viewModel.surePassword.observe(getViewLifecycleOwner(),s -> {
+            if(!s.equals(surePassword_UI.getText().toString()))surePassword_UI.setText(s);
         });
         userName_UI.addTextChangedListener(new TextWatcher() {
             @Override
@@ -94,8 +91,7 @@ public class Register_Fragment extends Fragment  {
             @Override
             public void afterTextChanged(Editable s) {
                 if(!s.toString().equals(Core.liveUser.getValue().getUserName())){
-                    Core.liveUser.getValue().setPasswords(s.toString());
-                    Core.liveUser.postValue(Core.liveUser.getValue());
+                    viewModel.password.postValue(s.toString());
                 }
             }
         });

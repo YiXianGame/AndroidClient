@@ -1,20 +1,19 @@
 package com.xianyu.yixian_client.Frame.Login.Fragment;
 
-import android.media.MediaPlayer;
-import android.net.Uri;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.VideoView;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.uber.autodispose.AutoDispose;
@@ -23,25 +22,27 @@ import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.DepthPageTransformer;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.Login_Fragment_Adapter;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
-import com.xianyu.yixian_client.Frame.Main.MainViewModel;
 import com.xianyu.yixian_client.Model.Log.Log.Tag;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
-import com.xianyu.yixian_client.Model.ShortCode.MessageDialog;
+import com.xianyu.yixian_client.Utils.ShortCode.MessageDialog;
 import com.xianyu.yixian_client.R;
+import com.xianyu.yixian_client.Utils.MD5Utils;
 import com.xianyu.yixian_client.databinding.LoginMainFragmentBinding;
-import com.xianyu.yixian_client.databinding.MainMainFragmentBinding;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.Observer;
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleObserver;
+import io.reactivex.SingleOnSubscribe;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class Main_Fragment extends Fragment {
     private LoginMainFragmentBinding binding;
     private ViewPager2 paper;
-    private TabLayout tab;
     LoginViewModel viewModel;
 
     @Override
@@ -57,13 +58,17 @@ public class Main_Fragment extends Fragment {
 
 
     private void init(){
+        //UI数据初始化
+        viewModel.password.postValue("");
+        viewModel.surePassword.postValue("");
+        viewModel.verificationCode.postValue("");
         //跳出主线程
         viewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
         //fragment绑定初始化
         paper = binding.getRoot().findViewById(R.id.paper);
         paper.setPageTransformer(new DepthPageTransformer());
         paper.setAdapter(new Login_Fragment_Adapter(requireActivity()));
-        tab = binding.getRoot().findViewById(R.id.tabLayout);
+        TabLayout tab = binding.getRoot().findViewById(R.id.tabLayout);
         tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -78,7 +83,7 @@ public class Main_Fragment extends Fragment {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 switch (tab.getPosition()){
-                    case 0:Register_Click(); break;
+                    case 0: Register_Click();break;
                     case 1:Login_Click(); break;
                     case 2:Forget_Click(); break;
                     default:break;
@@ -88,53 +93,66 @@ public class Main_Fragment extends Fragment {
         new TabLayoutMediator(
                 tab,
                 paper,
-                (tab, position) -> {
+                (item, position) -> {
                     switch (position){
-                        case 0 : tab.setText(R.string.register);break;
-                        case 1 : tab.setText(R.string.login);break;
-                        case 2 : tab.setText(R.string.pw_forget);break;
+                        case 0 : item.setText(R.string.register);break;
+                        case 1 : item.setText(R.string.login);break;
+                        case 2 : item.setText(R.string.pw_forget);break;
                         default: break;
                     }
                 }
         ).attach();
         paper.setOffscreenPageLimit(3);
         tab.selectTab(tab.getTabAt(1));
-
     }
 
     public void Login_Click() {
-        if(Core.liveUser == null || Core.liveUser.getValue().getPasswords().isEmpty() || Core.liveUser.getValue().getUserName().isEmpty()){
+        if(Core.liveUser == null || viewModel.password.getValue().isEmpty() || Core.liveUser.getValue().getUserName().isEmpty()){
             MessageDialog.Error_Dialog(getContext(),"登录失败","内容不能为空");
         }
         else {
-            Core.liveUser.getValue().setNickName("涯");
-            viewModel.repository.test(Core.liveUser.getValue()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(result ->{
-                Log.d(Tag.RemoteRepository,"后台修改后新的用户昵称为:" + result.getNickName());
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_login_Activity_to_main_navigation);
-                requireActivity().finish();
+            viewModel.repository.loginUser(Core.liveUser.getValue(), MD5Utils.encrypt(viewModel.password.getValue())).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(result->{
+                if(result == -1){
+                    MessageDialog.Error_Dialog(getContext(),"登录失败","该账户尚未注册");
+                }
+                else if(result == -2){
+                    MessageDialog.Error_Dialog(getContext(),"登录失败","账户或密码错误");
+                }
+                else {
+                    Core.liveUser.getValue().setPassword(viewModel.password.getValue());
+                    //viewModel.repository.insertUser(Core.liveUser.getValue());
+                    new MaterialAlertDialogBuilder(getContext())
+                            .setTitle("登陆成功")
+                            .setMessage("欢迎您的回归！")
+                            .setPositiveButton(R.string.confirm_dialog, (dialog, which) -> {
+                                dialog.dismiss();
+                                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_login_Activity_to_main_navigation);
+                                requireActivity().finish();
+                            })
+                            .show();
+                }
             });
         }
     }
-
-    public void Register_Click() {
-        if(Core.liveUser == null || Core.liveUser.getValue().getPasswords().isEmpty() || Core.liveUser.getValue().getUserName().isEmpty() || viewModel.surePassword.getValue().isEmpty()){
+    public void Register_Click()  {
+        if(Core.liveUser == null || viewModel.password.getValue().isEmpty() || Core.liveUser.getValue().getUserName().isEmpty() || viewModel.surePassword.getValue().isEmpty()){
             MessageDialog.Error_Dialog(getContext(),"注册失败","内容不能为空");
         }
-        else if(Core.liveUser.getValue().getPasswords().equals(viewModel.surePassword.getValue())){
-            viewModel.repository.registerUser(Core.liveUser.getValue()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(result->{
-                if(result){
-                    MessageDialog.Confirm_Dialog(getContext(),"注册成功","恭喜您，注册成功！");
+        else if(viewModel.surePassword.getValue().equals(viewModel.surePassword.getValue())){
+            viewModel.repository.registerUser(Core.liveUser.getValue(),viewModel.password.getValue()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(value -> {
+                if(value != -1 && value != -2){
+                    MessageDialog.Error_Dialog(getContext(),"ID:value","恭喜您注册成功！" );
                 }
-                else MessageDialog.Confirm_Dialog(getContext(),"注册失败","抱歉，用户可能已存在！");
+                else MessageDialog.Error_Dialog(getContext(),"注册失败","重复密码与密码不一致");
             });
         }
         else MessageDialog.Error_Dialog(getContext(),"注册失败","重复密码与密码不一致");
     }
     public void Forget_Click() {
-        if(Core.liveUser == null || Core.liveUser.getValue().getPasswords().isEmpty() || Core.liveUser.getValue().getUserName().isEmpty() || viewModel.verificationCode.getValue().isEmpty()){
+        if(Core.liveUser == null || viewModel.password.getValue().isEmpty() || Core.liveUser.getValue().getUserName().isEmpty() || viewModel.verificationCode.getValue().isEmpty()){
             MessageDialog.Error_Dialog(getContext(),"找回失败","内容不能为空");
         }
-        else if(!Core.liveUser.getValue().getPasswords().equals(viewModel.surePassword)){
+        else{
 
         }
     }

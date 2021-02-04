@@ -1,9 +1,7 @@
 package com.xianyu.yixian_client.Model.Repository;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
-import com.xianyu.yixian_client.Model.Log.Log.Tag;
 import com.xianyu.yixian_client.Model.Room.DataBase_Room;
 import com.xianyu.yixian_client.Model.Room.Entity.Friend;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
@@ -17,13 +15,11 @@ import javax.inject.Singleton;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Single;
-import io.reactivex.SingleObserver;
+import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import kotlin.jvm.functions.Function0;
 
 
 /**
@@ -48,35 +44,19 @@ public class Repository{
         local = new LocalRepository(db);
         remote = new RemoteRepository();
     }
-
-    public Single<Boolean> registerUser(User user) {
-        return RxSingleOne(value -> {
-            long id = remote.registerUser(value);
-            if(id != -1){
-                value.setId(id);
-                value.setPasswords("");
-                return true;
-            }
-            return false;
-        },user);
+    //这里是产生的Observable
+    public Single<Long> registerUser(User user,String password) {
+        return Rx(() -> remote.userRequest.RegisterUser(user.getUserName(),user.getNickName(),password));
     }
-    public Single<User> test(User user) {
-        return RxSingleOne(value -> {
-            return remote.test(value);
-        },user);
+
+    public Single<Long> loginUser(User user,String password){
+        return Rx(()->remote.userRequest.LoginUser(user.getUserName(),password));
+    }
+    public void update_UserAttribute(User user){
+
     }
     public Single<List<User>> queryAllUsers() {
         return local.queryAllUsers();
-    }
-    public void insertUser(User arg) {
-        RxNoneOne(user -> local.insertUser(user), arg);
-    }
-    public void deleteUser(User arg) {
-        RxNoneOne(user -> local.deleteUser(user), arg);
-    }
-
-    public void updateUser(User user) {
-        RxNoneOne(arg -> local.updateUser(arg), user);
     }
 
     public Single<User> queryUserByUserName(String userName) {
@@ -88,15 +68,15 @@ public class Repository{
     }
 
     public void insertFriend(Friend... friends) {
-        RxNoneOne(arg -> local.insertFriend(friends), friends);
+        Rx(arg -> local.insertFriend(friends));
     }
 
     public void deleteFriend(Friend... friends) {
-        RxNoneOne(arg -> local.deleteFriend(friends), friends);
+        Rx(arg -> local.deleteFriend(friends));
     }
 
     public void updateFriend(Friend... friends) {
-        RxNoneOne(arg -> local.updateFriend(friends), friends);
+        Rx(arg -> local.updateFriend(friends));
     }
 
     public Single<List<Friend>> queryFriends(long user_id) {
@@ -104,15 +84,15 @@ public class Repository{
     }
 
     public void insertSkillCard(SkillCard... skillCards) {
-        RxNoneOne(arg -> local.insertSkillCard(skillCards), skillCards);
+        Rx(arg -> local.insertSkillCard(skillCards));
     }
 
     public void deleteSkillCard(SkillCard... skillCards) {
-        RxNoneOne(arg -> local.deleteSkillCard(skillCards), skillCards);
+        Rx(arg -> local.deleteSkillCard(skillCards));
     }
 
     public void updateSkillCard(SkillCard... skillCards) {
-        RxNoneOne(arg -> local.updateSkillCard(skillCards), skillCards);
+        Rx(arg -> local.updateSkillCard(skillCards));
     }
 
     public Single<List<SkillCard>> querySkillCardByAuthor(long user_id) {
@@ -133,27 +113,9 @@ public class Repository{
     }
     //RxJava2的异步方法封装
     @SuppressLint("CheckResult")
-    private <T> void RxNoneOne(Consumer<T> functions,T arg){
-        Observable.create((ObservableOnSubscribe<T>) emitter -> {
-            functions.accept(arg);
-        }).subscribeOn(Schedulers.io()).subscribe();
-    }
-    //RxJava2的异步Single监听封装
-    @SuppressLint("CheckResult")
-    private <T,R> Single<R> RxSingleOne(Function<T,R> functions,T arg){
-        Single<R> result = new Single<R>() {
-            @Override
-            protected void subscribeActual(@NonNull SingleObserver<? super R> observer) {
-                try {
-                    R result = functions.apply(arg);
-                    observer.onSuccess(result);
-                }
-                catch (Exception e){
-                    Log.e(Tag.RemoteRepository,"RxNoneOne执行出错:\n" + functions.toString());
-                    e.printStackTrace();
-                }
-            }
-        };
-        return result.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    private <T,R> Single<R> Rx(Function0<R> functions){
+        return Single.create((SingleOnSubscribe<R>) emitter -> {
+            emitter.onSuccess(functions.invoke());
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 }

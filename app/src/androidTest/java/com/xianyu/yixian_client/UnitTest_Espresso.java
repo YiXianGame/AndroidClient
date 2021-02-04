@@ -1,6 +1,7 @@
 package com.xianyu.yixian_client;
 
 import android.content.Context;
+import android.widget.Button;
 
 
 import androidx.test.filters.SmallTest;
@@ -27,21 +28,12 @@ import javax.inject.Inject;
 
 @SmallTest
 public class UnitTest_Espresso {
-    @Inject
-    DataBase_Room dataBase_room;
-
-    public ActivityTestRule<Login_Activity> activityTestRule = new ActivityTestRule<Login_Activity>(Login_Activity.class);
     @Before
     public void Create_Database(){
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-
     }
     @Test
     public void Database(){
-        User user = new User();
-        user.setUserName("12312");
-        user.setId(839336369);
-        dataBase_room.userDao().insert(user);
 
     }
     @After

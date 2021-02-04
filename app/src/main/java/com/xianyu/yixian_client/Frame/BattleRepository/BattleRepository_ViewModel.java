@@ -39,7 +39,7 @@ public class BattleRepository_ViewModel extends ViewModel {
         );
     }
     public void updateUser(User user){
-        repository.updateUser(user);
+
     }
     public void refreshSkillCards(){
         disposable.add(repository.queryAllSkillCards().observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())

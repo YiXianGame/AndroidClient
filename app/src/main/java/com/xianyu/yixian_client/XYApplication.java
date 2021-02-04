@@ -2,13 +2,10 @@ package com.xianyu.yixian_client;
 
 import android.app.Application;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.provider.ContactsContract;
 import android.util.Pair;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.load.resource.bitmap.BitmapDrawableEncoder;
 import com.bumptech.glide.module.AppGlideModule;
 import com.xianyu.yixian_client.Model.Repository.Repository;
 import com.xianyu.yixian_client.Model.Room.Entity.Attribute;
@@ -19,11 +16,9 @@ import com.xianyu.yixian_client.Model.Room.Entity.History;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
@@ -31,10 +26,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.HiltAndroidApp;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -58,11 +50,12 @@ public class XYApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        try {
-            init_data();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            init_data();
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//        }
+        Core.liveUser.postValue(new User());
     }
 
     private void init_data() throws InterruptedException, ExecutionException {
@@ -77,7 +70,7 @@ public class XYApplication extends Application {
             Glide.with(this).asBitmap().load(R.drawable.touxiang).submit().get().compress(Bitmap.CompressFormat.JPEG,50,out);
             //owner.setHeadImage(out.toByteArray());
         }).subscribeOn(Schedulers.io()).subscribe();
-        owner.setBattle_Count(42);
+        owner.setBattleCount(42);
         owner.setLv(2);
         owner.setUserName("839336369");
         owner.setActive(User.State.Leisure);
@@ -132,7 +125,7 @@ public class XYApplication extends Application {
             }
             owner.getCardGroups().add(cardGroup);
         }
-        repository.insertUser(owner);
+        //repository.insertUser(owner);
 
         Thread.sleep(1000);
         ArrayList<Friend> friends = new ArrayList<>();
@@ -142,14 +135,14 @@ public class XYApplication extends Application {
             user.setNickName("用户" + random.nextInt());
             user.setMoney(random.nextInt(1000));
             user.setExp(random.nextInt(200));
-            user.setBattle_Count(random.nextInt(100));
+            user.setBattleCount(random.nextInt(100));
             user.setLv(random.nextInt(10));
             user.setUserName("" + random.nextInt());
             user.setActive(User.State.Leisure);
             Friend friend = new Friend();
             friend.setUser_1(owner.getId());
             friend.setUser_2(user.getId());
-            repository.insertUser(user);
+            //repository.insertUser(user);
             friends.add(friend);
         }
         for(int i=50;i<100;i++){
@@ -158,14 +151,14 @@ public class XYApplication extends Application {
             user.setNickName("用户" + random.nextInt());
             user.setMoney(random.nextInt(1000));
             user.setExp(random.nextInt(200));
-            user.setBattle_Count(random.nextInt(100));
+            user.setBattleCount(random.nextInt(100));
             user.setLv(random.nextInt(10));
             user.setUserName("" + random.nextInt());
             user.setActive(User.State.Gaming);
             Friend friend = new Friend();
             friend.setUser_1(owner.getId());
             friend.setUser_2(user.getId());
-            repository.insertUser(user);
+            //repository.insertUser(user);
             friends.add(friend);
         }
         for(int i=100;i<150;i++){
@@ -174,14 +167,14 @@ public class XYApplication extends Application {
             user.setNickName("用户" + random.nextInt(30));
             user.setMoney(random.nextInt(1000));
             user.setExp(random.nextInt(200));
-            user.setBattle_Count(random.nextInt(100));
+            user.setBattleCount(random.nextInt(100));
             user.setLv(random.nextInt(10));
             user.setUserName("" + random.nextInt());
             user.setActive(User.State.Offline);
             Friend friend = new Friend();
             friend.setUser_1(owner.getId());
             friend.setUser_2(user.getId());
-            repository.insertUser(user);
+            //repository.insertUser(user);
             friends.add(friend);
         }
         Thread.sleep(1000);

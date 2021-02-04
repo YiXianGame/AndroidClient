@@ -35,7 +35,6 @@ public class CustomHeartbeatHandler extends ChannelHandlerAdapter {
         if(msg instanceof ClientResponseModel){
            ClientRequestModel request = socketClient.tasks.get(Integer.parseInt(((ClientResponseModel) msg).Id));
            if(request != null){
-
                request.setResult(((ClientResponseModel) msg).Result);
            }
         }

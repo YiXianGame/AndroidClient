@@ -1,11 +1,14 @@
 package com.xianyu.yixian_client.Model.Room.Entity;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
+import com.xianyu.yixian_client.Model.Log.Log.Tag;
 import com.xianyu.yixian_client.Model.Room.Convert.ActiveConvert;
 import com.xianyu.yixian_client.Model.Room.Convert.BytesConvert;
 import com.xianyu.yixian_client.Model.Room.Convert.GroupConvert;
@@ -39,18 +42,18 @@ public class User
     private byte[] headImage;
     @Expose
     private String nickName;
+
+    private String password;
     @Expose
     private int upgrade_num=0;
     @Expose
     private int create_num=0;
     @Expose
-    private int money = 0;
+    private long money = 0;
     @Expose
-    private String passwords;
+    private String personalSignature;
     @Expose
-    private String information;
-    @Expose
-    private int battle_Count;//战斗场次
+    private int battleCount;//战斗场次
     @Expose
     private int exp;//经验
     @Expose
@@ -74,6 +77,14 @@ public class User
     long headImage_update;//头像更新日期
     @Expose
     long cardGroup_update;//卡组更新日期
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public long getCardGroup_update() {
         return cardGroup_update;
@@ -138,8 +149,15 @@ public class User
     }
 
     public User(){
-
+        Log.d(Tag.Debug,"产生了");
     }
+
+    @Override
+    protected void finalize() throws Throwable {
+        Log.d(Tag.Debug,"销毁了");
+        super.finalize();
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -148,9 +166,8 @@ public class User
                 ", upgrade_num=" + upgrade_num +
                 ", create_num=" + create_num +
                 ", money=" + money +
-                ", passwords='" + passwords + '\'' +
-                ", information='" + information + '\'' +
-                ", battle_Count=" + battle_Count +
+                ", personalSignature='" + personalSignature + '\'' +
+                ", battleCount=" + battleCount +
                 ", exp=" + exp +
                 ", lv=" + lv +
                 ", title='" + title + '\'' +
@@ -193,36 +210,28 @@ public class User
         this.create_num = create_num;
     }
 
-    public int getMoney() {
+    public long getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(long money) {
         this.money = money;
     }
 
-    public String getPasswords() {
-        return passwords;
+    public String getPersonalSignature() {
+        return personalSignature;
     }
 
-    public void setPasswords(String passwords) {
-        this.passwords = passwords;
+    public void setPersonalSignature(String personalSignature) {
+        this.personalSignature = personalSignature;
     }
 
-    public String getInformation() {
-        return information;
+    public int getBattleCount() {
+        return battleCount;
     }
 
-    public void setInformation(String information) {
-        this.information = information;
-    }
-
-    public int getBattle_Count() {
-        return battle_Count;
-    }
-
-    public void setBattle_Count(int battle_Count) {
-        this.battle_Count = battle_Count;
+    public void setBattleCount(int battleCount) {
+        this.battleCount = battleCount;
     }
 
     public int getExp() {

@@ -53,7 +53,7 @@ public class Personal_Fragment extends Fragment {
                 kills_text.setText(String.format(Locale.getDefault(),"杀敌数:%d",user.getKills()));
 
                 TextView battle_text = binding.getRoot().findViewById(R.id.battle_count_num_text);
-                battle_text.setText(String.format(Locale.getDefault(),"战斗场次:%d",user.getBattle_Count()));
+                battle_text.setText(String.format(Locale.getDefault(),"战斗场次:%d",user.getBattleCount()));
 
                 TextView deaths_text = binding.getRoot().findViewById(R.id.deaths_num_text);
                 deaths_text.setText(String.format(Locale.getDefault(),"死亡数:%d",user.getDeaths()));

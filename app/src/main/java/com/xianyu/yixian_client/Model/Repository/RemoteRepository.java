@@ -52,82 +52,9 @@ public class RemoteRepository implements IRemoteRepository {
                 e.printStackTrace();
             }
             //每一个Service都可以拥有自己的TypeConvert.
-            userRequest = RPCRequestProxyFactory.Register(UserRequest.class,"User","192.168.0.105","28015",type);
-            RPCAdaptFactory.Register(CommandServer.class,"UserCommand","192.168.0.105","28015",type);
+            userRequest = RPCRequestProxyFactory.Register(UserRequest.class,"UserServer","192.168.0.105","28015",type);
+            RPCAdaptFactory.Register(CommandServer.class,"UserClient","192.168.0.105","28015",type);
             //Observable.create((ObservableOnSubscribe<Void>) emitter -> Log.d(Tag.Debug,userDao.hello("你好"))).subscribeOn(Schedulers.io()).subscribe();
         }
-    }
-    public User test(User user){
-        return userRequest.test(user);
-    }
-
-    @Override
-    public long registerUser(User user) {
-        return userRequest.RegisterUser(user);
-    }
-
-    @Override
-    public void updateUser(User user) {
-
-    }
-
-    @Override
-    public User queryUserByUserName(String userName) {
-        return null;
-    }
-
-    @Override
-    public User queryUserById(long id) {
-        return null;
-    }
-
-    @Override
-    public void insertFriend(Friend... friends) {
-
-    }
-
-    @Override
-    public void deleteFriend(Friend... friends) {
-
-    }
-
-    @Override
-    public void updateFriend(Friend... friends) {
-
-    }
-
-    @Override
-    public List<Friend> queryFriends(long user_id) {
-        return null;
-    }
-
-    @Override
-    public void insertSkillCard(SkillCard... skillCards) {
-
-    }
-
-    @Override
-    public void deleteSkillCard(SkillCard... skillCards) {
-
-    }
-
-    @Override
-    public void updateSkillCard(SkillCard... skillCards) {
-
-    }
-
-    @Override
-    public List<SkillCard> querySkillCardByAuthor(long user_id) {
-        return null;
-    }
-
-    @Override
-    public SkillCard querySkillCardById(long id) {
-        return null;
-    }
-
-    @Override
-    public List<User> queryAllFriendUsers(long user_id) {
-        return null;
     }
 }
