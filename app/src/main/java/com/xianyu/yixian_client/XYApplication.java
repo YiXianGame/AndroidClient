@@ -4,9 +4,13 @@ import android.app.Application;
 import android.graphics.Bitmap;
 import android.util.Pair;
 
+import androidx.compose.ui.text.platform.AndroidAccessibilitySpannableStringKt;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import com.xianyu.yixian_client.Model.Repository.Repository;
 import com.xianyu.yixian_client.Model.Room.Entity.Attribute;
 import com.xianyu.yixian_client.Model.Room.Entity.Buff;
@@ -27,6 +31,7 @@ import javax.inject.Inject;
 import dagger.hilt.android.HiltAndroidApp;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -55,7 +60,6 @@ public class XYApplication extends Application {
 //        } catch (InterruptedException | ExecutionException e) {
 //            e.printStackTrace();
 //        }
-        Core.liveUser.postValue(new User());
     }
 
     private void init_data() throws InterruptedException, ExecutionException {

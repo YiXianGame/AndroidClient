@@ -30,7 +30,6 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 public class LoginViewModel extends ViewModel {
     public MutableLiveData<String> verificationCode = new MutableLiveData<String>();
-    public MutableLiveData<String> password = new MutableLiveData<String>();
     public MutableLiveData<String> surePassword = new MutableLiveData<String>();
     private final CompositeDisposable disposable = new CompositeDisposable();
     public Repository repository;

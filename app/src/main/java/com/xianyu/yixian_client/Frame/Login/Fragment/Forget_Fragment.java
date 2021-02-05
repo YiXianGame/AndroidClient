@@ -16,6 +16,7 @@ import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
 import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.R;
+import com.xianyu.yixian_client.Utils.MD5Utils;
 import com.xianyu.yixian_client.databinding.LoginForgetFragmentBinding;
 
 /**
@@ -49,9 +50,7 @@ public class Forget_Fragment extends Fragment {
                 }
             }
         });
-        viewModel.password.observe(getViewLifecycleOwner(),s -> {
-            if(!s.equals(passWord_UI.getText().toString()))passWord_UI.setText(s);
-        });
+
         viewModel.verificationCode.observe(getViewLifecycleOwner(),s -> {
             if(!s.equals(verification_UI.getText().toString()))verification_UI.setText(s);
         });
@@ -87,8 +86,8 @@ public class Forget_Fragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals(Core.liveUser.getValue().getUsername())){
-                    viewModel.password.postValue(s.toString());
+                if(!MD5Utils.encrypt(s.toString()).equals(Core.liveUser.getValue().getPassword())){
+                    Core.liveUser.getValue().setPassword(MD5Utils.encrypt(s.toString()));
                 }
             }
         });

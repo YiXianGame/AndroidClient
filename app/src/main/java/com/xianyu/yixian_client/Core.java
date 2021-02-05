@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.xianyu.yixian_client.Model.Room.Entity.Config;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 
@@ -22,6 +23,7 @@ import java.util.ArrayList;
  * @Version: 1.0
  */
 public class Core {
+    public static MutableLiveData<Config> config = new MutableLiveData<>();
     public static MutableLiveData<User> liveUser = new MutableLiveData<User>();
     public static MutableLiveData<ArrayList<SkillCard>> liveSkillcards = new MutableLiveData<>();
     public static Gson gson = new Gson().newBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).excludeFieldsWithoutExposeAnnotation().create();

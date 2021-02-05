@@ -1,5 +1,11 @@
 package com.xianyu.yixian_client.Model.Repository.Interface;
 
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
+import androidx.room.Update;
+
+import com.xianyu.yixian_client.Model.Room.Entity.Config;
 import com.xianyu.yixian_client.Model.Room.Entity.Friend;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
@@ -21,26 +27,6 @@ import io.reactivex.Single;
  * @Version: 1.0
  */
 public interface ILocalRepository {
-
-    public void insertUser(User user);
-    public void deleteUser(User user);
     public void insertOrReplaceUserAttribute(User user);
-    public Single<User> queryUserByUserName(String userName);
-    public Single<User> queryUserById(long id);
-    public User queryByIdSync(long id);
-    public Single<List<User>> queryAllUsers();
 
-
-    public void insertFriend(Friend... friends);
-    public void deleteFriend(Friend... friends);
-    public void updateFriend(Friend... friends);
-    public Single<List<Friend>> queryFriends(long user_id);
-
-    public void insertSkillCard(SkillCard... skillCards);
-    public void deleteSkillCard(SkillCard... skillCards);
-    public void updateSkillCard(SkillCard... skillCards);
-    public Single<List<SkillCard>> querySkillCardByAuthor(long user_id);
-    public Single<SkillCard> querySkillCardById(long id);
-    public Single<List<SkillCard>> queryAllSkillCards();
-    public Single<List<User>> queryAllFriendUsers(long user_id);
 }

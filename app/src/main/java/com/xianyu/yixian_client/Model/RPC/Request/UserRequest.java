@@ -9,8 +9,8 @@ import io.reactivex.Single;
 public interface UserRequest
 {
     long RegisterUser(String username,String nickname,String password);
-    long LoginUser(String username, String md5_password);
-    User Sync_UserAttribute(long id,long date);
+    long LoginUser(long id,String username, String md5_password);
+    User Sync_UserAttribute(long date);
     User QueryUserByUserName(String userName);
     User Query_UserAttributeById(long id);
     List<User> QueryAllFriendUsers(long user_id);

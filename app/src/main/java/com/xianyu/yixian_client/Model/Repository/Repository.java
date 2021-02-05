@@ -2,7 +2,9 @@ package com.xianyu.yixian_client.Model.Repository;
 
 import android.annotation.SuppressLint;
 
+import com.xianyu.yixian_client.Model.Repository.Interface.IRepository;
 import com.xianyu.yixian_client.Model.Room.DataBase_Room;
+import com.xianyu.yixian_client.Model.Room.Entity.Config;
 import com.xianyu.yixian_client.Model.Room.Entity.Friend;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
@@ -34,9 +36,9 @@ import kotlin.jvm.functions.Function0;
  * @Version: 1.0
  */
 @Singleton
-public class Repository{
-    private LocalRepository local;
-    private RemoteRepository remote;
+public class Repository implements IRepository {
+    public LocalRepository local;
+    public RemoteRepository remote;
     private final CompositeDisposable disposable = new CompositeDisposable();
     @Inject
     public Repository(DataBase_Room db){
@@ -44,87 +46,117 @@ public class Repository{
         remote = new RemoteRepository();
     }
     //这里是产生的Observable
-    public Single<Long> registerUser(User user,String password) {
-        return Rx(() -> remote.userRequest.RegisterUser(user.getUsername(),user.getNickname(),password));
+    @Override
+    public Single<Long> registerUser(User user) {
+        return Rx(() -> remote.userRequest.RegisterUser(user.getUsername(),user.getNickname(),user.getPassword()));
+    }
+    @Override
+    public Single<Long> loginUser(User user){
+        return Rx(()->remote.userRequest.LoginUser(user.getId(),user.getUsername(),user.getPassword()));
     }
 
-    public Single<Long> loginUser(User user,String password){
-        return Rx(()->remote.userRequest.LoginUser(user.getUsername(),password));
+    @Override
+    public void insertUser(User user) {
+        RxVoid(()->local.db.userDao().insert(user));
     }
+
+    @Override
+    public void updateUserPassword(User user) {
+        RxVoid(()->local.db.userDao().updateUserPassword(user.getId(),user.getPassword()));
+    }
+
+    @Override
     public Single<User> update_UserAttribute(User user){
         return Rx(()->{
             //先在远程确认一下更新日期是否相同
-            User value = remote.userRequest.Sync_UserAttribute(user.getId(),user.getAttribute_update());
+            User value = remote.userRequest.Sync_UserAttribute(user.getAttribute_update());
             //不相同的话，将新数据插入到本地数据库
             if(value != null){
                 local.insertOrReplaceUserAttribute(user);
             }
             else {
                 //相同的话从本地数据库取数据
-                value = local.queryByIdSync(user.getId());
+                value = local.db.userDao().queryByIdSync(user.getId());
                 //本地数据库的数据找不到了，从远程取一下.
                 if(value == null){
-                    value = remote.userRequest.QueryUserById(user.getId());
+                    value = remote.userRequest.Query_UserAttributeById(user.getId());
                 }
             }
             return value;
         });
     }
+    @Override
     public Single<List<User>> queryAllUsers() {
-        return local.queryAllUsers();
+        return local.db.userDao().queryAll();
     }
-
+    @Override
     public Single<User> queryUserByUserName(String userName) {
-        return local.queryUserByUserName(userName);
+        return local.db.userDao().queryByUserName(userName);
     }
-
+    @Override
     public Single<User> queryUserById(long id) {
-        return local.queryUserById(id);
+        return local.db.userDao().queryById(id);
     }
-
+    @Override
     public void insertFriend(Friend... friends) {
-        RxVoid(()->local.insertFriend(friends));
+        RxVoid(()->local.db.friendDao().insert(friends));
     }
-
+    @Override
     public void deleteFriend(Friend... friends) {
-        RxVoid(() -> local.deleteFriend(friends));
+        RxVoid(() -> local.db.friendDao().delete(friends));
     }
-
+    @Override
     public void updateFriend(Friend... friends) {
-        RxVoid(() -> local.updateFriend(friends));
+        RxVoid(() -> local.db.friendDao().update(friends));
     }
-
+    @Override
     public Single<List<Friend>> queryFriends(long user_id) {
-        return local.queryFriends(user_id);
+        return local.db.friendDao().query(user_id);
     }
-
+    @Override
+    public Single<List<User>> queryAllFriendUsers(long user_id) {
+        return local.db.friendDao().queryWithUsers(user_id);
+    }
+    @Override
     public void insertSkillCard(SkillCard... skillCards) {
-        RxVoid(() -> local.insertSkillCard(skillCards));
+        RxVoid(() -> local.db.skillCardDao().insert(skillCards));
     }
-
+    @Override
     public void deleteSkillCard(SkillCard... skillCards) {
-        RxVoid(() -> local.deleteSkillCard(skillCards));
+        RxVoid(() -> local.db.skillCardDao().delete(skillCards));
     }
-
+    @Override
     public void updateSkillCard(SkillCard... skillCards) {
-        RxVoid(() -> local.updateSkillCard(skillCards));
+        RxVoid(() -> local.db.skillCardDao().update(skillCards));
     }
-
+    @Override
     public Single<List<SkillCard>> querySkillCardByAuthor(long user_id) {
 
-        return local.querySkillCardByAuthor(user_id);
+        return local.db.skillCardDao().queryByAuthorId(user_id);
     }
-
+    @Override
     public Single<SkillCard> querySkillCardById(long id) {
-        return local.querySkillCardById(id);
+        return local.db.skillCardDao().queryById(id);
     }
-
+    @Override
     public Single<List<SkillCard>> queryAllSkillCards() {
-        return local.queryAllSkillCards();
+        return local.db.skillCardDao().queryAllSkillCards();
     }
-
-    public Single<List<User>> queryAllFriendUsers(long user_id) {
-        return local.queryAllFriendUsers(user_id);
+    @Override
+    public void insertConfig(Config... configs) {
+        local.db.configDao().insert(configs);
+    }
+    @Override
+    public void updateConfig(Config... configs) {
+        local.db.configDao().update(configs);
+    }
+    @Override
+    public void deleteConfig(Config... configs) {
+        local.db.configDao().delete(configs);
+    }
+    @Override
+    public Single<Config> queryConfig(int start, int end) {
+        return local.db.configDao().query(start,end);
     }
     //RxJava2的异步方法封装
     @SuppressLint("CheckResult")

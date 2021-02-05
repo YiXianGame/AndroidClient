@@ -19,10 +19,14 @@ import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.DepthPageTransformer;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.Login_Fragment_Adapter;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
+import com.xianyu.yixian_client.Model.Room.Entity.Config;
+import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.Utils.ShortCode.MessageDialog;
 import com.xianyu.yixian_client.R;
-import com.xianyu.yixian_client.Utils.MD5Utils;
 import com.xianyu.yixian_client.databinding.LoginMainFragmentBinding;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class Main_Fragment extends Fragment {
     private LoginMainFragmentBinding binding;
@@ -35,7 +39,19 @@ public class Main_Fragment extends Fragment {
         if(binding == null){
             binding = LoginMainFragmentBinding.inflate(inflater,container,false);
             viewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
-            init();
+            viewModel.repository.queryConfig(0,0).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+            .subscribe(config -> {
+                if(config!=null){
+                    Core.config.postValue(config);
+                    viewModel.repository.queryUserById(config.getId()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                            .subscribe(value->{Core.liveUser.postValue(value);init();});
+                }
+                else {
+                    Core.config.postValue(new Config());
+                    Core.liveUser.postValue(new User());
+                    init();
+                }
+            });
         }
         return binding.getRoot();
     }
@@ -43,7 +59,6 @@ public class Main_Fragment extends Fragment {
 
     private void init(){
         //UI数据初始化
-        viewModel.password.postValue("");
         viewModel.surePassword.postValue("");
         viewModel.verificationCode.postValue("");
         //跳出主线程
@@ -91,11 +106,11 @@ public class Main_Fragment extends Fragment {
     }
 
     public void Login_Click() {
-        if(Core.liveUser == null || viewModel.password.getValue().isEmpty() || Core.liveUser.getValue().getUsername().isEmpty()){
+        if(Core.liveUser == null || Core.liveUser.getValue().getPassword().isEmpty() || Core.liveUser.getValue().getUsername().isEmpty()){
             MessageDialog.Error_Dialog(getContext(),"登录失败","内容不能为空");
         }
         else {
-            viewModel.repository.loginUser(Core.liveUser.getValue(), MD5Utils.encrypt(viewModel.password.getValue())).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(result->{
+            viewModel.repository.loginUser(Core.liveUser.getValue()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(result->{
                 if(result == -1){
                     MessageDialog.Error_Dialog(getContext(),"登录失败","该账户尚未注册");
                 }
@@ -103,8 +118,11 @@ public class Main_Fragment extends Fragment {
                     MessageDialog.Error_Dialog(getContext(),"登录失败","账户或密码错误");
                 }
                 else {
+                    Core.liveUser.getValue().setId(result);
+                    Core.config.getValue().setId(result);
                     viewModel.init_User(Core.liveUser);
-                    Core.liveUser.getValue().setPassword(viewModel.password.getValue());
+                    viewModel.repository.insertConfig(Core.config.getValue());
+                    viewModel.repository.updateUserPassword(Core.liveUser.getValue());
                     //viewModel.repository.insertUser(Core.liveUser.getValue());
                     new MaterialAlertDialogBuilder(getContext())
                             .setTitle("登陆成功")
@@ -119,13 +137,13 @@ public class Main_Fragment extends Fragment {
         }
     }
     public void Register_Click()  {
-        if(Core.liveUser == null || viewModel.password.getValue().isEmpty() || Core.liveUser.getValue().getUsername().isEmpty() || viewModel.surePassword.getValue().isEmpty()){
+        if(Core.liveUser == null || Core.liveUser.getValue().getPassword().isEmpty()|| Core.liveUser.getValue().getUsername().isEmpty() || viewModel.surePassword.getValue().isEmpty()){
             MessageDialog.Error_Dialog(getContext(),"注册失败","内容不能为空");
         }
         else if(viewModel.surePassword.getValue().equals(viewModel.surePassword.getValue())){
-            viewModel.repository.registerUser(Core.liveUser.getValue(),viewModel.password.getValue()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(value -> {
+            viewModel.repository.registerUser(Core.liveUser.getValue()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(value -> {
                 if(value != -1 && value != -2){
-                    MessageDialog.Error_Dialog(getContext(),"ID:value","恭喜您注册成功！" );
+                    MessageDialog.Error_Dialog(getContext(),"ID:" + value,"恭喜您注册成功！" );
                 }
                 else MessageDialog.Error_Dialog(getContext(),"注册失败","重复密码与密码不一致");
             });
@@ -133,7 +151,7 @@ public class Main_Fragment extends Fragment {
         else MessageDialog.Error_Dialog(getContext(),"注册失败","重复密码与密码不一致");
     }
     public void Forget_Click() {
-        if(Core.liveUser == null || viewModel.password.getValue().isEmpty() || Core.liveUser.getValue().getUsername().isEmpty() || viewModel.verificationCode.getValue().isEmpty()){
+        if(Core.liveUser == null || Core.liveUser.getValue().getPassword().isEmpty() || Core.liveUser.getValue().getUsername().isEmpty() || viewModel.verificationCode.getValue().isEmpty()){
             MessageDialog.Error_Dialog(getContext(),"找回失败","内容不能为空");
         }
         else{

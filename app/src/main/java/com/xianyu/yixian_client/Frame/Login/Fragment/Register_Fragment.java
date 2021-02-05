@@ -14,6 +14,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
 import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.R;
+import com.xianyu.yixian_client.Utils.MD5Utils;
 import com.xianyu.yixian_client.databinding.LoginRegisterFragmentBinding;
 
 /**
@@ -35,22 +36,25 @@ public class Register_Fragment extends Fragment  {
                              Bundle savedInstanceState) {
         LoginRegisterFragmentBinding binding = LoginRegisterFragmentBinding.inflate(inflater,container,false);
         viewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
-        TextInputEditText userName_UI = binding.getRoot().findViewById(R.id.username);
-        TextInputEditText passWord_UI = binding.getRoot().findViewById(R.id.password);
+        TextInputEditText username_UI = binding.getRoot().findViewById(R.id.username);
+        TextInputEditText nickname_UI = binding.getRoot().findViewById(R.id.nickname);
+        TextInputEditText password_UI = binding.getRoot().findViewById(R.id.password);
         TextInputEditText surePassword_UI = binding.getRoot().findViewById(R.id.sure_password);
         Core.liveUser.observe(getViewLifecycleOwner(), user -> {
-            String ui_userName = userName_UI.getText().toString();
-            if(!ui_userName.equals(user.getUsername())){
-                userName_UI.setText(user.getUsername());
+            String ui_username = username_UI.getText().toString();
+            if(!ui_username.equals(user.getUsername())){
+                username_UI.setText(user.getUsername());
+            }
+            String ui_nickname = nickname_UI.getText().toString();
+            if(!ui_nickname.equals(user.getNickname())){
+                nickname_UI.setText(user.getNickname());
             }
         });
-        viewModel.password.observe(getViewLifecycleOwner(),s -> {
-            if(!s.equals(passWord_UI.getText().toString()))passWord_UI.setText(s);
-        });
+
         viewModel.surePassword.observe(getViewLifecycleOwner(),s -> {
             if(!s.equals(surePassword_UI.getText().toString()))surePassword_UI.setText(s);
         });
-        userName_UI.addTextChangedListener(new TextWatcher() {
+        username_UI.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -69,7 +73,7 @@ public class Register_Fragment extends Fragment  {
                 }
             }
         });
-        passWord_UI.addTextChangedListener(new TextWatcher() {
+        nickname_UI.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -82,8 +86,27 @@ public class Register_Fragment extends Fragment  {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals(Core.liveUser.getValue().getUsername())){
-                    viewModel.password.postValue(s.toString());
+                if(!s.toString().equals(Core.liveUser.getValue().getNickname())){
+                    Core.liveUser.getValue().setNickname(s.toString());
+                    Core.liveUser.postValue(Core.liveUser.getValue());
+                }
+            }
+        });
+        password_UI.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!(Core.liveUser.getValue().getPassword().equals(MD5Utils.encrypt(s.toString())))){
+                    Core.liveUser.getValue().setPassword(MD5Utils.encrypt(s.toString()));
                 }
             }
         });
@@ -101,7 +124,7 @@ public class Register_Fragment extends Fragment  {
             @Override
             public void afterTextChanged(Editable s) {
                 if(!s.toString().equals(viewModel.surePassword.getValue())){
-                    viewModel.surePassword.postValue(s.toString());
+                    viewModel.surePassword.postValue(MD5Utils.encrypt(s.toString()));
                 }
             }
         });
