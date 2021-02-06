@@ -54,7 +54,13 @@ public class Repository implements IRepository{
     //这里是产生的Observable
     @Override
     public Single<Long> registerUser(User user) {
-        return Rx(() -> remote.userRequest.RegisterUser(user.getUsername(),user.getNickname(),user.getPassword()));
+        return Single.create(new SingleOnSubscribe<Long>() {
+            @Override
+            public void subscribe(@NonNull SingleEmitter<Long> emitter) {
+                long result = remote.userRequest.RegisterUser(user.getUsername(),user.getNickname(),user.getPassword());
+                emitter.onSuccess(result);
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
     @Override
     public Single<Long> loginUser(User user){

@@ -65,7 +65,7 @@ public class Main_Fragment extends Fragment {
                                     @Override
                                     public void onSuccess(@NonNull User user) {
                                         Core.liveUser.setValue(user);
-                                        if(!(user.getPassword().equals("") || user.getPassword() == null)){
+                                        if(!(user.getUsername() == null||user.getPassword() == null || user.getUsername().equals("") || user.getPassword().equals(""))){
                                             Login_Click();
                                         }
                                     }

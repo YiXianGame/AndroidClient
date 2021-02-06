@@ -35,9 +35,9 @@ public  class RPCRequestProxy implements InvocationHandler {
                 }
                 else throw new RPCException(String.format("Java中的%s类型参数尚未注册！", param_type));
             }
-            Object[] obj = new Object[args.length + 1];
+            Object[] obj;
+            obj = new Object[args.length + 1];
             System.arraycopy(args, 0, obj, 1, obj.length - 1);
-            String a = Core.gson.toJson(args);
             ClientRequestModel request = new ClientRequestModel("2.0", service, methodId.toString(), obj);
             SocketClient socketClient = RPCClientFactory.GetClient(clientKey);
             Class<?> return_type = method.getReturnType();
