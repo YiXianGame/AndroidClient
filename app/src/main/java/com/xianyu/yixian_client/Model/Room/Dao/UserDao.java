@@ -12,6 +12,8 @@ import com.xianyu.yixian_client.Model.Room.Convert.ActiveConvert;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 
 import java.util.List;
+
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 
@@ -32,27 +34,29 @@ import io.reactivex.Single;
 @Dao
 public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insert(User... user);
-
-    @Query("UPDATE OR REPLACE user SET username=:username,nickname=:nickname,upgrade_num=:upgrade_num,create_num=:create_num," +
+    void insert(User... user);
+    @Query("UPDATE user SET username=:username,password=:password WHERE id=:id")
+    void updateAccount(long id,String username,String password);
+    @TypeConverters(ActiveConvert.class)
+    @Query("UPDATE user SET username=:username,nickname=:nickname,upgrade_num=:upgrade_num,create_num=:create_num," +
             "money=:money,personalSignature=:personalSignature,battleCount=:battleCount,exp=:exp,lv=:lv,title=:title,active=:active," +
-            "kills=:kills,deaths=:deaths,registerDate=:registerDate,attribute_update=:attribute_update,skillCard_update=:skillCard_update," +
-            "headImage_update=:headImage_update,cardGroup_update=:cardGroup_update WHERE id = :id")
-    public void insertUserAttribute(long id, String username, String nickname, int upgrade_num,
+            "kills=:kills,deaths=:deaths,registerDate=:registerDate,attribute_update=:attribute_update " +
+            "WHERE id = :id")
+    void insertUserAttribute(long id, String username, String nickname, int upgrade_num,
                                     int create_num, long money, String personalSignature,
                                     int battleCount, long exp, int lv, String title, User.State active, int kills, int deaths, long registerDate,
-                                    long attribute_update, long skillCard_update, long headImage_update, long cardGroup_update);
+                                    long attribute_update);
     @Query("UPDATE user SET password = :password WHERE id = :id")
-    public void updateUserPassword(long id, String password);
+    void updateUserPassword(long id, String password);
     @Delete
-    public void delete(User... user);
+    void delete(User... user);
 
     @Query("SELECT * FROM user WHERE username = :username")
-    public Single<User> queryByUserName(String username);
+    Maybe<User> queryByUserName(String username);
     @Query("SELECT * FROM user WHERE id = :id")
-    public Single<User> queryById(long id);
+    Maybe<User> queryById(long id);
     @Query("SELECT * FROM user WHERE id = :id")
-    public User queryByIdSync(long id);
+    User queryByIdSync(long id);
     @Query("SELECT * FROM user")
-    public Single<List<User>> queryAll();
+    Single<List<User>> queryAll();
 }

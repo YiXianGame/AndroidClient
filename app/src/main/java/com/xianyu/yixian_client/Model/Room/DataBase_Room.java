@@ -26,7 +26,7 @@ import com.xianyu.yixian_client.Model.Room.Entity.User;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-@Database(entities = {User.class,SkillCard.class,Friend.class , CardRepository.class, Config.class},version = 2,exportSchema = false)
+@Database(entities = {User.class,SkillCard.class,Friend.class , CardRepository.class, Config.class},version = 1,exportSchema = false)
 public abstract class DataBase_Room extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract SkillCardDao skillCardDao();

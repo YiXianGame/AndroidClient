@@ -59,39 +59,14 @@ public class UnitTest_Mock {
         verify(mockedList).add("one");
         verify(mockedList).clear();
     }
-    public class userRequestTest implements UserRequest {
-        @Override
-        public void insertUser(User user) {
 
-        }
-
-        @Override
-        public void updateUser(User user) {
-
-        }
-
-        @Override
-        public User queryUserByUserName(String userName) {
-            return null;
-        }
-
-        @Override
-        public User queryUserById(long id) {
-            return null;
-        }
-
-        @Override
-        public List<User> queryAllFriendUsers(long user_id) {
-            return null;
-        }
-    }
     @Test
     public void proxy(){
         RPCRequestProxy proxy = new RPCRequestProxy();
         Class<?>[] d =  UserRequest.class.getInterfaces();
         com.xianyu.yixian_client.Model.RPC.Request.UserRequest user = (com.xianyu.yixian_client.Model.RPC.Request.UserRequest) Proxy.newProxyInstance(UserRequest.class.getClassLoader(), d, new InvocationHandler() {
             @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            public Object invoke(Object proxy, Method method, Object[] args) {
                 return null;
             }
         });

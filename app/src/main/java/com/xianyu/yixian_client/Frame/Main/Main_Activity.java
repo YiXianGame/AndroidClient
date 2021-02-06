@@ -58,7 +58,6 @@ public class Main_Activity extends AppCompatActivity {
     }
 
     private void init() {
-
         videoView = binding.getRoot().findViewById(R.id.videoView_main);
         videoView.setVideoPath(Uri.parse("android.resource://" + getPackageName() + "/raw/" + R.raw.cg_bg).toString());
         videoView.setOnPreparedListener(mp -> mp.setLooping(true));

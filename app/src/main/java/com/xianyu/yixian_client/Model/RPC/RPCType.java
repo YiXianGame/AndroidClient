@@ -1,16 +1,8 @@
 package com.xianyu.yixian_client.Model.RPC;
 
-import android.util.Log;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.internal.LinkedTreeMap;
-import com.google.gson.reflect.TypeToken;
 import com.xianyu.yixian_client.Core;
-import com.xianyu.yixian_client.Model.Log.Log.Tag;
-import com.xianyu.yixian_client.Model.Room.Entity.User;
+import com.xianyu.yixian_client.Model.Exception.RPCException;
 
-import java.lang.reflect.Type;
 import java.util.HashMap;
 
 public class RPCType {

@@ -1,5 +1,7 @@
 package com.xianyu.yixian_client.Model.RPC;
 
+import com.xianyu.yixian_client.Model.Exception.RPCException;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -14,7 +16,7 @@ public class RPCAdaptProxy {
         this.methods = methods;
     }
 
-    public <T> void Register(Class<T> adaptImp,RPCType type) throws  RPCException {
+    public <T> void Register(Class<T> adaptImp,RPCType type) throws RPCException {
         StringBuilder methodId = new StringBuilder();
         this.type = type;
         for(Method method : adaptImp.getMethods())

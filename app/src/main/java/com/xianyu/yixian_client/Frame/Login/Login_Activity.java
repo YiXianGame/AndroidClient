@@ -8,13 +8,23 @@ import android.widget.VideoView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Model.Repository.Repository;
+import com.xianyu.yixian_client.Model.Room.Entity.Config;
+import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.LoginActivityBinding;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.MaybeObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 @AndroidEntryPoint
 public class Login_Activity extends AppCompatActivity {
@@ -27,15 +37,20 @@ public class Login_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = LoginActivityBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         viewModel.initialization(repository);
+        binding = LoginActivityBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         videoView = binding.getRoot().findViewById(R.id.back_ground);
         videoView.setVideoPath(Uri.parse("android.resource://" + getPackageName() + "/raw/" + R.raw.cg_bg).toString());
         videoView.setOnPreparedListener(mp -> mp.setLooping(true));
         mediaPlayer = MediaPlayer.create(this, R.raw.b);
         mediaPlayer.setLooping(true);
+        init();
+    }
+
+    private void init() {
+
     }
 
     @Override

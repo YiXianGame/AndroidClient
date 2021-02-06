@@ -26,10 +26,10 @@ public class LocalRepository implements ILocalRepository {
     }
 
     @Override
-    public void insertOrReplaceUserAttribute(User user) {
+    public void updateUserAttribute(User user) {
         db.userDao().insertUserAttribute(user.getId(),user.getUsername(),user.getNickname(),user.getUpgrade_num(),
                 user.getCreate_num(),user.getMoney(),user.getPersonalSignature(),user.getBattleCount(),
                 user.getExp(),user.getLv(),user.getTitle(),user.getActive(),user.getKills(),user.getDeaths(),user.getRegisterDate(),
-                user.getAttribute_update(),user.getSkillCard_update(),user.getHeadImage_update(),user.getCardGroup_update());
+                user.getAttribute_update());
     }
 }

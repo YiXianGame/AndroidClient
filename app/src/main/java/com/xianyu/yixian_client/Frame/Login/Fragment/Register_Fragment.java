@@ -124,7 +124,7 @@ public class Register_Fragment extends Fragment  {
             @Override
             public void afterTextChanged(Editable s) {
                 if(!s.toString().equals(viewModel.surePassword.getValue())){
-                    viewModel.surePassword.postValue(MD5Utils.encrypt(s.toString()));
+                    viewModel.surePassword.postValue(s.toString());
                 }
             }
         });

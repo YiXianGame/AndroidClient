@@ -10,6 +10,7 @@ import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 
 import java.util.List;
 
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 
@@ -40,7 +41,7 @@ public interface SkillCardDao {
     public Single<List<SkillCard>> queryByAuthorId(long user_id);
 
     @Query("SELECT * FROM skillcard WHERE id = :id")
-    public Single<SkillCard> queryById(long id);
+    public Maybe<SkillCard> queryById(long id);
 
     @Query("SELECT * FROM skillcard")
     public Single<List<SkillCard>> queryAllSkillCards();

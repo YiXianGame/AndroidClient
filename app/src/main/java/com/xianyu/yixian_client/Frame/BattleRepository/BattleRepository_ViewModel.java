@@ -12,6 +12,7 @@ import com.xianyu.yixian_client.Model.Room.Entity.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -27,10 +28,10 @@ public class BattleRepository_ViewModel extends ViewModel {
     public void initialization(Repository repository){
         this.repository = repository;
     }
-    public Single<User> queryUserById(long id){
+    public Maybe<User> queryUserById(long id){
          return repository.queryUserById(id);
     }
-    public Single<SkillCard> querySkillCardById(long id){
+    public Maybe<SkillCard> querySkillCardById(long id){
         return repository.querySkillCardById(id);
     }
     public void refreshUser(){

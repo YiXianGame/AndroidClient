@@ -36,14 +36,14 @@ public class User
     @PrimaryKey
     private long id;
     @Expose
-    private String username;
+    private String username="";
     @TypeConverters(BytesConvert.class)
     @Expose
     private byte[] headImage;
     @Expose
-    private String nickname;
+    private String nickname="";
     @Expose
-    private String password;
+    private String password="";
     @Expose
     private int upgrade_num=0;
     @Expose
@@ -51,7 +51,7 @@ public class User
     @Expose
     private long money = 0;
     @Expose
-    private String personalSignature;
+    private String personalSignature="";
     @Expose
     private int battleCount;//战斗场次
     @Expose
@@ -147,17 +147,6 @@ public class User
     public void setHistory(ArrayList<History> history) {
         this.history = history;
     }
-
-    public User(){
-        Log.d(Tag.Debug,"产生了");
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        Log.d(Tag.Debug,"销毁了");
-        super.finalize();
-    }
-
     @Override
     public String toString() {
         return "User{" +

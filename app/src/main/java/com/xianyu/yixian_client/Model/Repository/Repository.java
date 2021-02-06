@@ -2,6 +2,7 @@ package com.xianyu.yixian_client.Model.Repository;
 
 import android.annotation.SuppressLint;
 
+import com.xianyu.yixian_client.Model.Exception.UserException;
 import com.xianyu.yixian_client.Model.Repository.Interface.IRepository;
 import com.xianyu.yixian_client.Model.Room.DataBase_Room;
 import com.xianyu.yixian_client.Model.Room.Entity.Config;
@@ -14,9 +15,14 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Maybe;
+import io.reactivex.MaybeEmitter;
+import io.reactivex.MaybeOnSubscribe;
 import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
@@ -36,9 +42,9 @@ import kotlin.jvm.functions.Function0;
  * @Version: 1.0
  */
 @Singleton
-public class Repository implements IRepository {
-    public LocalRepository local;
-    public RemoteRepository remote;
+public class Repository implements IRepository{
+    private LocalRepository local;
+    private RemoteRepository remote;
     private final CompositeDisposable disposable = new CompositeDisposable();
     @Inject
     public Repository(DataBase_Room db){
@@ -61,18 +67,13 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public void updateUserPassword(User user) {
-        RxVoid(()->local.db.userDao().updateUserPassword(user.getId(),user.getPassword()));
-    }
-
-    @Override
-    public Single<User> update_UserAttribute(User user){
-        return Rx(()->{
+    public Maybe<User> sync_UserAttribute(User user){
+        return RxNull(() -> {
             //先在远程确认一下更新日期是否相同
             User value = remote.userRequest.Sync_UserAttribute(user.getAttribute_update());
             //不相同的话，将新数据插入到本地数据库
             if(value != null){
-                local.insertOrReplaceUserAttribute(user);
+                local.updateUserAttribute(value);
             }
             else {
                 //相同的话从本地数据库取数据
@@ -80,21 +81,35 @@ public class Repository implements IRepository {
                 //本地数据库的数据找不到了，从远程取一下.
                 if(value == null){
                     value = remote.userRequest.Query_UserAttributeById(user.getId());
+                    if(value != null){
+                        local.db.userDao().insert(value);
+                    }
                 }
             }
             return value;
         });
     }
+
+    @Override
+    public void updateLocalAccount(User user) {
+        RxVoid(()->local.db.userDao().updateAccount(user.getId(),user.getUsername(),user.getPassword()));
+    }
+
+    @Override
+    public Maybe<User> queryLocalUser(long id) {
+        return local.db.userDao().queryById(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+
     @Override
     public Single<List<User>> queryAllUsers() {
         return local.db.userDao().queryAll();
     }
     @Override
-    public Single<User> queryUserByUserName(String userName) {
+    public Maybe<User> queryUserByUserName(String userName) {
         return local.db.userDao().queryByUserName(userName);
     }
     @Override
-    public Single<User> queryUserById(long id) {
+    public Maybe<User> queryUserById(long id) {
         return local.db.userDao().queryById(id);
     }
     @Override
@@ -135,7 +150,7 @@ public class Repository implements IRepository {
         return local.db.skillCardDao().queryByAuthorId(user_id);
     }
     @Override
-    public Single<SkillCard> querySkillCardById(long id) {
+    public Maybe<SkillCard> querySkillCardById(long id) {
         return local.db.skillCardDao().queryById(id);
     }
     @Override
@@ -144,7 +159,7 @@ public class Repository implements IRepository {
     }
     @Override
     public void insertConfig(Config... configs) {
-        local.db.configDao().insert(configs);
+        RxVoid(()->local.db.configDao().insert(configs));
     }
     @Override
     public void updateConfig(Config... configs) {
@@ -155,19 +170,42 @@ public class Repository implements IRepository {
         local.db.configDao().delete(configs);
     }
     @Override
-    public Single<Config> queryConfig(int start, int end) {
+    public Single<List<Config>> queryConfig(int start, int end) {
         return local.db.configDao().query(start,end);
     }
-    //RxJava2的异步方法封装
+    //返回值不为空
     @SuppressLint("CheckResult")
     private <T,R> Single<R> Rx(Function0<R> functions){
-        return Single.create((SingleOnSubscribe<R>) emitter -> {
-            emitter.onSuccess(functions.invoke());
+        return Single.create(new SingleOnSubscribe<R>() {
+            @Override
+            public void subscribe(@NonNull SingleEmitter<R> emitter) throws Exception {
+                emitter.onSuccess(functions.invoke());
+            }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
-    //RxJava2的异步方法封装
+    //返回值可能为空
     @SuppressLint("CheckResult")
-    private <T,R> void RxVoid(Action action){
+    private <T,R> Maybe<R> RxNull(Function0<R> functions) {
+        return Maybe.create(new MaybeOnSubscribe<R>() {
+            @Override
+            public void subscribe(@NonNull MaybeEmitter<R> emitter) throws Exception {
+                try{
+                    R result = functions.invoke();
+                    if(result!=null){
+                        emitter.onSuccess(result);
+                    }
+                    else emitter.onComplete();
+                }
+                catch (Exception e){
+                    emitter.onError(e);
+                    throw e;
+                }
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    }
+    //无返回值
+    @SuppressLint("CheckResult")
+    private <T,R> void RxVoid(Action action) {
         Single.create((SingleOnSubscribe<Integer>) emitter -> {
             action.run();
             emitter.onSuccess(1);

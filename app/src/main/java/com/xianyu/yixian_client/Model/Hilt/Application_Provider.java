@@ -34,7 +34,7 @@ public class Application_Provider {
     //数据库 不需要Singleton，因为Factory是Singleton
     @Provides
     public DataBase_Room provideDB_Room(@ApplicationContext Context context){
-        return Room.inMemoryDatabaseBuilder(context, DataBase_Room.class).build();
+        return Room.databaseBuilder(context, DataBase_Room.class,"db").build();
     }
 
 }

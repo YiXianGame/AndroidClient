@@ -33,10 +33,18 @@ public class CustomHeartbeatHandler extends ChannelHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         if(msg instanceof ClientResponseModel){
-           ClientRequestModel request = socketClient.tasks.get(Integer.parseInt(((ClientResponseModel) msg).Id));
-           if(request != null){
-               request.setResult(((ClientResponseModel) msg).Result);
-           }
+            ClientResponseModel respond = (ClientResponseModel) msg;
+            ClientRequestModel request = socketClient.tasks.get(Integer.parseInt((respond.Id)));
+            if(request != null){
+                socketClient.tasks.remove(Integer.parseInt((respond.Id)));
+                request.setResult(respond.Result);
+            }
+            else {
+                Log.e(Tag.RemoteRepository,"\n------------------未找到请求--------------------");
+                Log.e(Tag.RemoteRepository,String.format("%s:%s::[客]\n%s",socketClient.host,socketClient.port,respond));
+                Log.e(Tag.RemoteRepository,"--------------------------------------------");
+                return;
+            }
         }
         else if(msg instanceof ServerRequestModel){
             ServerRequestModel request = (ServerRequestModel)msg;
@@ -46,9 +54,6 @@ public class CustomHeartbeatHandler extends ChannelHandlerAdapter {
             if(adapt != null){
                 method = adapt.getMethods().get(request.MethodId);
                 if(method!= null){
-                    Log.d(Tag.RemoteRepository,"\n(---------------------------------------------------------);");
-                    Log.d(Tag.RemoteRepository,String.format("%s:%s::[服-指令]\n%s",socketClient.host,socketClient.port,request));
-                    Log.d(Tag.RemoteRepository,"(---------------------------------------------------------);");
                     adapt.ConvertParams(request.MethodId,request.Params);
                     method.invoke(null,request.Params);
                 }
@@ -65,7 +70,6 @@ public class CustomHeartbeatHandler extends ChannelHandlerAdapter {
                 Log.e(Tag.RemoteRepository,"--------------------------------------------");
                 return;
             }
-
         }
     }
 

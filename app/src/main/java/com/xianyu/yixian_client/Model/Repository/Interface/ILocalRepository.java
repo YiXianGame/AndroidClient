@@ -27,6 +27,6 @@ import io.reactivex.Single;
  * @Version: 1.0
  */
 public interface ILocalRepository {
-    public void insertOrReplaceUserAttribute(User user);
+    void updateUserAttribute(User user);
 
 }

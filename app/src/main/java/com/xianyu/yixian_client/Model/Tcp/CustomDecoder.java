@@ -1,6 +1,9 @@
 package com.xianyu.yixian_client.Model.Tcp;
 
+import android.util.Log;
+
 import com.xianyu.yixian_client.Core;
+import com.xianyu.yixian_client.Model.Log.Log.Tag;
 import com.xianyu.yixian_client.Model.RPC.ClientResponseModel;
 import com.xianyu.yixian_client.Model.RPC.ServerRequestModel;
 
@@ -35,9 +38,11 @@ public class CustomDecoder extends ByteToMessageDecoder {
                     //收到的数据足够成包,开始组包.
                     content.writeBytes(in.array(),readerIndex,needRemain);
                     if(pattern == 0){
+                        Log.d(Tag.RemoteRepository,"[服-请求]:" + content.toString(StandardCharsets.UTF_8));
                         out.add(Core.gson.fromJson(content.toString(StandardCharsets.UTF_8), ServerRequestModel.class));
                     }
                     else {
+                        Log.d(Tag.RemoteRepository,"[客-返回]:" + content.toString(StandardCharsets.UTF_8));
                         out.add(Core.gson.fromJson(content.toString(StandardCharsets.UTF_8), ClientResponseModel.class));
                     }   
                     content.resetWriterIndex();

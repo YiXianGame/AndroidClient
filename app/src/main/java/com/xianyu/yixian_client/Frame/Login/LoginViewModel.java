@@ -1,18 +1,11 @@
 package com.xianyu.yixian_client.Frame.Login;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
-import com.uber.autodispose.AutoDispose;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Model.Repository.Repository;
 import com.xianyu.yixian_client.Model.Room.Entity.User;
 
-import java.util.Observable;
-
-import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 
 
@@ -36,8 +29,8 @@ public class LoginViewModel extends ViewModel {
     public void initialization(Repository repository){
         this.repository = repository;
     }
-    public void init_User(MutableLiveData<User> user_live){
-        disposable.add(repository.update_UserAttribute(user_live.getValue()).subscribe(user_live::postValue));
+    public void sync_User(MutableLiveData<User> user_live){
+        disposable.add(repository.sync_UserAttribute(user_live.getValue()).subscribe(user_live::postValue));
     }
 }
 
