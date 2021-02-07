@@ -7,11 +7,9 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.module.DraggableModule;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.material.textview.MaterialTextView;
-import com.xianyu.yixian_client.Model.Room.Entity.Attribute;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.R;
 
@@ -152,7 +150,7 @@ public class SkillCardAdapt extends BaseQuickAdapter<SkillCard, SkillCardAdapt.V
         }
         @Override
         public boolean areContentsTheSame(@NonNull SkillCard oldItem, @NonNull SkillCard newItem) {
-            return oldItem.getUpdate() == newItem.getUpdate();
+            return oldItem.getAttributeUpdate() == newItem.getAttributeUpdate();
         }
     }
 }

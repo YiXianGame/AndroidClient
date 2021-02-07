@@ -9,7 +9,6 @@ import com.xianyu.yixian_client.Model.Room.Convert.AttributeConvert;
 import com.xianyu.yixian_client.Model.Room.Convert.BuffConvert;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @ProjectName: YiXian_Client
@@ -25,6 +24,7 @@ import java.util.HashMap;
  */
 @Entity(tableName = "skillcard")
 public class SkillCard {
+    public enum Category {Physics,Magic,Attack,Cure,Eternal };
     @Expose
     @PrimaryKey
     long id;//卡牌ID-
@@ -37,23 +37,35 @@ public class SkillCard {
     @Expose
     int probability;//卡牌觉醒的概率
     @Expose
-    int auxiliary_hp;//己方HP效果
+    int auxiliaryHp;//己方HP效果
     @Expose
-    int auxiliary_mp;//己方MP效果
+    int auxiliaryMp;//己方MP效果
     @Expose
-    int enemy_hp;//敌人HP效果
+    int enemyHp;//敌人HP效果
     @Expose
-    int enemy_mp;//敌人MP效果
+    int enemyMp;//敌人MP效果
     @Expose
-    long author_id;//作者ID-
+    long authorId;//作者ID
     @Expose
-    int max_enemy;//最大锁定敌人数 魂命
+    int maxEnemy;//最大锁定敌人数 魂命
     @Expose
-    int max_auxiliary;//最大锁定友军数 灵命
+    int maxAuxiliary;//最大锁定友军数 灵命
     @Expose
     int registerDate;//卡牌注册日期
     @Expose
-    int update;//卡牌更新日期
+    int attributeUpdate;//卡牌更新日期
+    @Expose
+    @TypeConverters(BuffConvert.class)
+    ArrayList<Buff> enemyBuff = new ArrayList<>();
+    @Expose
+    @TypeConverters(BuffConvert.class)
+    ArrayList<Buff> auxiliaryBuff = new ArrayList<>();
+    @Expose
+    @TypeConverters(AttributeConvert.class)
+    ArrayList<Category> category = new ArrayList<>();
+
+    ArrayList<User> enemy = new ArrayList<>();
+    ArrayList<User> auxiliary = new ArrayList<>();
 
     public int getRegisterDate() {
         return registerDate;
@@ -63,52 +75,37 @@ public class SkillCard {
         this.registerDate = register_data;
     }
 
-    public int getUpdate() {
-        return update;
+    public int getAttributeUpdate() {
+        return attributeUpdate;
     }
 
-    public void setUpdate(int update_data) {
-        this.update = update_data;
+    public void setAttributeUpdate(int update_data) {
+        this.attributeUpdate = update_data;
     }
 
-    @Expose
-    @TypeConverters(BuffConvert.class)
-    HashMap<Buff.Category,Buff> enemy_buffs = new HashMap<>();
-    @Expose
-    @TypeConverters(BuffConvert.class)
-    HashMap<Buff.Category,Buff> auxiliary_buffs = new HashMap<>();
-    @Expose
-    @TypeConverters(AttributeConvert.class)
-    HashMap<Attribute.Category,Attribute> attributes = new HashMap<>();
-
-    public HashMap<Buff.Category, Buff> getEnemy_buffs() {
-        return enemy_buffs;
+    public ArrayList<Buff> getEnemyBuff() {
+        return enemyBuff;
     }
 
-    public void setEnemy_buffs(HashMap<Buff.Category, Buff> enemy_buffs) {
-        this.enemy_buffs = enemy_buffs;
+    public void setEnemyBuff(ArrayList<Buff> enemyBuff) {
+        this.enemyBuff = enemyBuff;
     }
 
-    public HashMap<Buff.Category, Buff> getAuxiliary_buffs() {
-        return auxiliary_buffs;
+    public ArrayList<Buff> getAuxiliaryBuff() {
+        return auxiliaryBuff;
     }
 
-    public void setAuxiliary_buffs(HashMap<Buff.Category, Buff> auxiliary_buffs) {
-        this.auxiliary_buffs = auxiliary_buffs;
+    public void setAuxiliaryBuff(ArrayList<Buff> auxiliaryBuff) {
+        this.auxiliaryBuff = auxiliaryBuff;
     }
 
-    public HashMap<Attribute.Category, Attribute> getAttributes() {
-        return attributes;
+    public ArrayList<Category> getCategory() {
+        return category;
     }
 
-    public void setAttributes(HashMap<Attribute.Category, Attribute> attributes) {
-        this.attributes = attributes;
+    public void setCategory(ArrayList<Category> category) {
+        this.category = category;
     }
-
-    public SkillCard(){
-
-    }
-
 
     public long getId() {
         return id;
@@ -150,57 +147,57 @@ public class SkillCard {
         this.probability = probability;
     }
 
-    public int getAuxiliary_hp() {
-        return auxiliary_hp;
+    public int getAuxiliaryHp() {
+        return auxiliaryHp;
     }
 
-    public void setAuxiliary_hp(int auxiliary_hp) {
-        this.auxiliary_hp = auxiliary_hp;
+    public void setAuxiliaryHp(int auxiliaryHp) {
+        this.auxiliaryHp = auxiliaryHp;
     }
 
-    public int getAuxiliary_mp() { return auxiliary_mp; }
+    public int getAuxiliaryMp() { return auxiliaryMp; }
 
-    public void setAuxiliary_mp(int auxiliary_mp) {
-        this.auxiliary_mp = auxiliary_mp;
+    public void setAuxiliaryMp(int auxiliaryMp) {
+        this.auxiliaryMp = auxiliaryMp;
     }
 
-    public int getEnemy_hp() {
-        return enemy_hp;
+    public int getEnemyHp() {
+        return enemyHp;
     }
 
-    public void setEnemy_hp(int enemy_hp) {
-        this.enemy_hp = enemy_hp;
+    public void setEnemyHp(int enemyHp) {
+        this.enemyHp = enemyHp;
     }
 
-    public int getEnemy_mp() {
-        return enemy_mp;
+    public int getEnemyMp() {
+        return enemyMp;
     }
 
-    public void setEnemy_mp(int enemy_mp) {
-        this.enemy_mp = enemy_mp;
+    public void setEnemyMp(int enemyMp) {
+        this.enemyMp = enemyMp;
     }
 
-    public long getAuthor_id() {
-        return author_id;
+    public long getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor_id(long author_id) {
-        this.author_id = author_id;
+    public void setAuthorId(long authorId) {
+        this.authorId = authorId;
     }
 
-    public int getMax_enemy() {
-        return max_enemy;
+    public int getMaxEnemy() {
+        return maxEnemy;
     }
 
-    public void setMax_enemy(int max_enemy) {
-        this.max_enemy = max_enemy;
+    public void setMaxEnemy(int maxEnemy) {
+        this.maxEnemy = maxEnemy;
     }
 
-    public int getMax_auxiliary() {
-        return max_auxiliary;
+    public int getMaxAuxiliary() {
+        return maxAuxiliary;
     }
 
-    public void setMax_auxiliary(int max_auxiliary) {
-        this.max_auxiliary = max_auxiliary;
+    public void setMaxAuxiliary(int maxAuxiliary) {
+        this.maxAuxiliary = maxAuxiliary;
     }
 }

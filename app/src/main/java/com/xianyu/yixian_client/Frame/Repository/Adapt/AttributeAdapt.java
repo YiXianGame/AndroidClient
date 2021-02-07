@@ -1,24 +1,17 @@
 package com.xianyu.yixian_client.Frame.Repository.Adapt;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.material.textview.MaterialTextView;
-import com.xianyu.yixian_client.Model.Room.Entity.Attribute;
-import com.xianyu.yixian_client.Model.Room.Entity.Buff;
 import com.xianyu.yixian_client.R;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.Locale;
 
 public class AttributeAdapt extends BaseQuickAdapter<Attribute,AttributeAdapt.ViewHolder> {

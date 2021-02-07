@@ -18,28 +18,45 @@ import com.google.gson.annotations.Expose;
 public class Buff {
     public enum Category { Freeze };
     @Expose
-    int duration_Immediate;//效果持续时长
-    @Expose
-    int duration_Round;//效果持续回合
+    int duration;//效果持续时长
     @Expose
     int power;//能力
     @Expose
     Category category;//类型
+    User owner;//Buff拥有者
+    long expire;//到期时间
+    boolean isExpire;//到期时间
 
-    public int getDuration_Immediate() {
-        return duration_Immediate;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setDuration_Immediate(int duration_Immediate) {
-        this.duration_Immediate = duration_Immediate;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
-    public int getDuration_Round() {
-        return duration_Round;
+    public long getExpire() {
+        return expire;
     }
 
-    public void setDuration_Round(int duration_Round) {
-        this.duration_Round = duration_Round;
+    public void setExpire(long expire) {
+        this.expire = expire;
+    }
+
+    public boolean isExpire() {
+        return isExpire;
+    }
+
+    public void setExpire(boolean expire) {
+        isExpire = expire;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public int getPower() {

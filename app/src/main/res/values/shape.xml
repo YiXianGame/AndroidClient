@@ -20,7 +20,7 @@
 
     <!--Material allows theming of a component’s shape through the customization of corner -->
     <!--style and radius size. To systematically apply shape throughout your app, it helps to -->
-    <!--understand that components are categorized by size, grouped into categories of small, -->
+    <!--understand that components are categorized by size, grouped into category of small, -->
     <!--medium and large. Each component size group can be themed by overriding the Material -->
     <!--Components attributes ?shapeAppearanceSmallComponent, ?shapeAppearanceMediumComponent -->
     <!--and ?shapeAppearanceLargeComponent in your app's theme. Those attributes are already -->

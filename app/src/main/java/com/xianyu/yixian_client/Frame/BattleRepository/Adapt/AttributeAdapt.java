@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.material.textview.MaterialTextView;
-import com.xianyu.yixian_client.Model.Room.Entity.Attribute;
 import com.xianyu.yixian_client.R;
 
 import org.jetbrains.annotations.NotNull;

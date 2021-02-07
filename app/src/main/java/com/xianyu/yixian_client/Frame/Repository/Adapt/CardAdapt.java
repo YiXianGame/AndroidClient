@@ -11,7 +11,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.material.textview.MaterialTextView;
-import com.xianyu.yixian_client.Model.Room.Entity.Attribute;
 import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
 import com.xianyu.yixian_client.R;
 
@@ -74,13 +73,13 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
         viewHolder.name_text.setText(skillCard.getName());
         viewHolder.description.setText(skillCard.getDescription());
         viewHolder.mp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getMp()));
-        viewHolder.enemyHp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getEnemy_hp()));
-        viewHolder.enemyMp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getEnemy_mp()));
-        viewHolder.auxiliaryHp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getAuxiliary_hp()));
-        viewHolder.auxiliaryMp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getAuxiliary_mp()));
+        viewHolder.enemyHp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getEnemyHp()));
+        viewHolder.enemyMp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getEnemyMp()));
+        viewHolder.auxiliaryHp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getAuxiliaryHp()));
+        viewHolder.auxiliaryMp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getAuxiliaryMp()));
         viewHolder.probability_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getProbability()));
-        viewHolder.max_enemy_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getMax_enemy()));
-        viewHolder.max_auxiliary.setText(String.format(Locale.getDefault(),"%d",skillCard.getMax_auxiliary()));
+        viewHolder.max_enemy_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getMaxEnemy()));
+        viewHolder.max_auxiliary.setText(String.format(Locale.getDefault(),"%d",skillCard.getMaxAuxiliary()));
     }
 
     public class BluePrint{
@@ -177,7 +176,7 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
         }
         @Override
         public boolean areContentsTheSame(@NonNull SkillCard oldItem, @NonNull SkillCard newItem) {
-            return oldItem.getUpdate() == newItem.getUpdate();
+            return oldItem.getAttributeUpdate() == newItem.getAttributeUpdate();
         }
     }
 }

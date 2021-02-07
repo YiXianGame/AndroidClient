@@ -4,15 +4,10 @@ import android.app.Application;
 import android.graphics.Bitmap;
 import android.util.Pair;
 
-import androidx.compose.ui.text.platform.AndroidAccessibilitySpannableStringKt;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;
-import com.uber.autodispose.AutoDispose;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import com.xianyu.yixian_client.Model.Repository.Repository;
-import com.xianyu.yixian_client.Model.Room.Entity.Attribute;
 import com.xianyu.yixian_client.Model.Room.Entity.Buff;
 import com.xianyu.yixian_client.Model.Room.Entity.CardGroup;
 import com.xianyu.yixian_client.Model.Room.Entity.Friend;
@@ -31,7 +26,6 @@ import javax.inject.Inject;
 import dagger.hilt.android.HiltAndroidApp;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -100,13 +94,13 @@ public class XYApplication extends Application {
             if(random.nextInt(10) > 5) skillCard.getAttributes().put(Attribute.Category.Magic,new Attribute(Attribute.Category.Magic));
             if(random.nextInt(10) > 5) skillCard.getAttributes().put(Attribute.Category.Physics,new Attribute(Attribute.Category.Physics));
             if(random.nextInt(10) > 5) skillCard.getAttributes().put(Attribute.Category.Eternal,new Attribute(Attribute.Category.Eternal));
-            skillCard.setAuthor_id(owner.getId());
+            skillCard.setAuthorId(owner.getId());
             skillCard.setId(i);
             skillCard.setMp(random.nextInt(20));
-            skillCard.setAuxiliary_hp(random.nextInt(20));
-            skillCard.setAuxiliary_mp(random.nextInt(20));
-            skillCard.setEnemy_hp(random.nextInt(20));
-            skillCard.setEnemy_mp(random.nextInt(20));
+            skillCard.setAuxiliaryHp(random.nextInt(20));
+            skillCard.setAuxiliaryMp(random.nextInt(20));
+            skillCard.setEnemyHp(random.nextInt(20));
+            skillCard.setEnemyMp(random.nextInt(20));
             skillCard.setProbability(random.nextInt(100));
             skillCard.setDescription("卡牌描述");
             for(int j=0;j<random.nextInt(5);j++){
