@@ -9,10 +9,11 @@
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="$USER_HOME$/.gradle/gradle-6.5-bin/gradle-6.5" />
-        <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Make" />
+            <option value="$PROJECT_DIR$/Material" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

@@ -11,7 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.material.textview.MaterialTextView;
-import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
+import com.yixian.material.Entity.SkillCard;
 import com.xianyu.yixian_client.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +22,7 @@ import java.util.Locale;
 
 public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> implements LoadMoreModule {
     public BluePrint bluePrint = new BluePrint();
-    public List<SkillCard> skillCards_filters;
+    public List<SkillCard> skillCards_filterBases;
     public  CardAdapt(){
         super(R.layout.repository_card_item);
         this.setDiffCallback(new DiffCallBack());
@@ -35,51 +35,51 @@ public class CardAdapt extends BaseQuickAdapter<SkillCard,CardAdapt.ViewHolder> 
         for (SkillCard value : origin_data) {
             if (!bluePrint.getName().equals("") && !value.getName().contains(bluePrint.getName())) {
                 newValues.remove(value);
-            } else if (bluePrint.isCure() && !value.getAttributes().containsKey(Attribute.Category.Cure)) {
+            } else if (bluePrint.isCure() && !value.getCategory().contains(SkillCard.Category.Cure)) {
                 newValues.remove(value);
-            } else if (bluePrint.isAttack() && !value.getAttributes().containsKey(Attribute.Category.Attack)) {
+            } else if (bluePrint.isAttack() && !value.getCategory().contains(SkillCard.Category.Attack)) {
                 newValues.remove(value);
-            } else if (bluePrint.isEternal() && !value.getAttributes().containsKey(Attribute.Category.Eternal)) {
+            } else if (bluePrint.isEternal() && !value.getCategory().contains(SkillCard.Category.Eternal)) {
                 newValues.remove(value);
-            } else if (bluePrint.isMagic() && !value.getAttributes().containsKey(Attribute.Category.Magic)) {
+            } else if (bluePrint.isMagic() && !value.getCategory().contains(SkillCard.Category.Magic)) {
                 newValues.remove(value);
-            } else if (bluePrint.isPhysics() && !value.getAttributes().containsKey(Attribute.Category.Physics)) {
+            } else if (bluePrint.isPhysics() && !value.getCategory().contains(SkillCard.Category.Physics)) {
                 newValues.remove(value);
             }
         }
-        skillCards_filters = newValues;
-        if(skillCards_filters.size() >= 9){
-            setDiffNewData(new ArrayList<>(skillCards_filters.subList(0,10)));
+        skillCards_filterBases = newValues;
+        if(skillCards_filterBases.size() >= 9){
+            setDiffNewData(new ArrayList<>(skillCards_filterBases.subList(0,10)));
         }
         else {
-            setDiffNewData(new ArrayList<>(skillCards_filters));
+            setDiffNewData(new ArrayList<>(skillCards_filterBases));
         }
     }
 
     @Override
     protected void convert(@NotNull CardAdapt.ViewHolder  viewHolder, SkillCard skillCard) {
         BuffAdapt auxiliary_buff_adapt = new BuffAdapt();
-        auxiliary_buff_adapt.setDiffNewData(new ArrayList<>(skillCard.getAuxiliary_buffs().values()));
+        auxiliary_buff_adapt.setDiffNewData(new ArrayList<>(skillCard.getAuxiliaryBuff()));
         viewHolder.auxiliary_buffs_recycle.setAdapter(auxiliary_buff_adapt);
 
         BuffAdapt enemy_buff_adapter = new BuffAdapt();
-        enemy_buff_adapter.setDiffNewData(new ArrayList<>(skillCard.getEnemy_buffs().values()));
+        enemy_buff_adapter.setDiffNewData(new ArrayList<>(skillCard.getEnemyBuff()));
         viewHolder.enemy_buffs_recycle.setAdapter(enemy_buff_adapter);
 
         AttributeAdapt attribute_adapt = new AttributeAdapt();
-        attribute_adapt.setDiffNewData(new ArrayList<>(skillCard.getAttributes().values()));
+        attribute_adapt.setDiffNewData(new ArrayList<>(skillCard.getCategory()));
         viewHolder.attributes_recycle.setAdapter(attribute_adapt);
 
         viewHolder.name_text.setText(skillCard.getName());
         viewHolder.description.setText(skillCard.getDescription());
-        viewHolder.mp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getMp()));
-        viewHolder.enemyHp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getEnemyHp()));
-        viewHolder.enemyMp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getEnemyMp()));
-        viewHolder.auxiliaryHp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getAuxiliaryHp()));
-        viewHolder.auxiliaryMp_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getAuxiliaryMp()));
-        viewHolder.probability_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getProbability()));
-        viewHolder.max_enemy_text.setText(String.format(Locale.getDefault(),"%d",skillCard.getMaxEnemy()));
-        viewHolder.max_auxiliary.setText(String.format(Locale.getDefault(),"%d",skillCard.getMaxAuxiliary()));
+        viewHolder.mp_text.setText(String.format(Locale.getDefault(),"%d", skillCard.getMp()));
+        viewHolder.enemyHp_text.setText(String.format(Locale.getDefault(),"%d", skillCard.getEnemyHp()));
+        viewHolder.enemyMp_text.setText(String.format(Locale.getDefault(),"%d", skillCard.getEnemyMp()));
+        viewHolder.auxiliaryHp_text.setText(String.format(Locale.getDefault(),"%d", skillCard.getAuxiliaryHp()));
+        viewHolder.auxiliaryMp_text.setText(String.format(Locale.getDefault(),"%d", skillCard.getAuxiliaryMp()));
+        viewHolder.probability_text.setText(String.format(Locale.getDefault(),"%d", skillCard.getProbability()));
+        viewHolder.max_enemy_text.setText(String.format(Locale.getDefault(),"%d", skillCard.getMaxEnemy()));
+        viewHolder.max_auxiliary.setText(String.format(Locale.getDefault(),"%d", skillCard.getMaxAuxiliary()));
     }
 
     public class BluePrint{

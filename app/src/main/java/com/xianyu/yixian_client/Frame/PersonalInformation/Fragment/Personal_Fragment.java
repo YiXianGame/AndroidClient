@@ -11,10 +11,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.PersonalInformation.PersonalProfileViewModel;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.PersonalProfilePersonalFragmentBinding;
+import com.yixian.make.Core;
 
 import java.util.Locale;
 

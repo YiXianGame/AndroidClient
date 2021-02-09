@@ -13,10 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
-import com.xianyu.yixian_client.Core;
-import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.R;
-import com.xianyu.yixian_client.Utils.MD5Utils;
+import com.yixian.make.Core;
+import com.yixian.material.Entity.User;
+import com.yixian.material.Utils.MD5Utils;
 import com.xianyu.yixian_client.databinding.LoginForgetFragmentBinding;
 
 /**

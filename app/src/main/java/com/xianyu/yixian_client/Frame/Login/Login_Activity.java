@@ -8,23 +8,13 @@ import android.widget.VideoView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.uber.autodispose.AutoDispose;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-import com.xianyu.yixian_client.Core;
-import com.xianyu.yixian_client.Model.Repository.Repository;
-import com.xianyu.yixian_client.Model.Room.Entity.Config;
-import com.xianyu.yixian_client.Model.Room.Entity.User;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.LoginActivityBinding;
+import com.yixian.make.Model.Repository;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.MaybeObserver;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 @AndroidEntryPoint
 public class Login_Activity extends AppCompatActivity {

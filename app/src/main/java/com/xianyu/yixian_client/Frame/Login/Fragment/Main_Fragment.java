@@ -15,21 +15,21 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.DepthPageTransformer;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.Login_Fragment_Adapter;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
-import com.xianyu.yixian_client.Model.Room.Entity.Config;
-import com.xianyu.yixian_client.Model.Room.Entity.User;
-import com.xianyu.yixian_client.Utils.ShortCode.MessageDialog;
+import com.yixian.material.Entity.User;
+import com.xianyu.yixian_client.Model.MessageDialog;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.LoginMainFragmentBinding;
+import com.yixian.make.Core;
+
+import java.util.ArrayList;
 
 import io.reactivex.MaybeObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class Main_Fragment extends Fragment {
@@ -50,12 +50,11 @@ public class Main_Fragment extends Fragment {
 
 
     private void init(){
-        viewModel.repository.queryConfig(0,1).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+        viewModel.repository.configRepository.query(0,1).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
                 .subscribe(list->{
                     if(list.size()>0){
-                        Config config = list.get(0);
-                        Core.config.postValue(config);
-                        viewModel.repository.queryUserById(config.getId()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                        Core.liveConfig.postValue(list.get(0));
+                        viewModel.repository.userRepository.local_queryById(Core.liveConfig.getValue().getId()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
                                 .subscribe(new MaybeObserver<User>() {
                                     @Override
                                     public void onSubscribe(@NonNull Disposable d) {
@@ -65,7 +64,7 @@ public class Main_Fragment extends Fragment {
                                     @Override
                                     public void onSuccess(@NonNull User user) {
                                         Core.liveUser.setValue(user);
-                                        if(!(user.getUsername() == null||user.getPassword() == null || user.getUsername().equals("") || user.getPassword().equals(""))){
+                                        if(!(user.getUsername() == null|| user.getPassword() == null || user.getUsername().equals("") || user.getPassword().equals(""))){
                                             Login_Click();
                                         }
                                     }
@@ -77,13 +76,13 @@ public class Main_Fragment extends Fragment {
 
                                     @Override
                                     public void onComplete() {
-                                        Core.liveUser.postValue(new User());
+                                        Core.liveUser.setValue(new User());
                                     }
                                 });
                     }
                     else {
-                        Core.config.postValue(new Config());
-                        Core.liveUser.postValue(new User());
+                        Core.liveUser.setValue(new User());
+                        Core.liveSkillcards.setValue(new ArrayList<>());
                     }
                 });
         //UI数据初始化
@@ -134,11 +133,11 @@ public class Main_Fragment extends Fragment {
     }
 
     public void Login_Click() {
-        if(Core.liveUser == null || Core.liveUser.getValue().getPassword().isEmpty() || Core.liveUser.getValue().getUsername().isEmpty()){
+        if(Core.liveUser.getValue() == null || Core.liveUser.getValue().getPassword().isEmpty() || Core.liveUser.getValue().getUsername().isEmpty()){
             MessageDialog.Error_Dialog(getContext(),"登录失败","内容不能为空");
         }
         else {
-            viewModel.repository.loginUser(Core.liveUser.getValue()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(result->{
+            viewModel.repository.userRepository.login(Core.liveUser.getValue()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(result->{
                 if(result == -1){
                     MessageDialog.Error_Dialog(getContext(),"登录失败","该账户尚未注册");
                 }
@@ -147,8 +146,8 @@ public class Main_Fragment extends Fragment {
                 }
                 else {
                     Core.liveUser.getValue().setId(result);
-                    Core.config.getValue().setId(result);
-                    viewModel.repository.queryLocalUser(result).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(new MaybeObserver<User>() {
+                    Core.liveUser.getValue().setId(result);
+                    viewModel.repository.userRepository.local_queryById(result).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(new MaybeObserver<User>() {
                         @Override
                         public void onSubscribe(@NonNull Disposable d) {
 
@@ -156,8 +155,7 @@ public class Main_Fragment extends Fragment {
 
                         @Override
                         public void onSuccess(@NonNull User user) {
-                            viewModel.repository.updateLocalAccount(Core.liveUser.getValue());
-                            viewModel.sync_User(Core.liveUser);
+                            viewModel.repository.userRepository.local_update(Core.liveUser.getValue());
                         }
 
                         @Override
@@ -167,11 +165,10 @@ public class Main_Fragment extends Fragment {
 
                         @Override
                         public void onComplete() {
-                            viewModel.repository.insertUser(Core.liveUser.getValue());
-                            viewModel.sync_User(Core.liveUser);
+                            viewModel.repository.userRepository.local_insert(Core.liveUser.getValue());
                         }
                     });
-                    viewModel.repository.insertConfig(Core.config.getValue());
+                    viewModel.repository.configRepository.local_insert(Core.liveConfig.getValue());
                     //viewModel.repository.insertUser(Core.liveUser.getValue());
                     new MaterialAlertDialogBuilder(getContext())
                             .setTitle("登陆成功")
@@ -186,11 +183,11 @@ public class Main_Fragment extends Fragment {
         }
     }
     public void Register_Click()  {
-        if(Core.liveUser == null || Core.liveUser.getValue().getPassword().isEmpty()|| Core.liveUser.getValue().getUsername().isEmpty() || viewModel.surePassword.getValue().isEmpty()){
+        if(Core.liveUser.getValue() == null || Core.liveUser.getValue().getPassword().isEmpty()|| Core.liveUser.getValue().getUsername().isEmpty() || viewModel.surePassword.getValue().isEmpty()){
             MessageDialog.Error_Dialog(getContext(),"注册失败","内容不能为空");
         }
         else if(viewModel.surePassword.getValue().equals(viewModel.surePassword.getValue())){
-            viewModel.repository.registerUser(Core.liveUser.getValue()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(value -> {
+            viewModel.repository.userRepository.register(Core.liveUser.getValue()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(value -> {
                 if(value == -1){
                     MessageDialog.Error_Dialog(getContext(),"注册失败","用户注册时数据库出错，请联系管理员");
                 }
@@ -205,7 +202,7 @@ public class Main_Fragment extends Fragment {
         else MessageDialog.Error_Dialog(getContext(),"注册失败","重复密码与密码不一致");
     }
     public void Forget_Click() {
-        if(Core.liveUser == null || Core.liveUser.getValue().getPassword().isEmpty() || Core.liveUser.getValue().getUsername().isEmpty() || viewModel.verificationCode.getValue().isEmpty()){
+        if(Core.liveUser.getValue() == null || Core.liveUser.getValue().getPassword().isEmpty() || Core.liveUser.getValue().getUsername().isEmpty() || viewModel.verificationCode.getValue().isEmpty()){
             MessageDialog.Error_Dialog(getContext(),"找回失败","内容不能为空");
         }
         else{

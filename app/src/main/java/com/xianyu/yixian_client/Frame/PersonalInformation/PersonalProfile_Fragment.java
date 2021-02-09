@@ -1,6 +1,5 @@
 package com.xianyu.yixian_client.Frame.PersonalInformation;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
@@ -11,18 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.DepthPageTransformer;
 import com.xianyu.yixian_client.Frame.PersonalInformation.Fragment.Bind.PersonalInformation_Fragment_Adapter;
-import com.xianyu.yixian_client.Model.Repository.Repository;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.PersonalProfileFragmentBinding;
+import com.yixian.make.Model.Repository;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+
 @AndroidEntryPoint
 public class PersonalProfile_Fragment extends Fragment {
     PersonalProfileViewModel viewModel;

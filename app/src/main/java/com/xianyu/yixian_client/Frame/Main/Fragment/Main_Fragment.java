@@ -1,7 +1,6 @@
 package com.xianyu.yixian_client.Frame.Main.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.google.android.material.tabs.TabLayout;
-import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.Main.Adapt.Friend_Adapt;
 import com.xianyu.yixian_client.Frame.Main.MainViewModel;
-import com.xianyu.yixian_client.Model.Enums;
-import com.xianyu.yixian_client.Model.Log.Log.Tag;
-import com.xianyu.yixian_client.Model.Room.Entity.User;
+import com.yixian.make.Core;
+import com.yixian.material.Entity.User;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.MainMainFragmentBinding;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.schedulers.Schedulers;
 
 public class Main_Fragment extends Fragment {
     private MainMainFragmentBinding binding;

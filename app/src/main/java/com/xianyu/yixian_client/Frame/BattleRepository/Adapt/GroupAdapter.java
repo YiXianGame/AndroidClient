@@ -1,20 +1,16 @@
 package com.xianyu.yixian_client.Frame.BattleRepository.Adapt;
 
-import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.chad.library.adapter.base.BaseNodeAdapter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.node.BaseNode;
-import com.chad.library.adapter.base.module.BaseDraggableModule;
 import com.chad.library.adapter.base.module.DraggableModule;
 import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionFirst;
 import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionFirstNode;
 import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionSecond;
 import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionSecondNode;
-import com.xianyu.yixian_client.Model.Room.Entity.CardGroup;
+import com.yixian.material.Entity.CardGroup;
 
 import org.jetbrains.annotations.NotNull;
 

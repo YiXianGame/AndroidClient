@@ -2,14 +2,10 @@ package com.xianyu.yixian_client.Frame.PersonalInformation;
 
 import androidx.lifecycle.ViewModel;
 
-import com.xianyu.yixian_client.Model.Repository.Repository;
-import com.xianyu.yixian_client.Model.Room.Entity.User;
+import com.yixian.make.Model.Repository;
+import com.yixian.material.Entity.User;
 
-import javax.inject.Inject;
-
-import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.Maybe;
-import io.reactivex.Single;
 
 public class PersonalProfileViewModel extends ViewModel {
 
@@ -21,6 +17,6 @@ public class PersonalProfileViewModel extends ViewModel {
         this.repository = repository;
     }
     public Maybe<User> queryUserByID(long user_id){
-        return repository.queryUserById(user_id);
+        return repository.userRepository.local_queryById(user_id);
     }
 }

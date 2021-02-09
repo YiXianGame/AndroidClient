@@ -1,24 +1,20 @@
 package com.xianyu.yixian_client;
 
 import android.content.Context;
-import android.widget.Button;
 
 
 import androidx.test.filters.SmallTest;
 import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.ActivityTestRule;
 
-import com.xianyu.yixian_client.Frame.Login.Login_Activity;
-import com.xianyu.yixian_client.Model.Room.DataBase_Room;
-import com.xianyu.yixian_client.Model.Room.Entity.User;
+import com.yixian.material.Entity.SkillCard;
+import com.yixian.material.Entity.User;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-
-import javax.inject.Inject;
+import java.util.ArrayList;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -28,16 +24,12 @@ import javax.inject.Inject;
 
 @SmallTest
 public class UnitTest_Espresso {
-    @Before
-    public void Create_Database(){
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-    }
     @Test
-    public void Database(){
-
+    public void addition_isCorrect() {
+        ArrayList<User> list = new ArrayList<User>();
+        gene(list, new ArrayList<SkillCard>());
     }
-    @After
-    public void closeDb() throws IOException {
-
+    public void gene(ArrayList<User> cls,ArrayList<SkillCard> c2){
+        System.out.println(cls.getClass().getTypeName());
     }
 }

@@ -1,7 +1,6 @@
 package com.xianyu.yixian_client.Frame.Main.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.xianyu.yixian_client.Frame.Main.MainViewModel;
-import com.xianyu.yixian_client.Model.Enums;
-import com.xianyu.yixian_client.Model.Log.Log.Tag;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.MainChooseModeFragmentBinding;
+import com.yixian.material.Entity.Room;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -36,16 +34,15 @@ public class ChooseMode_Fragment extends Fragment {
     private void init() {
         Button solo_button = binding.getRoot().findViewById(R.id.soloGame_button);
         solo_button.setOnClickListener(v ->{
-            ChooseMode_FragmentDirections.ActionChooseModeDestToReadyFragment action = ChooseMode_FragmentDirections.actionChooseModeDestToReadyFragment();
+            ChooseMode_FragmentDirections.ActionChooseModeDestToReadyFragment action = ChooseMode_FragmentDirections.actionChooseModeDestToReadyFragment(Room.Room_Type.Round_Solo);
             if(ChooseMode_FragmentArgs.fromBundle(getArguments()).getGameMode() == 0){
-                action.setRoomMode(Enums.Room_Type.Round_Solo);
+                action.setRoomMode(Room.Room_Type.Round_Solo);
             }
             else {
-                action.setRoomMode(Enums.Room_Type.RealTime_Solo);
+                action.setRoomMode(Room.Room_Type.RealTime_Solo);
             }
             Navigation.findNavController(v).navigate(R.id.action_chooseMode_dest_to_readyFragment);
         });
-
     }
 
     @Override

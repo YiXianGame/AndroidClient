@@ -62,8 +62,7 @@
     tools:layout="@layout/main_ready_fragment" >
         <argument
             android:name="roomMode"
-            app:argType="com.xianyu.yixian_client.Model.Enums$Room_Type"
-            android:defaultValue="Round_Solo" />
+            app:argType="com.yixian.material.Entity.Room$Room_Type" />
     </fragment>
 
 </navigation>

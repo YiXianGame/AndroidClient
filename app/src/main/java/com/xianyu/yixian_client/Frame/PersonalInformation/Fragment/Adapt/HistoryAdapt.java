@@ -1,24 +1,18 @@
 package com.xianyu.yixian_client.Frame.PersonalInformation.Fragment.Adapt;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.material.textview.MaterialTextView;
-import com.xianyu.yixian_client.Model.Room.Entity.History;
-import com.xianyu.yixian_client.Model.Room.Entity.User;
+import com.yixian.material.Entity.History;
 import com.xianyu.yixian_client.R;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.Locale;
 
 public class HistoryAdapt extends BaseQuickAdapter<History,HistoryAdapt.ViewHolder> {
@@ -34,7 +28,7 @@ public class HistoryAdapt extends BaseQuickAdapter<History,HistoryAdapt.ViewHold
             holder.result_text.setText(R.string.victory);
         }
         else holder.result_text.setText(R.string.defeat);
-        holder.kills_text.setText(String.format(Locale.getDefault(),"%d",history.getKills()));
+        holder.kills_text.setText(String.format(Locale.getDefault(),"%d", history.getKills()));
     }
 
     public class ViewHolder extends BaseViewHolder {

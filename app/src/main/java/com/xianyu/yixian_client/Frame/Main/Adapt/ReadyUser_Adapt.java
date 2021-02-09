@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.xianyu.yixian_client.Model.Room.Entity.User;
+import com.yixian.material.Entity.User;
 import com.xianyu.yixian_client.R;
 
 import org.jetbrains.annotations.NotNull;

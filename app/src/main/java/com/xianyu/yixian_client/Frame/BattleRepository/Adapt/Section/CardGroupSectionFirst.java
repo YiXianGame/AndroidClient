@@ -1,7 +1,5 @@
 package com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section;
 
-import android.view.ViewGroup;
-
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.chad.library.adapter.base.provider.BaseNodeProvider;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;

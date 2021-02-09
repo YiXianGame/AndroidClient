@@ -15,10 +15,10 @@ import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputEditText;
 import com.xianyu.yixian_client.Frame.Repository.Adapt.CardAdapt;
-import com.xianyu.yixian_client.Model.Repository.Repository;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.BattleRepositoryHeadBinding;
 import com.xianyu.yixian_client.databinding.RepositoryFragmentBinding;
+import com.yixian.make.Model.Repository;
 
 import java.util.ArrayList;
 
@@ -55,14 +55,14 @@ public class RepositoryFragment extends Fragment {
         loadMoreModule.setPreLoadNumber(10);
         loadMoreModule.setEnableLoadMoreEndClick(false);
         loadMoreModule.setOnLoadMoreListener(() -> {
-            if(skillCardAdapt.skillCards_filters == null)loadMoreModule.loadMoreFail();
+            if(skillCardAdapt.skillCards_filterBases == null)loadMoreModule.loadMoreFail();
             int last_index = skillCardAdapt.getData().size()-1;
-            if(last_index + 4 <= skillCardAdapt.skillCards_filters.size()){
-                skillCardAdapt.addData(new ArrayList<>(skillCardAdapt.skillCards_filters.subList(last_index + 1,last_index + 4)));
+            if(last_index + 4 <= skillCardAdapt.skillCards_filterBases.size()){
+                skillCardAdapt.addData(new ArrayList<>(skillCardAdapt.skillCards_filterBases.subList(last_index + 1,last_index + 4)));
                 loadMoreModule.loadMoreComplete();
             }
-            else if(last_index + 1 < skillCardAdapt.skillCards_filters.size()){
-                skillCardAdapt.addData(new ArrayList<>(skillCardAdapt.skillCards_filters.subList(last_index + 1,skillCardAdapt.skillCards_filters.size())));
+            else if(last_index + 1 < skillCardAdapt.skillCards_filterBases.size()){
+                skillCardAdapt.addData(new ArrayList<>(skillCardAdapt.skillCards_filterBases.subList(last_index + 1,skillCardAdapt.skillCards_filterBases.size())));
                 loadMoreModule.loadMoreComplete();
             }
             else{

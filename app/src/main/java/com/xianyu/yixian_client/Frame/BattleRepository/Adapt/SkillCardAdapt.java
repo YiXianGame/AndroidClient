@@ -10,7 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.android.material.textview.MaterialTextView;
-import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
+import com.yixian.material.Entity.SkillCard;
 import com.xianyu.yixian_client.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +21,7 @@ import java.util.Locale;
 
 public class SkillCardAdapt extends BaseQuickAdapter<SkillCard, SkillCardAdapt.ViewHolder > implements LoadMoreModule{
     public BluePrint bluePrint = new BluePrint();
-    public List<SkillCard> skillCards_filters;
+    public List<SkillCard> skillCards_filterBases;
     public SkillCardAdapt(){
         super(R.layout.battle_repository_card_item);
         setDiffCallback(new DiffCallBack());
@@ -29,17 +29,17 @@ public class SkillCardAdapt extends BaseQuickAdapter<SkillCard, SkillCardAdapt.V
     @Override
     protected void convert(@NotNull SkillCardAdapt.ViewHolder holder, SkillCard skillCard) {
         holder.name_text.setText(skillCard.getName());
-        holder.mp_text.setText(String.format(Locale.CHINESE,"%d",skillCard.getMp()));
+        holder.mp_text.setText(String.format(Locale.CHINESE,"%d", skillCard.getMp()));
         BuffAdapt auxiliary_buff_adapt = new BuffAdapt();
-        auxiliary_buff_adapt.setDiffNewData(new ArrayList<>(skillCard.getAuxiliary_buffs().values()));
+        auxiliary_buff_adapt.setDiffNewData(new ArrayList<>(skillCard.getAuxiliaryBuff()));
         holder.auxiliary_buffs_recycle.setAdapter(auxiliary_buff_adapt);
 
         BuffAdapt enemy_buff_adapt = new BuffAdapt();
-        enemy_buff_adapt.setDiffNewData(new ArrayList<>(skillCard.getEnemy_buffs().values()));
+        enemy_buff_adapt.setDiffNewData(new ArrayList<>(skillCard.getEnemyBuff()));
         holder.enemy_buffs_recycle.setAdapter(enemy_buff_adapt);
 
         AttributeAdapt attribute_adapt = new AttributeAdapt();
-        attribute_adapt.setDiffNewData(new ArrayList<>(skillCard.getAttributes().values()));
+        attribute_adapt.setDiffNewData(new ArrayList<>(skillCard.getCategory()));
         holder.attributes_recycle.setAdapter(attribute_adapt);
     }
     public void filter(List<SkillCard> origin_data) {
@@ -49,24 +49,24 @@ public class SkillCardAdapt extends BaseQuickAdapter<SkillCard, SkillCardAdapt.V
         for (SkillCard value : origin_data) {
             if (!bluePrint.getName().equals("") && !value.getName().contains(bluePrint.getName())) {
                 newValues.remove(value);
-            } else if (bluePrint.isCure() && !value.getAttributes().containsKey(Attribute.Category.Cure)) {
+            } else if (bluePrint.isCure() && !value.getCategory().contains(SkillCard.Category.Cure)) {
                 newValues.remove(value);
-            } else if (bluePrint.isAttack() && !value.getAttributes().containsKey(Attribute.Category.Attack)) {
+            } else if (bluePrint.isAttack() && !value.getCategory().contains(SkillCard.Category.Attack)) {
                 newValues.remove(value);
-            } else if (bluePrint.isEternal() && !value.getAttributes().containsKey(Attribute.Category.Eternal)) {
+            } else if (bluePrint.isEternal() && !value.getCategory().contains(SkillCard.Category.Eternal)) {
                 newValues.remove(value);
-            } else if (bluePrint.isMagic() && !value.getAttributes().containsKey(Attribute.Category.Magic)) {
+            } else if (bluePrint.isMagic() && !value.getCategory().contains(SkillCard.Category.Magic)) {
                 newValues.remove(value);
-            } else if (bluePrint.isPhysics() && !value.getAttributes().containsKey(Attribute.Category.Physics)) {
+            } else if (bluePrint.isPhysics() && !value.getCategory().contains(SkillCard.Category.Physics)) {
                 newValues.remove(value);
             }
         }
-        skillCards_filters = newValues;
-        if(skillCards_filters.size() >= 9){
-            setDiffNewData(new ArrayList<>(skillCards_filters.subList(0,10)));
+        skillCards_filterBases = newValues;
+        if(skillCards_filterBases.size() >= 9){
+            setDiffNewData(new ArrayList<>(skillCards_filterBases.subList(0,10)));
         }
         else {
-            setDiffNewData(new ArrayList<>(skillCards_filters));
+            setDiffNewData(new ArrayList<>(skillCards_filterBases));
         }
     }
 

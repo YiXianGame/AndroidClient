@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +21,13 @@ import com.chad.library.adapter.base.module.BaseDraggableModule;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputEditText;
-import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.GroupAdapter;
-import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionFirst;
 import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionFirstNode;
 import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionSecondNode;
 import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.SkillCardAdapt;
-import com.xianyu.yixian_client.Model.Log.Log.Tag;
-import com.xianyu.yixian_client.Model.Repository.Repository;
-import com.xianyu.yixian_client.Model.Room.Entity.CardGroup;
-import com.xianyu.yixian_client.Model.Room.Entity.SkillCard;
+import com.yixian.make.Core;
+import com.yixian.make.Model.Repository;
+import com.yixian.material.Entity.CardGroup;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.BattleRepositoryFragmentBinding;
 import com.xianyu.yixian_client.databinding.BattleRepositoryHeadBinding;
@@ -75,14 +71,14 @@ public class BattleRepository_Fragment extends Fragment {
         loadMoreModule.setEnableLoadMoreEndClick(false);
         recyclerView.setAdapter(skillCardAdapt);
         loadMoreModule.setOnLoadMoreListener(() -> {
-            if(skillCardAdapt.skillCards_filters == null)loadMoreModule.loadMoreFail();
+            if(skillCardAdapt.skillCards_filterBases == null)loadMoreModule.loadMoreFail();
             int last_index = skillCardAdapt.getData().size()-1;
-            if(last_index + 4 <= skillCardAdapt.skillCards_filters.size()){
-                skillCardAdapt.addData(new ArrayList<>(skillCardAdapt.skillCards_filters.subList(last_index + 1,last_index + 4)));
+            if(last_index + 4 <= skillCardAdapt.skillCards_filterBases.size()){
+                skillCardAdapt.addData(new ArrayList<>(skillCardAdapt.skillCards_filterBases.subList(last_index + 1,last_index + 4)));
                 loadMoreModule.loadMoreComplete();
             }
-            else if(last_index + 1 < skillCardAdapt.skillCards_filters.size()){
-                skillCardAdapt.addData(new ArrayList<>(skillCardAdapt.skillCards_filters.subList(last_index + 1,skillCardAdapt.skillCards_filters.size())));
+            else if(last_index + 1 < skillCardAdapt.skillCards_filterBases.size()){
+                skillCardAdapt.addData(new ArrayList<>(skillCardAdapt.skillCards_filterBases.subList(last_index + 1,skillCardAdapt.skillCards_filterBases.size())));
                 loadMoreModule.loadMoreComplete();
             }
             else{

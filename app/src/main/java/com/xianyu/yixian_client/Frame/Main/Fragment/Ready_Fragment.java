@@ -4,26 +4,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
-import com.xianyu.yixian_client.Core;
-import com.xianyu.yixian_client.Frame.Main.Adapt.Friend_Adapt;
 import com.xianyu.yixian_client.Frame.Main.Adapt.ReadyInvite_Adapt;
 import com.xianyu.yixian_client.Frame.Main.Adapt.ReadyUser_Adapt;
 import com.xianyu.yixian_client.Frame.Main.MainViewModel;
-import com.xianyu.yixian_client.Model.Enums;
-import com.xianyu.yixian_client.Model.Room.Entity.User;
+import com.yixian.make.Core;
+import com.yixian.material.Entity.User;
 import com.xianyu.yixian_client.R;
-import com.xianyu.yixian_client.databinding.MainChooseModeFragmentBinding;
 import com.xianyu.yixian_client.databinding.MainReadyFragmentBinding;
 
 import java.util.ArrayList;

@@ -1,6 +1,5 @@
 package com.xianyu.yixian_client.Frame.FriendSystem;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,10 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.google.android.material.textfield.TextInputEditText;
-import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.FriendSystem.Adapt.Friend_Adapt;
-import com.xianyu.yixian_client.Model.Repository.Repository;
-import com.xianyu.yixian_client.Model.Room.Entity.User;
+import com.yixian.make.Core;
+import com.yixian.make.Model.Repository;
+import com.yixian.material.Entity.User;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.FriendsFragmentBinding;
 

@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,14 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-import com.xianyu.yixian_client.Core;
 import com.xianyu.yixian_client.Frame.PersonalInformation.Fragment.Adapt.HistoryAdapt;
 import com.xianyu.yixian_client.Frame.PersonalInformation.PersonalProfileViewModel;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.PersonalProfileHistoryFragmentBinding;
 import com.xianyu.yixian_client.databinding.PersonalProfileHistoryItemBinding;
-
-import java.util.Locale;
+import com.yixian.make.Core;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
