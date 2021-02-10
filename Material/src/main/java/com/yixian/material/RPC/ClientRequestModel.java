@@ -1,39 +1,46 @@
 package com.yixian.material.RPC;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.Expose;
 import com.yixian.material.Utils.Utils;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 
 
 public class ClientRequestModel {
     @Expose(serialize = false,deserialize = false)
-    public Object Result;
+    public ClientResponseModel Result;
     @Expose
     public String JsonRpc;
     @Expose
     public String MethodId;
     @Expose
-    public Object[] Params;
+    public String[] Params;
     @Expose
     public String Id;
     @Expose
     public String Service;
 
 
-    public ClientRequestModel(String jsonRpc,String service, String methodId, Object[] params) {
+    public ClientRequestModel(String jsonRpc,String service, String methodId, String[] params) {
         JsonRpc = jsonRpc;
         MethodId = methodId;
         Params = params;
         Service = service;
     }
 
-    public void setResult(Object result) {
+    public void setResult(ClientResponseModel result) {
         synchronized (this){
             Result = result;
             this.notify();
         }
     }
 
-    public Object getResult() throws InterruptedException {
+    public ClientResponseModel getResult() throws InterruptedException {
         synchronized (this){
             if (Result == null){
                 this.wait();

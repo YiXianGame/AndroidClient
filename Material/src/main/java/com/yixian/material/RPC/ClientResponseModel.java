@@ -6,18 +6,13 @@ public class ClientResponseModel {
     @Expose
     public String JsonRpc = null;
     @Expose
-    public Object Result = null;
+    public String Result = null;
+    @Expose
+    public String ResultType = null;
     @Expose
     public Error Error = null;
     @Expose
     public String Id = null;
-
-    public ClientResponseModel(String jsonRpc, Object result, Error error, String id) {
-        JsonRpc = jsonRpc;
-        Result = result;
-        Error = error;
-        Id = id;
-    }
 
     @Override
     public String toString() {

@@ -5,8 +5,8 @@ import android.util.Log;
 import com.yixian.material.Log.Log.Tag;
 import com.yixian.material.RPC.ClientRequestModel;
 import com.yixian.material.RPC.ClientResponseModel;
-import com.yixian.material.RPC.RPCAdaptFactory;
-import com.yixian.material.RPC.RPCAdaptProxy;
+import com.yixian.material.RPC.RPCServerFactory;
+import com.yixian.material.RPC.RPCServerProxy;
 import com.yixian.material.RPC.ServerRequestModel;
 
 import java.lang.reflect.Method;
@@ -37,20 +37,19 @@ public class CustomHeartbeatHandler extends ChannelHandlerAdapter {
             ClientRequestModel request = socketClient.tasks.get(Integer.parseInt((respond.Id)));
             if(request != null){
                 socketClient.tasks.remove(Long.parseLong((respond.Id)));
-                request.setResult(respond.Result);
+                request.setResult(respond);
             }
             else {
                 Log.e(Tag.RemoteRepository,"\n------------------未找到请求--------------------");
                 Log.e(Tag.RemoteRepository,String.format("%s:%s::[客]\n%s",socketClient.host,socketClient.port,respond));
                 Log.e(Tag.RemoteRepository,"--------------------------------------------");
-                return;
             }
         }
         else if(msg instanceof ServerRequestModel){
             ServerRequestModel request = (ServerRequestModel)msg;
-            RPCAdaptProxy adapt;
+            RPCServerProxy adapt;
             Method method;
-            adapt = RPCAdaptFactory.services.get(new Triple<>(((ServerRequestModel) msg).Service, socketClient.host, socketClient.port));
+            adapt = RPCServerFactory.services.get(new Triple<>(((ServerRequestModel) msg).Service, socketClient.host, socketClient.port));
             if(adapt != null){
                 method = adapt.getMethods().get(request.MethodId);
                 if(method!= null){

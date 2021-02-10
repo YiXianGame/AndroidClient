@@ -8,5 +8,5 @@ import java.util.List;
 public interface SkillCardRequest {
     ArrayList<SkillCard> sync(long timestamp);
     ArrayList<SkillCard> syncUser(long timestamp);
-    ArrayList<SkillCard> syncUser2(ArrayList<SkillCard> skillCards);
+    ArrayList<SkillCard> Test(ArrayList<SkillCard> list);
 }

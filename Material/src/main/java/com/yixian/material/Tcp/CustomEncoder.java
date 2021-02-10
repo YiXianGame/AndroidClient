@@ -1,7 +1,10 @@
 package com.yixian.material.Tcp;
 
+import android.util.Log;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.yixian.material.Log.Log.Tag;
 import com.yixian.material.RPC.ClientRequestModel;
 import com.yixian.material.Utils.Utils;
 

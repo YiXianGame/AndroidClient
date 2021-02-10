@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 
-public class RPCAdaptProxy {
+public class RPCServerProxy {
     private HashMap<String,Method> methods = new HashMap<>();
     private RPCType type;
     public HashMap<String, Method> getMethods() {
@@ -26,7 +26,7 @@ public class RPCAdaptProxy {
                 methodId.append(method.getName());
                 String type_name;
                 for(Class parameter_type : method.getParameterTypes()){
-                    type_name = type.getTypeToAbstract().get(parameter_type);
+                    type_name = type.getAbstractName().get(parameter_type);
                     if(type_name != null) {
                         methodId.append("-").append(type_name);
                     }
@@ -42,8 +42,8 @@ public class RPCAdaptProxy {
         String[] param_id = methodId.split("-");
         for (int i = 1,j=0; i < param_id.length; i++,j++)
         {
-            if(type.getTypeConvert().get(param_id[i]) == null)throw new RPCException(String.format("RPC中的%s类型参数尚未被注册！",param_id[i]));
-            else parameters[j] = (type.getTypeConvert().get(param_id[i])).convert(parameters[j]);
+            if(type.getConvert().get(param_id[i]) == null)throw new RPCException(String.format("RPC中的%s类型参数尚未被注册！",param_id[i]));
+            else parameters[j] = (type.getConvert().get(param_id[i])).convert((String) parameters[j]);
         }
     }
 }

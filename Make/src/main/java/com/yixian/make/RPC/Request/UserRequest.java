@@ -1,5 +1,6 @@
 package com.yixian.make.RPC.Request;
 
+import com.yixian.material.Entity.SkillCard;
 import com.yixian.material.Entity.User;
 
 import java.util.List;

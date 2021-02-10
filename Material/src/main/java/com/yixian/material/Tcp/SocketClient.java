@@ -58,10 +58,8 @@ public class SocketClient {
                         public void initChannel(SocketChannel ch)
                                 throws Exception {
                             ch.pipeline().addLast(new CustomDecoder());
-
                             ch.pipeline().addLast(new IdleStateHandler(0,0,5));
                             ch.pipeline().addLast(new CustomHeartbeatHandler(SocketClient.this));
-
                             ch.pipeline().addLast(new CustomEncoder());
                         }
                     });

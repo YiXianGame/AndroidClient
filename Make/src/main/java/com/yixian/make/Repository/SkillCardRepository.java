@@ -1,8 +1,10 @@
 package com.yixian.make.Repository;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import com.yixian.material.Entity.SkillCard;
+import com.yixian.material.Log.Log.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +42,6 @@ public class SkillCardRepository {
     }
 
     public Single<List<SkillCard>> queryByAuthor(long user_id) {
-
         return local.db.skillCardDao().queryByAuthorId(user_id);
     }
 
@@ -50,6 +51,12 @@ public class SkillCardRepository {
 
     public Single<List<SkillCard>> queryAll() {
         return local.db.skillCardDao().queryAllSkillCards();
+    }
+    public void Test(ArrayList<SkillCard> skillCards) {
+        RxVoid(()->{
+            ArrayList<SkillCard> result = remote.skillCardRequest.Test(skillCards);
+            Log.d(Tag.Debug,result.get(0).getName());
+        });
     }
     public Maybe<Boolean> sync(long timestamp){
         return RxNull(() -> {
