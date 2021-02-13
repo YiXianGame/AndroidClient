@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface SkillCardRequest {
-    ArrayList<SkillCard> sync(long timestamp);
-    ArrayList<SkillCard> syncUser(long timestamp);
-    ArrayList<SkillCard> Test(ArrayList<SkillCard> list);
+    ArrayList<SkillCard> Sync(Long timestamp);
+    ArrayList<SkillCard> SyncUser(Long timestamp);
 }

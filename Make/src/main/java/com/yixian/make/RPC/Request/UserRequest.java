@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface UserRequest {
     long RegisterUser(String username,String nickname,String password);
-    long LoginUser(long id,String username, String md5_password);
-    User Sync_UserAttribute(long date);
+    long LoginUser(Long id,String username, String md5_password);
+    User Sync_UserAttribute(Long date);
     User QueryUserByUserName(String userName);
-    User Query_UserAttributeById(long id);
-    List<User> QueryAllFriendUsers(long user_id);
+    User Query_UserAttributeById(Long id);
+    List<User> QueryAllFriendUsers(Long user_id);
 }

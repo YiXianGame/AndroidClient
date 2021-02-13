@@ -69,10 +69,12 @@ public class UserRepository {
         });
     }
 
-    public void local_update(User user) {
+    public void local_updateAccount(User user) {
         RxVoid(()->local.db.userDao().updateAccount(user.getId(), user.getUsername(), user.getPassword()));
     }
-
+    public void local_updateSKillCardUpdate(User user) {
+        RxVoid(()->local.db.userDao().updateSKillCardUpdate(user.getId(), user.getSkillCard_update()));
+    }
     public Maybe<User> local_query(long id) {
         return local.db.userDao().queryById(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }

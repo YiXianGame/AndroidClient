@@ -1,10 +1,8 @@
 package com.yixian.make.Repository;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import com.yixian.material.Entity.SkillCard;
-import com.yixian.material.Log.Log.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,19 +50,13 @@ public class SkillCardRepository {
     public Single<List<SkillCard>> queryAll() {
         return local.db.skillCardDao().queryAllSkillCards();
     }
-    public void Test(ArrayList<SkillCard> skillCards) {
-        RxVoid(()->{
-            ArrayList<SkillCard> result = remote.skillCardRequest.Test(skillCards);
-            Log.d(Tag.Debug,result.get(0).getName());
-        });
-    }
-    public Maybe<Boolean> sync(long timestamp){
-        return RxNull(() -> {
+    public Single<Boolean> sync(long timestamp){
+        return Rx(() -> {
             //先在远程确认一下更新日期是否相同
-            ArrayList<SkillCard> value = remote.skillCardRequest.sync(timestamp);
+            ArrayList<SkillCard> value = remote.skillCardRequest.Sync(timestamp);
             //不相同的话，将新数据插入到本地数据库
             if(value != null){
-                local.db.skillCardDao().update((SkillCard[]) value.toArray());
+                local.db.skillCardDao().insert(value.toArray(new SkillCard[0]));
             }
             return true;
         });

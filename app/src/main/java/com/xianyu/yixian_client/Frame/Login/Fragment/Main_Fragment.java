@@ -18,6 +18,7 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.DepthPageTransformer;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.Login_Fragment_Adapter;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
+import com.yixian.material.Entity.Config;
 import com.yixian.material.Entity.User;
 import com.xianyu.yixian_client.Model.MessageDialog;
 import com.xianyu.yixian_client.R;
@@ -53,7 +54,7 @@ public class Main_Fragment extends Fragment {
         viewModel.repository.configRepository.query(0,1).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
                 .subscribe(list->{
                     if(list.size()>0){
-                        Core.liveConfig.postValue(list.get(0));
+                        Core.liveConfig.setValue(list.get(0));
                         viewModel.repository.userRepository.local_queryById(Core.liveConfig.getValue().getId()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this)))
                                 .subscribe(new MaybeObserver<User>() {
                                     @Override
@@ -83,6 +84,7 @@ public class Main_Fragment extends Fragment {
                     else {
                         Core.liveUser.setValue(new User());
                         Core.liveSkillcards.setValue(new ArrayList<>());
+                        Core.liveConfig.setValue(new Config());
                     }
                 });
         //UI数据初始化
@@ -146,26 +148,25 @@ public class Main_Fragment extends Fragment {
                 }
                 else {
                     Core.liveUser.getValue().setId(result);
-                    Core.liveUser.getValue().setId(result);
+                    Core.liveConfig.getValue().setId(result);
                     viewModel.repository.userRepository.local_queryById(result).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(new MaybeObserver<User>() {
                         @Override
                         public void onSubscribe(@NonNull Disposable d) {
-
                         }
 
                         @Override
                         public void onSuccess(@NonNull User user) {
-                            viewModel.repository.userRepository.local_update(Core.liveUser.getValue());
+                            viewModel.repository.userRepository.local_updateAccount(Core.liveUser.getValue());
                         }
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-
+                            viewModel.repository.userRepository.local_insert(Core.liveUser.getValue());
                         }
 
                         @Override
                         public void onComplete() {
-                            viewModel.repository.userRepository.local_insert(Core.liveUser.getValue());
+
                         }
                     });
                     viewModel.repository.configRepository.local_insert(Core.liveConfig.getValue());

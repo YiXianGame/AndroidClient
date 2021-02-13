@@ -1,5 +1,7 @@
 package com.xianyu.yixian_client.Frame.Main;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -44,11 +46,7 @@ public class MainViewModel extends ViewModel {
         disposable.add(repository.userRepository.syncAttribute(user_live.getValue()).subscribe(user_live::postValue));
     }
     public void syncSkillCard(MutableLiveData<User> user_live){
-        disposable.add(repository.skillCardRepository.sync(Core.liveConfig.getValue().getSkillCardUpdate()).subscribe(list->{
-           if(list!=null){
-               
-           }
-        }));
+        disposable.add(repository.skillCardRepository.sync(Core.liveConfig.getValue().getSkillCardUpdate()).subscribe());
     }
 
     @Override

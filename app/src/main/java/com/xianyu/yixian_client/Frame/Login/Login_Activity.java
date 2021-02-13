@@ -39,12 +39,6 @@ public class Login_Activity extends AppCompatActivity {
         videoView.setOnPreparedListener(mp -> mp.setLooping(true));
         mediaPlayer = MediaPlayer.create(this, R.raw.b);
         mediaPlayer.setLooping(true);
-        ArrayList<SkillCard> skillCards = new ArrayList<SkillCard>(){};
-        skillCards.add(new SkillCard());
-        skillCards.add(new SkillCard());
-        viewModel.repository.skillCardRepository.Test(skillCards);
-
-        init();
     }
 
     private void init() {

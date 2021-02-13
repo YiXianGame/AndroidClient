@@ -36,6 +36,8 @@ public interface UserDao {
     void insert(User... user);
     @Query("UPDATE user SET username=:username,password=:password WHERE id=:id")
     void updateAccount(long id,String username,String password);
+    @Query("UPDATE user SET skillCard_update=:timestamp WHERE id=:id")
+    void updateSKillCardUpdate(long id,long timestamp);
     @TypeConverters(ActiveConvert.class)
     @Query("UPDATE user SET username=:username,nickname=:nickname,upgrade_num=:upgrade_num,create_num=:create_num," +
             "money=:money,personalSignature=:personalSignature,battleCount=:battleCount,exp=:exp,lv=:lv,title=:title,active=:active," +

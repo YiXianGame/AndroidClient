@@ -4,7 +4,9 @@ import android.app.Application;
 
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;
+import com.yixian.make.Core;
 import com.yixian.make.Model.Repository;
+import com.yixian.make.Repository.ConfigRepository;
 import com.yixian.material.Entity.SkillCard;
 import com.yixian.material.Entity.User;
 
@@ -35,5 +37,6 @@ public class XYApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Core.repository = repository;
     }
 }

@@ -47,7 +47,7 @@ public class CustomDecoder extends ByteToMessageDecoder {
                     else {
                         Log.d(Tag.RemoteRepository,"[客-返回]:" + content.toString(StandardCharsets.UTF_8));
                         out.add(Utils.gson.fromJson(content.toString(StandardCharsets.UTF_8), ClientResponseModel.class));
-                    }   
+                    }
                     content.resetWriterIndex();
                     readerIndex += needRemain;
                     needRemain = 0;

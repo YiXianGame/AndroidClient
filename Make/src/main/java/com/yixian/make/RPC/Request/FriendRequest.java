@@ -8,5 +8,5 @@ public interface FriendRequest {
     public void insertFriend(Friend... friends);
     public void deleteFriend(Friend... friends);
     public void updateFriend(Friend... friends);
-    public List<Friend> queryFriends(long user_id);
+    public List<Friend> queryFriends(Long user_id);
 }

@@ -65,7 +65,8 @@ public  class RPCRequestProxy implements InvocationHandler {
             else{
                 socketClient.Send(request);
                 ClientResponseModel respond = request.getResult();
-                return type.getConvert().get(respond.ResultType).convert((String) respond.Result);
+                if(respond.ResultType.equals("null"))return null;
+                else return type.getConvert().get(respond.ResultType).convert(respond.Result);
             }
         }
         catch (Exception err){

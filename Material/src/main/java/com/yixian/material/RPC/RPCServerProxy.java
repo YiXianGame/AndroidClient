@@ -25,12 +25,12 @@ public class RPCServerProxy {
             if(Modifier.isPublic(modifier) && Modifier.isStatic(modifier) && !Modifier.isInterface(modifier)){
                 methodId.append(method.getName());
                 String type_name;
-                for(Class parameter_type : method.getParameterTypes()){
+                for(Class<?> parameter_type : method.getParameterTypes()){
                     type_name = type.getAbstractName().get(parameter_type);
                     if(type_name != null) {
                         methodId.append("-").append(type_name);
                     }
-                    else throw new RPCException(String.format("Java中的%s类型参数尚未注册！",type_name));
+                    else throw new RPCException(String.format("Java中的%s类型参数尚未注册！",parameter_type.getName()));
                 }
                 methods.put(methodId.toString(),method);
                 methodId.setLength(0);

@@ -26,7 +26,7 @@ public class RPCServerFactory {
                 services.put(key,service);
             }
             catch (Exception err){
-                Log.e(Tag.RemoteRepository,"发送异常报错，销毁注册");
+                Log.e(Tag.RemoteRepository,serviceName + "异常报错，销毁注册\n" + err.getMessage());
 
             }
         }

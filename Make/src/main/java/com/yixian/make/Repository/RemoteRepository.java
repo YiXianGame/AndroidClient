@@ -2,13 +2,11 @@ package com.yixian.make.Repository;
 
 import android.util.Log;
 
-import com.google.gson.JsonElement;
-import com.google.gson.reflect.TypeToken;
+import com.yixian.make.RPC.Adapt.SkillCardAdapt;
+import com.yixian.make.RPC.Adapt.UserAdapt;
 import com.yixian.material.Entity.User;
 import com.yixian.material.Log.Log.Tag;
 import com.yixian.make.RPC.Request.SkillCardRequest;
-import com.yixian.make.RPC.Server.SkillCardServer;
-import com.yixian.make.RPC.Server.UserServer;
 import com.yixian.material.RPC.RPCServerFactory;
 import com.yixian.material.Exception.RPCException;
 import com.yixian.material.RPC.RPCRequestProxyFactory;
@@ -16,9 +14,7 @@ import com.yixian.material.RPC.RPCType;
 import com.yixian.make.RPC.Request.UserRequest;
 import com.yixian.make.Repository.Interface.IRemoteRepository;
 import com.yixian.material.Entity.SkillCard;
-import com.yixian.material.Utils.Utils;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -40,11 +36,10 @@ public class RemoteRepository implements IRemoteRepository {
     public RemoteRepository(){
         RPCType type = new RPCType();
         try{
-            //已经知道Gson将int转为了double,为空就默认加一个cast转换,不为空就是自定义Convert
-            type.add(int.class,"int");
+            type.add(Integer.class,"int");
             type.add(String.class,"string");
-            type.add(boolean.class,"bool");
-            type.add(long.class,"long");
+            type.add(Boolean.class,"bool");
+            type.add(Long.class,"long");
             type.add(SkillCard.class,"skillCard");
             type.add(User.class,"user");
             type.add(new ArrayList<SkillCard>(){}.getClass().getGenericSuperclass(),"skillcards");
@@ -55,9 +50,9 @@ public class RemoteRepository implements IRemoteRepository {
         }
         //每一个Service都可以拥有自己的TypeConvert.
         userRequest = RPCRequestProxyFactory.Register(UserRequest.class,"UserServer","192.168.0.105","28015",type);
-        RPCServerFactory.Register(UserServer.class,"UserClient","192.168.0.105","28015",type);
+        RPCServerFactory.Register(UserAdapt.class,"UserClient","192.168.0.105","28015",type);
         skillCardRequest = RPCRequestProxyFactory.Register(SkillCardRequest.class,"SkillCardServer","192.168.0.105","28015",type);
-        RPCServerFactory.Register(SkillCardServer.class,"SkillCardClient","192.168.0.105","28015",type);
+        RPCServerFactory.Register(SkillCardAdapt.class,"SkillCardClient","192.168.0.105","28015",type);
         //Observable.create((ObservableOnSubscribe<Void>) emitter -> Log.d(Tag.Debug,userDao.hello("你好"))).subscribeOn(Schedulers.io()).subscribe();
     }
 }
