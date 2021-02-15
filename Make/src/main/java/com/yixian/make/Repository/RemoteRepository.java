@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.yixian.make.RPC.Adapt.SkillCardAdapt;
 import com.yixian.make.RPC.Adapt.UserAdapt;
+import com.yixian.material.Entity.CardGroup;
+import com.yixian.material.Entity.CardItem;
 import com.yixian.material.Entity.User;
 import com.yixian.material.Log.Log.Tag;
 import com.yixian.make.RPC.Request.SkillCardRequest;
@@ -42,7 +44,9 @@ public class RemoteRepository implements IRemoteRepository {
             type.add(Long.class,"long");
             type.add(SkillCard.class,"skillCard");
             type.add(User.class,"user");
-            type.add(new ArrayList<SkillCard>(){}.getClass().getGenericSuperclass(),"skillcards");
+            type.add(new ArrayList<SkillCard>(){}.getClass().getGenericSuperclass(),"skillCards");
+            type.add(new ArrayList<CardItem>(){}.getClass().getGenericSuperclass(),"cardItem");
+            type.add(new ArrayList<CardGroup>(){}.getClass().getGenericSuperclass(),"cardGroups");
         }
         catch (RPCException e){
             Log.e(Tag.RemoteRepository,e.getMessage());

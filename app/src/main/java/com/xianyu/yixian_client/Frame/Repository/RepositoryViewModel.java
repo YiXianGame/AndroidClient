@@ -3,13 +3,18 @@ package com.xianyu.yixian_client.Frame.Repository;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.yixian.make.Core;
 import com.yixian.make.Model.Repository;
 import com.yixian.material.Entity.SkillCard;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.MaybeObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -25,13 +30,6 @@ import io.reactivex.schedulers.Schedulers;
  * @Version: 1.0
  */
 public class RepositoryViewModel extends ViewModel {
-    MutableLiveData<List<SkillCard>> skillcards_live = new MutableLiveData<>();
-    public void refreshSkillCards(){
-        disposable.add(repository.skillCardRepository.queryAll().observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                .subscribe(skillCards -> {
-                    skillcards_live.postValue(skillCards);
-                }));
-    }
     private final CompositeDisposable disposable = new CompositeDisposable();
     private Repository repository;
     public RepositoryViewModel(){

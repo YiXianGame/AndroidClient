@@ -2,12 +2,10 @@ package com.yixian.make.Repository;
 
 import android.annotation.SuppressLint;
 
-import com.yixian.make.Core;
+import com.yixian.material.Entity.CardItem;
 import com.yixian.material.Entity.SkillCard;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import io.reactivex.Maybe;
 import io.reactivex.MaybeEmitter;
@@ -21,52 +19,38 @@ import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import kotlin.jvm.functions.Function0;
 
-public class SkillCardRepository {
+public class CardItemRepository {
     private LocalRepository local;
     private RemoteRepository remote;
-    public SkillCardRepository(LocalRepository local,RemoteRepository remote){
+    public CardItemRepository(LocalRepository local,RemoteRepository remote){
         this.local = local;
         this.remote = remote;
     }
-
-    public void insert(SkillCard... skillCards) {
-        RxVoid(() -> local.db.skillCardDao().insert(skillCards));
-    }
-
-    public void delete(SkillCard... skillCards) {
-        RxVoid(() -> local.db.skillCardDao().delete(skillCards));
-    }
-
-    public void update(SkillCard... skillCards) {
-        RxVoid(() -> local.db.skillCardDao().update(skillCards));
-    }
-
-    public Single<List<SkillCard>> queryByAuthor(long user_id) {
-        return local.db.skillCardDao().queryByAuthorId(user_id);
-    }
-
-    public Maybe<SkillCard> queryById(long id) {
-        return local.db.skillCardDao().queryById(id);
-    }
-
-    public Single<List<SkillCard>> queryAll() {
-        return local.db.skillCardDao().queryAllSkillCards();
-    }
-    public Single<Boolean> sync(long timestamp){
-        return Rx(() -> {
-            //先在远程确认一下更新日期是否相同
-            ArrayList<SkillCard> value = remote.skillCardRequest.Sync(timestamp);
-            //不相同的话，将新数据插入到本地数据库
-            if(value != null){
-                local.db.skillCardDao().insert(value.toArray(new SkillCard[0]));
+    public Maybe<ArrayList<SkillCard>> QuerySkillCardsByUserId(long id){
+        return RxNull(()->{
+            ArrayList<SkillCard> skillCards = new ArrayList<>();
+            ArrayList<CardItem> value = new ArrayList<>(local.db.cardRepositoryDao().queryByIdSync(id));
+            ArrayList<Long> none = new ArrayList<>();
+            for(CardItem item : value){
+                SkillCard skillCard = local.db.skillCardDao().queryByIdSync(item.getItemId());
+                if(skillCard == null)none.add(item.getItemId());
+                else skillCards.add(skillCard);
             }
-            return true;
+            if(none.size()>0){
+                ArrayList<SkillCard> syncSkillCards = remote.skillCardRequest.Query(none);
+                if(syncSkillCards!=null){
+                    local.db.skillCardDao().insert(skillCards.toArray(new SkillCard[0]));
+                    skillCards.addAll(syncSkillCards);
+                }
+                else return null;
+            }
+            return skillCards;
         });
     }
     @SuppressLint("CheckResult")
     private <T,R> Single<R> Rx(Function0<R> functions){
         return Single.create(new SingleOnSubscribe<R>() {
-        
+
             public void subscribe(@NonNull SingleEmitter<R> emitter) throws Exception {
                 emitter.onSuccess(functions.invoke());
             }
@@ -76,7 +60,7 @@ public class SkillCardRepository {
     @SuppressLint("CheckResult")
     private <T,R> Maybe<R> RxNull(Function0<R> functions) {
         return Maybe.create(new MaybeOnSubscribe<R>() {
-        
+
             public void subscribe(@NonNull MaybeEmitter<R> emitter) throws Exception {
                 try{
                     R result = functions.invoke();

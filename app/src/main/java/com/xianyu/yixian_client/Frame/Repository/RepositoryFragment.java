@@ -18,6 +18,7 @@ import com.xianyu.yixian_client.Frame.Repository.Adapt.CardAdapt;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.BattleRepositoryHeadBinding;
 import com.xianyu.yixian_client.databinding.RepositoryFragmentBinding;
+import com.yixian.make.Core;
 import com.yixian.make.Model.Repository;
 
 import java.util.ArrayList;
@@ -69,8 +70,8 @@ public class RepositoryFragment extends Fragment {
                 loadMoreModule.loadMoreEnd();
             }
         });
-        viewModel.skillcards_live.observe(requireActivity(), skillCards -> {
-            viewModel.skillcards_live.observe(getViewLifecycleOwner(), skillCardAdapt::filter);
+        Core.liveSkillcards.observe(requireActivity(), skillCards -> {
+            skillCardAdapt.filter(new ArrayList<>(skillCards.values()));
         });
         TextInputEditText editText = head.findViewById(R.id.searchName_textInput);
         editText.addTextChangedListener(new TextWatcher() {
@@ -82,7 +83,7 @@ public class RepositoryFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 skillCardAdapt.bluePrint.setName(s.toString());
-                skillCardAdapt.filter(viewModel.skillcards_live.getValue());
+                skillCardAdapt.filter(new ArrayList<>(Core.liveSkillcards.getValue().values()));
             }
 
             @Override
@@ -93,30 +94,28 @@ public class RepositoryFragment extends Fragment {
         Chip physics_chip = head.findViewById(R.id.physics_chip);
         physics_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             skillCardAdapt.bluePrint.setPhysics(isChecked);
-            skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
+            skillCardAdapt.filter(new ArrayList<>(Core.liveSkillcards.getValue().values()));});
 
         Chip magic_chip = head.findViewById(R.id.magic_chip);
         magic_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             skillCardAdapt.bluePrint.setMagic(isChecked);
-            skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
+            skillCardAdapt.filter(new ArrayList<>(Core.liveSkillcards.getValue().values()));});
 
         Chip cure_chip = head.findViewById(R.id.cure_chip);
         cure_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             skillCardAdapt.bluePrint.setCure(isChecked);
-            skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
+            skillCardAdapt.filter(new ArrayList<>(Core.liveSkillcards.getValue().values()));});
 
         Chip attack_chip = head.findViewById(R.id.attack_chip);
         attack_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             skillCardAdapt.bluePrint.setAttack(isChecked);
-            skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
+            skillCardAdapt.filter(new ArrayList<>(Core.liveSkillcards.getValue().values()));});
 
         Chip eternal_chip = head.findViewById(R.id.eternal_chip);
         eternal_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             skillCardAdapt.bluePrint.setEternal(isChecked);
-            skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
-
+            skillCardAdapt.filter(new ArrayList<>(Core.liveSkillcards.getValue().values()));});
         recyclerView.setAdapter(skillCardAdapt);
-        viewModel.refreshSkillCards();
 
     }
 }

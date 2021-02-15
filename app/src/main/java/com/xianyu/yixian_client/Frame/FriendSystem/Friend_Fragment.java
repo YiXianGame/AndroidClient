@@ -54,7 +54,7 @@ public class Friend_Fragment extends Fragment {
         friend_adapt.setAnimationFirstOnly(false);
         loadMoreModule.setAutoLoadMore(true);
         loadMoreModule.setEnableLoadMoreEndClick(false);
-        loadMoreModule.setPreLoadNumber(1 );
+        loadMoreModule.setPreLoadNumber(1);
         loadMoreModule.setOnLoadMoreListener(() -> {
             List<User> users = friend_adapt.friends_filters;
             if(users == null)loadMoreModule.loadMoreFail();

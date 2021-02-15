@@ -34,6 +34,8 @@ import io.reactivex.Single;
 public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User... user);
+    @Query("UPDATE user SET cardGroups=:cardGroups WHERE id=:id")
+    void updateCardGroup(long id,String cardGroups);
     @Query("UPDATE user SET username=:username,password=:password WHERE id=:id")
     void updateAccount(long id,String username,String password);
     @Query("UPDATE user SET skillCard_update=:timestamp WHERE id=:id")
@@ -41,12 +43,12 @@ public interface UserDao {
     @TypeConverters(ActiveConvert.class)
     @Query("UPDATE user SET username=:username,nickname=:nickname,upgrade_num=:upgrade_num,create_num=:create_num," +
             "money=:money,personalSignature=:personalSignature,battleCount=:battleCount,exp=:exp,lv=:lv,title=:title,active=:active," +
-            "kills=:kills,deaths=:deaths,registerDate=:registerDate,attribute_update=:attribute_update " +
+            "kills=:kills,deaths=:deaths,registerDate=:registerDate,attribute_update=:attribute_update,cardGroups=:cardgroups " +
             "WHERE id = :id")
-    void insertUserAttribute(long id, String username, String nickname, int upgrade_num,
+    void updateUserAttribute(long id, String username, String nickname, int upgrade_num,
                              int create_num, long money, String personalSignature,
                              int battleCount, long exp, int lv, String title, User.State active, int kills, int deaths, long registerDate,
-                             long attribute_update);
+                             long attribute_update,String cardgroups);
     @Query("UPDATE user SET password = :password WHERE id = :id")
     void updateUserPassword(long id, String password);
     @Delete

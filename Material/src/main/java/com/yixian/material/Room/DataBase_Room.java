@@ -3,13 +3,14 @@ package com.yixian.material.Room;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
+import com.yixian.material.Room.Dao.CardRepositoryDao;
 import com.yixian.material.Room.Dao.ConfigDao;
 import com.yixian.material.Room.Dao.FriendDao;
 import com.yixian.material.Room.Dao.SkillCardDao;
 import com.yixian.material.Room.Dao.UserDao;
 import com.yixian.material.Entity.Config;
 import com.yixian.material.Entity.Friend;
-import com.yixian.material.Entity.CardRepository;
+import com.yixian.material.Entity.CardItem;
 import com.yixian.material.Entity.SkillCard;
 import com.yixian.material.Entity.User;
 
@@ -26,10 +27,11 @@ import com.yixian.material.Entity.User;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-@Database(entities = {User.class, SkillCard.class, Friend.class,CardRepository.class, Config.class},version = 1,exportSchema = false)
+@Database(entities = {User.class, SkillCard.class, Friend.class, CardItem.class, Config.class},version = 1,exportSchema = false)
 public abstract class DataBase_Room extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract SkillCardDao skillCardDao();
     public abstract FriendDao friendDao();
     public abstract ConfigDao configDao();
+    public abstract CardRepositoryDao cardRepositoryDao();
 }

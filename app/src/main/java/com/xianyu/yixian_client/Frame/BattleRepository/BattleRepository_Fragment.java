@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.yixian.material.Entity.CardGroup;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.BattleRepositoryFragmentBinding;
 import com.xianyu.yixian_client.databinding.BattleRepositoryHeadBinding;
+import com.yixian.material.Entity.SkillCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,19 @@ public class BattleRepository_Fragment extends Fragment {
 
     @SuppressLint("CheckResult")
     private void init() {
+        ArrayList<CardGroup> list = new ArrayList<>();
+        list.add(new CardGroup());
+        list.add(new CardGroup());
+        list.get(0).setName("一");
+        list.get(1).setName("二");
+        ArrayList<SkillCard> arrayList = new ArrayList<>(Core.liveSkillcards.getValue().values());
+        for(int i=0;i<10;i++){
+            list.get(0).getCards().add(new Pair<>(arrayList.get(i).getId(),arrayList.get(i).getName()));
+        }
+        for(int i=10;i<20;i++){
+            list.get(1).getCards().add(new Pair<>(arrayList.get(i).getId(),arrayList.get(i).getName()));
+        }
+        Core.liveUser.getValue().setCardGroups(list);
         RecyclerView recyclerView = binding.getRoot().findViewById(R.id.skillcards_recycle);
         SkillCardAdapt skillCardAdapt = new SkillCardAdapt();
         skillCardAdapt.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInLeft);
@@ -85,8 +100,9 @@ public class BattleRepository_Fragment extends Fragment {
                 loadMoreModule.loadMoreEnd();
             }
         });
-        viewModel.skillcards_live.observe(requireActivity(), skillCards -> {
-            viewModel.skillcards_live.observe(getViewLifecycleOwner(), skillCardAdapt::filter);
+
+        Core.liveSkillcards.observe(requireActivity(), skillCards -> {
+            skillCardAdapt.filter(new ArrayList<>(skillCards.values()));
         });
 
         TextInputEditText editText = head.findViewById(R.id.searchName_textInput);
@@ -99,7 +115,7 @@ public class BattleRepository_Fragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 skillCardAdapt.bluePrint.setName(s.toString());
-                skillCardAdapt.filter(viewModel.skillcards_live.getValue());
+                skillCardAdapt.filter(new ArrayList<>(Core.liveSkillcards.getValue().values()));
             }
 
             @Override
@@ -110,29 +126,27 @@ public class BattleRepository_Fragment extends Fragment {
         Chip physics_chip = head.findViewById(R.id.physics_chip);
         physics_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             skillCardAdapt.bluePrint.setPhysics(isChecked);
-            skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
+            skillCardAdapt.filter(new ArrayList<>(Core.liveSkillcards.getValue().values()));});
 
         Chip magic_chip = head.findViewById(R.id.magic_chip);
         magic_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             skillCardAdapt.bluePrint.setMagic(isChecked);
-            skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
+            skillCardAdapt.filter(new ArrayList<>(Core.liveSkillcards.getValue().values()));});
 
         Chip cure_chip = head.findViewById(R.id.cure_chip);
         cure_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             skillCardAdapt.bluePrint.setCure(isChecked);
-            skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
+            skillCardAdapt.filter(new ArrayList<>(Core.liveSkillcards.getValue().values()));});
 
         Chip attack_chip = head.findViewById(R.id.attack_chip);
         attack_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             skillCardAdapt.bluePrint.setAttack(isChecked);
-            skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
+            skillCardAdapt.filter(new ArrayList<>(Core.liveSkillcards.getValue().values()));});
 
         Chip eternal_chip = head.findViewById(R.id.eternal_chip);
         eternal_chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
             skillCardAdapt.bluePrint.setEternal(isChecked);
-            skillCardAdapt.filter(viewModel.skillcards_live.getValue());});
-
-        viewModel.refreshSkillCards();
+            skillCardAdapt.filter(new ArrayList<>(Core.liveSkillcards.getValue().values()));});
 
         RecyclerView group_recycle = binding.getRoot().findViewById(R.id.group_layout);
         GroupAdapter groupAdapter = new GroupAdapter();
@@ -155,7 +169,11 @@ public class BattleRepository_Fragment extends Fragment {
         groupDraggableModule.setOnItemDragListener(new OnItemDragListener() {
             @Override
             public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
-
+                if(viewHolder.getItemViewType() == 1){
+                    CardGroupSectionFirstNode parent = (CardGroupSectionFirstNode)groupAdapter.getData().get(groupAdapter.findParentNode(pos));
+                    CardGroupSectionSecondNode node = (CardGroupSectionSecondNode)groupAdapter.getData().get(pos);
+                    parent.getCardGroup().getCards().remove(node.getSkillcard());
+                }
             }
 
             @Override
@@ -165,7 +183,11 @@ public class BattleRepository_Fragment extends Fragment {
 
             @Override
             public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
-
+                if(viewHolder.getItemViewType() == 1){
+                    CardGroupSectionFirstNode parent = (CardGroupSectionFirstNode)groupAdapter.getData().get(groupAdapter.findParentNode(pos));
+                    CardGroupSectionSecondNode node = (CardGroupSectionSecondNode)groupAdapter.getData().get(pos);
+                    parent.getCardGroup().getCards().add(node.getSkillcard());
+                }
             }
         });
         groupDraggableModule.setOnItemSwipeListener(new OnItemSwipeListener() {
@@ -174,8 +196,7 @@ public class BattleRepository_Fragment extends Fragment {
                 if(viewHolder.getItemViewType() == 0){
                     CardGroupSectionFirstNode node = (CardGroupSectionFirstNode)groupAdapter.getData().get(pos);
                     Core.liveUser.getValue().getCardGroups().remove(node.getCardGroup());
-                    viewModel.updateUser(Core.liveUser.getValue());
-                    return;
+                    viewModel.updateUserAttribute(Core.liveUser.getValue());
                 }
                 else if(viewHolder.getItemViewType() == 1){
                     CardGroupSectionFirstNode parent = (CardGroupSectionFirstNode)groupAdapter.getData().get(groupAdapter.findParentNode(pos));
@@ -188,8 +209,7 @@ public class BattleRepository_Fragment extends Fragment {
 //                    catch (Exception e){
 //
 //                    }
-                    viewModel.updateUser(Core.liveUser.getValue());
-                    return;
+                    viewModel.updateUserAttribute(Core.liveUser.getValue());
                 }
             }
 
@@ -208,6 +228,5 @@ public class BattleRepository_Fragment extends Fragment {
 
             }
         });
-        viewModel.refreshUser();
     }
 }

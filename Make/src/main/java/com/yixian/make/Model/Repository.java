@@ -5,6 +5,7 @@ import android.content.Context;
 
 import androidx.room.Room;
 
+import com.yixian.make.Repository.CardItemRepository;
 import com.yixian.make.Repository.ConfigRepository;
 import com.yixian.make.Repository.FriendRepository;
 import com.yixian.make.Repository.LocalRepository;
@@ -51,6 +52,7 @@ public class Repository{
     public SkillCardRepository skillCardRepository;
     public ConfigRepository configRepository;
     public FriendRepository friendRepository;
+    public CardItemRepository cardItemRepository;
     @Inject
     public Repository(@ApplicationContext Context context){
         DataBase_Room db = Room.databaseBuilder(context, DataBase_Room.class,"db").build();
@@ -60,6 +62,7 @@ public class Repository{
         skillCardRepository = new SkillCardRepository(local,remote);
         configRepository = new ConfigRepository(local,remote);
         friendRepository = new FriendRepository(local,remote);
+        cardItemRepository = new CardItemRepository(local,remote);
     }
     //这里是产生的Observable
 

@@ -8,15 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
 import com.xianyu.yixian_client.R;
 import com.yixian.make.Core;
-import com.yixian.material.Entity.User;
-import com.yixian.material.Utils.MD5Utils;
+import com.yixian.material.Utils.MD5;
 import com.xianyu.yixian_client.databinding.LoginForgetFragmentBinding;
 
 /**
@@ -41,13 +39,10 @@ public class Forget_Fragment extends Fragment {
         TextInputEditText userName_UI = binding.getRoot().findViewById(R.id.username);
         TextInputEditText passWord_UI = binding.getRoot().findViewById(R.id.password);
         TextInputEditText verification_UI = binding.getRoot().findViewById(R.id.verification_code);
-        Core.liveUser.observe(getViewLifecycleOwner(), new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                String ui_userName = userName_UI.getText().toString();
-                if(!ui_userName.equals(user.getUsername())){
-                    userName_UI.setText(user.getUsername());
-                }
+        Core.liveUser.observe(getViewLifecycleOwner(), user -> {
+            String ui_userName = userName_UI.getText().toString();
+            if(!ui_userName.equals(user.getUsername())){
+                userName_UI.setText(user.getUsername());
             }
         });
 
@@ -86,8 +81,8 @@ public class Forget_Fragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!MD5Utils.encrypt(s.toString()).equals(Core.liveUser.getValue().getPassword())){
-                    Core.liveUser.getValue().setPassword(MD5Utils.encrypt(s.toString()));
+                if(!MD5.encrypt(s.toString()).equals(Core.liveUser.getValue().getPassword())){
+                    Core.liveUser.getValue().setPassword(MD5.encrypt(s.toString()));
                 }
             }
         });

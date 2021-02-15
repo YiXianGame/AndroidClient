@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface SkillCardRequest {
     ArrayList<SkillCard> Sync(Long timestamp);
-    ArrayList<SkillCard> SyncUser(Long timestamp);
+    ArrayList<SkillCard> Query(ArrayList<Long> skillCardIds);
 }

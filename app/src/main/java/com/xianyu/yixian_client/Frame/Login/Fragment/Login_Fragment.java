@@ -15,9 +15,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
 import com.xianyu.yixian_client.R;
 import com.yixian.make.Core;
-import com.yixian.material.Entity.Config;
 import com.yixian.material.Entity.User;
-import com.yixian.material.Utils.MD5Utils;
+import com.yixian.material.Utils.MD5;
 import com.xianyu.yixian_client.databinding.LoginLoginFragmentBinding;
 
 /**
@@ -83,8 +82,8 @@ public class Login_Fragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!MD5Utils.encrypt(s.toString()).equals(Core.liveUser.getValue().getPassword())){
-                    Core.liveUser.getValue().setPassword(MD5Utils.encrypt(s.toString()));
+                if(!MD5.encrypt(s.toString()).equals(Core.liveUser.getValue().getPassword())){
+                    Core.liveUser.getValue().setPassword(MD5.encrypt(s.toString()));
                 }
             }
         });

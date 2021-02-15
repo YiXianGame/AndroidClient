@@ -6,7 +6,7 @@ public class RPCException extends Exception{
     public RPCException(String message) {
         super(message);
     }
-    public RPCException(String message,RpcErrorCode code) {
+    public RPCException(RpcErrorCode code,String message) {
         super(message);
         Code = code;
     }

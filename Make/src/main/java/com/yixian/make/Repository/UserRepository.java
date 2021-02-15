@@ -2,8 +2,14 @@ package com.yixian.make.Repository;
 
 import android.annotation.SuppressLint;
 
+import com.yixian.material.Entity.CardGroup;
+import com.yixian.material.Entity.CardItem;
+import com.yixian.material.Entity.SkillCard;
 import com.yixian.material.Entity.User;
+import com.yixian.material.Exception.SkillCardException;
+import com.yixian.material.Utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Maybe;
@@ -39,7 +45,15 @@ public class UserRepository {
     public Single<Long> login(User user){
         return Rx(()->remote.userRequest.LoginUser(user.getId(), user.getUsername(), user.getPassword()));
     }
-
+    public void updateCardGroups(User user){
+        RxVoid(()->{
+            long timestamp = remote.userRequest.Update_CardGroups(user);
+            if(timestamp != -1){
+                user.setAttribute_update(timestamp);
+                local.updateUserAttribute(user);
+            }
+        });
+    }
 
     public void local_insert(User user) {
         RxVoid(()->local.db.userDao().insert(user));
@@ -68,6 +82,33 @@ public class UserRepository {
             return value;
         });
     }
+    public Maybe<ArrayList<SkillCard>> syncUserSkillCard(User user){
+        return RxNull(() -> {
+            //先在远程确认一下更新日期是否相同
+            ArrayList<CardItem> value = remote.userRequest.Sync_UserSkillCards(user.getId(),user.getSkillCard_update());
+            ArrayList<SkillCard> skillCards = new ArrayList<>();
+            ArrayList<Long> none = new ArrayList<>();
+            if(value != null){
+                local.db.cardRepositoryDao().deleteAllSync();
+                local.db.cardRepositoryDao().insert(value.toArray(new CardItem[0]));
+            }
+            else value = new ArrayList<>(local.db.cardRepositoryDao().queryByIdSync(user.getId()));
+            for(CardItem item : value){
+                SkillCard skillCard = local.db.skillCardDao().queryByIdSync(item.getItemId());
+                if(skillCard == null)none.add(item.getItemId());
+                else skillCards.add(skillCard);
+            }
+            if(none.size()>0){
+                ArrayList<SkillCard> syncSkillCards = remote.skillCardRequest.Query(none);
+                if(syncSkillCards!=null){
+                    local.db.skillCardDao().insert(skillCards.toArray(new SkillCard[0]));
+                    skillCards.addAll(syncSkillCards);
+                }
+                else return null;
+            }
+            return skillCards;
+        });
+    }
 
     public void local_updateAccount(User user) {
         RxVoid(()->local.db.userDao().updateAccount(user.getId(), user.getUsername(), user.getPassword()));
@@ -91,6 +132,20 @@ public class UserRepository {
         return local.db.userDao().queryById(id);
     }
 
+    public Maybe<User> syncUserCardGroup(User user) {
+        return RxNull(()->{
+            ArrayList<CardGroup> cardGroups = remote.userRequest.Sync_UserCardGroup(user.getCardGroup_update());
+            if(cardGroups!=null){
+                for (CardGroup item:cardGroups) {
+                    System.out.println(item.getCards().get(0).second);
+                }
+                user.setCardGroups(cardGroups);
+                local.db.userDao().updateCardGroup(user.getId(), Utils.gson.toJson(cardGroups));
+                return user;
+            }
+            else return null;
+        });
+    }
 
     @SuppressLint("CheckResult")
     private <T,R> Single<R> Rx(Function0<R> functions){

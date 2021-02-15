@@ -6,7 +6,7 @@ public class UserException extends Exception{
     public UserException(String message) {
         super(message);
     }
-    public UserException(String message, UserErrorCode code) {
+    public UserException(UserErrorCode code,String message) {
         super(message);
         Code = code;
     }

@@ -3,6 +3,7 @@ package com.yixian.make.Repository;
 import com.yixian.make.Repository.Interface.ILocalRepository;
 import com.yixian.material.Room.DataBase_Room;
 import com.yixian.material.Entity.User;
+import com.yixian.material.Utils.Utils;
 
 
 /**
@@ -26,9 +27,9 @@ public class LocalRepository implements ILocalRepository {
 
     @Override
     public void updateUserAttribute(User user) {
-        db.userDao().insertUserAttribute(user.getId(), user.getUsername(), user.getNickname(), user.getUpgrade_num(),
+        db.userDao().updateUserAttribute(user.getId(), user.getUsername(), user.getNickname(), user.getUpgrade_num(),
                 user.getCreate_num(), user.getMoney(), user.getPersonalSignature(), user.getBattleCount(),
                 user.getExp(), user.getLv(), user.getTitle(), user.getActive(), user.getKills(), user.getDeaths(), user.getRegisterDate(),
-                user.getAttribute_update());
+                user.getAttribute_update(), Utils.gson.toJson(user.getCardGroups()));
     }
 }

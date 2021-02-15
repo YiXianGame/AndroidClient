@@ -75,6 +75,12 @@ public class User
     long headImage_update;//头像更新日期
     @Expose
     long cardGroup_update;//卡组更新日期
+    @Expose
+    @TypeConverters(GroupConvert.class)
+    ArrayList<CardGroup> cardGroups = new ArrayList<>();
+    @Expose
+    @TypeConverters(HistoryConvert.class)
+    ArrayList<History> history = new ArrayList<>();
 
     public String getPassword() {
         return password;
@@ -131,12 +137,6 @@ public class User
     public void setAttribute_update(long update_data) {
         this.attribute_update = update_data;
     }
-    @Expose
-    @TypeConverters(GroupConvert.class)
-    ArrayList<CardGroup> cardGroups = new ArrayList<>();
-    @Expose
-    @TypeConverters(HistoryConvert.class)
-    ArrayList<History> history = new ArrayList<>();
 
     public ArrayList<History> getHistory() {
         return history;

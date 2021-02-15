@@ -44,6 +44,9 @@ public interface SkillCardDao {
     @Query("SELECT * FROM skillcard WHERE id = :id")
     public Maybe<SkillCard> queryById(long id);
 
+    @Query("SELECT * FROM skillcard WHERE id = :id")
+    public SkillCard queryByIdSync(long id);
+
     @Query("SELECT * FROM skillcard")
     public Single<List<SkillCard>> queryAllSkillCards();
 }

@@ -19,6 +19,7 @@ import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.DepthPageTransformer;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.Login_Fragment_Adapter;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
 import com.yixian.material.Entity.Config;
+import com.yixian.material.Entity.SkillCard;
 import com.yixian.material.Entity.User;
 import com.xianyu.yixian_client.Model.MessageDialog;
 import com.xianyu.yixian_client.R;
@@ -26,6 +27,7 @@ import com.xianyu.yixian_client.databinding.LoginMainFragmentBinding;
 import com.yixian.make.Core;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import io.reactivex.MaybeObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -65,6 +67,7 @@ public class Main_Fragment extends Fragment {
                                     @Override
                                     public void onSuccess(@NonNull User user) {
                                         Core.liveUser.setValue(user);
+                                        Core.liveSkillcards.setValue(new HashMap<>());
                                         if(!(user.getUsername() == null|| user.getPassword() == null || user.getUsername().equals("") || user.getPassword().equals(""))){
                                             Login_Click();
                                         }
@@ -83,7 +86,7 @@ public class Main_Fragment extends Fragment {
                     }
                     else {
                         Core.liveUser.setValue(new User());
-                        Core.liveSkillcards.setValue(new ArrayList<>());
+                        Core.liveSkillcards.setValue(new HashMap<>());
                         Core.liveConfig.setValue(new Config());
                     }
                 });
@@ -149,7 +152,7 @@ public class Main_Fragment extends Fragment {
                 else {
                     Core.liveUser.getValue().setId(result);
                     Core.liveConfig.getValue().setId(result);
-                    viewModel.repository.userRepository.local_queryById(result).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(new MaybeObserver<User>() {
+                    viewModel.repository.userRepository.local_queryById(result).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(new MaybeObserver<User>() {
                         @Override
                         public void onSubscribe(@NonNull Disposable d) {
                         }
@@ -161,12 +164,12 @@ public class Main_Fragment extends Fragment {
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            viewModel.repository.userRepository.local_insert(Core.liveUser.getValue());
+
                         }
 
                         @Override
                         public void onComplete() {
-
+                            viewModel.repository.userRepository.local_insert(Core.liveUser.getValue());
                         }
                     });
                     viewModel.repository.configRepository.local_insert(Core.liveConfig.getValue());
