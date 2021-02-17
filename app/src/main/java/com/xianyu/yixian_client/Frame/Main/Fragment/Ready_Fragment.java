@@ -49,7 +49,7 @@ public class Ready_Fragment extends Fragment {
         loadMoreModule.setEnableLoadMoreEndClick(false);
         loadMoreModule.setPreLoadNumber(1);
         loadMoreModule.setOnLoadMoreListener(() -> {
-            List<User> users = friend_adapt.filter(viewModel.friends_live.getValue());
+            List<User> users = friend_adapt.filter(Core.liveFriends.getValue());
             if(users == null)loadMoreModule.loadMoreFail();
             int last_index = users.lastIndexOf(friend_adapt.getData().get(friend_adapt.getData().size() - 1));
             if(last_index + 1 < users.size()){
@@ -60,8 +60,8 @@ public class Ready_Fragment extends Fragment {
                 loadMoreModule.loadMoreEnd();
             }
         });
-        viewModel.friends_live.observe(getViewLifecycleOwner(), list -> {
-            List<User> users = friend_adapt.filter(viewModel.friends_live.getValue());
+        Core.liveFriends.observe(getViewLifecycleOwner(), list -> {
+            List<User> users = friend_adapt.filter(Core.liveFriends.getValue());
             if (users != null){
                 if(users.size() >= 9){
                     friend_adapt.setDiffNewData(users.subList(0,9));
@@ -70,7 +70,6 @@ public class Ready_Fragment extends Fragment {
             }
             else friend_adapt.setDiffNewData(new ArrayList<>());
         });
-        viewModel.refreshFriends(Core.liveUser.getValue().getId());
         recyclerView.setAdapter(friend_adapt);
 
         recyclerView = binding.getRoot().findViewById(R.id.pos_recycle);

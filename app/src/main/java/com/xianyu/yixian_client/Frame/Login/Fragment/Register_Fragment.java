@@ -67,7 +67,7 @@ public class Register_Fragment extends Fragment  {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals(Core.liveUser.getValue().getUsername())){
+                if(Core.liveUser.getValue()!=null && !s.toString().equals(Core.liveUser.getValue().getUsername())){
                     Core.liveUser.getValue().setUsername(s.toString());
                     Core.liveUser.postValue(Core.liveUser.getValue());
                 }
@@ -86,7 +86,7 @@ public class Register_Fragment extends Fragment  {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals(Core.liveUser.getValue().getNickname())){
+                if(Core.liveUser.getValue()!= null && !s.toString().equals(Core.liveUser.getValue().getNickname())){
                     Core.liveUser.getValue().setNickname(s.toString());
                     Core.liveUser.postValue(Core.liveUser.getValue());
                 }
@@ -105,7 +105,7 @@ public class Register_Fragment extends Fragment  {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!(Core.liveUser.getValue().getPassword().equals(MD5.encrypt(s.toString())))){
+                if(Core.liveUser.getValue()!=null && !(Core.liveUser.getValue().getPassword().equals(MD5.encrypt(s.toString())))){
                     Core.liveUser.getValue().setPassword(MD5.encrypt(s.toString()));
                 }
             }

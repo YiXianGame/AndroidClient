@@ -62,7 +62,7 @@ public class Forget_Fragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals(Core.liveUser.getValue().getUsername())){
+                if(Core.liveUser.getValue()!=null && !s.toString().equals(Core.liveUser.getValue().getUsername())){
                     Core.liveUser.getValue().setUsername(s.toString());
                     Core.liveUser.postValue(Core.liveUser.getValue());
                 }
@@ -81,7 +81,7 @@ public class Forget_Fragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!MD5.encrypt(s.toString()).equals(Core.liveUser.getValue().getPassword())){
+                if(Core.liveUser.getValue()!=null && !MD5.encrypt(s.toString()).equals(Core.liveUser.getValue().getPassword())){
                     Core.liveUser.getValue().setPassword(MD5.encrypt(s.toString()));
                 }
             }
@@ -99,7 +99,7 @@ public class Forget_Fragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals(viewModel.verificationCode.getValue())){
+                if(Core.liveUser.getValue()!=null && !s.toString().equals(viewModel.verificationCode.getValue())){
                     viewModel.verificationCode.postValue(s.toString());
                 }
             }

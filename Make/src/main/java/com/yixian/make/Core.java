@@ -14,6 +14,7 @@ import java.util.HashMap;
 public class Core {
     public static MutableLiveData<Config> liveConfig = new MutableLiveData<>();
     public static MutableLiveData<User> liveUser = new MutableLiveData<User>();
+    public static MutableLiveData<ArrayList<User>> liveFriends = new MutableLiveData<ArrayList<User>>();
     public static MutableLiveData<HashMap<Long,SkillCard>> liveSkillcards = new MutableLiveData<>();
     public static Repository repository;
 }

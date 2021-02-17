@@ -63,7 +63,7 @@ public class Login_Fragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals(Core.liveUser.getValue().getUsername())){
+                if(Core.liveUser.getValue()!=null && !s.toString().equals(Core.liveUser.getValue().getUsername())){
                     Core.liveUser.getValue().setUsername(s.toString());
                     Core.liveUser.postValue(Core.liveUser.getValue());
                 }
@@ -82,7 +82,7 @@ public class Login_Fragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!MD5.encrypt(s.toString()).equals(Core.liveUser.getValue().getPassword())){
+                if(Core.liveUser.getValue()!=null && !MD5.encrypt(s.toString()).equals(Core.liveUser.getValue().getPassword())){
                     Core.liveUser.getValue().setPassword(MD5.encrypt(s.toString()));
                 }
             }

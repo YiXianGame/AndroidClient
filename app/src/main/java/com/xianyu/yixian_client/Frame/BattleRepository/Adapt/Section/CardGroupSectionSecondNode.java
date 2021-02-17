@@ -3,18 +3,19 @@ package com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section;
 import android.util.Pair;
 
 import com.chad.library.adapter.base.entity.node.BaseNode;
+import com.yixian.material.Entity.SkillCard;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class CardGroupSectionSecondNode extends BaseNode {
-    Pair<Long, String> skillcard;
-    public CardGroupSectionSecondNode(Pair<Long, String> skillcards) {
+    SkillCard skillcard;
+    public CardGroupSectionSecondNode(SkillCard skillcards) {
         this.skillcard = skillcards;
     }
 
-    public Pair<Long, String> getSkillcard() {
+    public SkillCard getSkillcard() {
         return skillcard;
     }
 

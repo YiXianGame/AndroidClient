@@ -3,8 +3,11 @@ package com.yixian.material.Entity;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
+import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
+import com.yixian.material.Room.Convert.ActiveConvert;
+import com.yixian.material.Room.Convert.FriendConvert;
 
 /**
  * @ProjectName: YiXian_Client
@@ -32,12 +35,23 @@ import com.google.gson.annotations.Expose;
 
 )
 public class Friend {
+    public enum Category { Friend }
     @Expose
     long user_1;
     @Expose
     long user_2;
     @Expose
+    @TypeConverters(FriendConvert.class)
+    private Category category = Category.Friend;//玩家当前游戏状态
     String solution;
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public long getUser_1() {
         return user_1;

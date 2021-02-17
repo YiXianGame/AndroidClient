@@ -46,6 +46,8 @@ public class Main_Activity extends AppCompatActivity {
         viewModel.syncUserAttribute(Core.liveUser);
         //同步技能卡
         viewModel.syncSkillCard(Core.liveUser);
+        //同步好友
+        viewModel.syncUserFriend(Core.liveUser);
     }
 
     @Override

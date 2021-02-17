@@ -23,6 +23,6 @@ public class CardGroupSectionSecond extends BaseNodeProvider {
     @Override
     public void convert(@NotNull BaseViewHolder baseViewHolder, BaseNode baseNode) {
         MaterialTextView name_text = baseViewHolder.findView(R.id.name_text);
-        name_text.setText(((CardGroupSectionSecondNode)baseNode).getSkillcard().second);
+        name_text.setText(((CardGroupSectionSecondNode)baseNode).getSkillcard().getName());
     }
 }

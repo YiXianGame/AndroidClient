@@ -67,12 +67,11 @@ public class Friend_Fragment extends Fragment {
                 loadMoreModule.loadMoreEnd();
             }
         });
-        viewModel.friends_live.observe(getViewLifecycleOwner(), friend_adapt::filter);
-        viewModel.refreshFriends(Core.liveUser.getValue().getId());
+        Core.liveFriends.observe(getViewLifecycleOwner(), friend_adapt::filter);
         CheckBox checkBox = binding.getRoot().findViewById(R.id.levelSort_check);
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {friend_adapt.bluePrint.setLevel(isChecked);friend_adapt.filter(viewModel.friends_live.getValue());});
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {friend_adapt.bluePrint.setLevel(isChecked);friend_adapt.filter(Core.liveFriends.getValue());});
         checkBox = binding.getRoot().findViewById(R.id.activeSort_check);
-        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {friend_adapt.bluePrint.setActive(isChecked);friend_adapt.filter(viewModel.friends_live.getValue());});
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {friend_adapt.bluePrint.setActive(isChecked);friend_adapt.filter(Core.liveFriends.getValue());});
         TextInputEditText name_textInput = binding.getRoot().findViewById(R.id.search_textInput);
         name_textInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -83,7 +82,7 @@ public class Friend_Fragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 friend_adapt.bluePrint.setNickName(s.toString());
-                friend_adapt.filter(viewModel.friends_live.getValue());
+                friend_adapt.filter(Core.liveFriends.getValue());
             }
 
             @Override
@@ -92,6 +91,5 @@ public class Friend_Fragment extends Fragment {
             }
         });
         recyclerView.setAdapter(friend_adapt);
-        viewModel.refreshFriends(Core.liveUser.getValue().getId());
     }
 }

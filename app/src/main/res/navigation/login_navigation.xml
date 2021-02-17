@@ -11,8 +11,9 @@
         <action
             android:id="@+id/action_login_Activity_to_main_navigation"
             app:destination="@id/main_Activity"
+            app:launchSingleTop="true"
             app:popUpTo="@id/main_Activity"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="true" />
     </fragment>
     <activity
         android:id="@+id/main_Activity"

@@ -4,7 +4,7 @@ import androidx.room.TypeConverter;
 
 import com.yixian.material.Entity.SkillCard;
 
-public class CategoryConvert {
+public class SkillCardCategoryConvert {
     @TypeConverter
     public String categoryToString(SkillCard.Category category){
         return category.toString();

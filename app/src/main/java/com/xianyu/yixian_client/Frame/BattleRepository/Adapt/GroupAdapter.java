@@ -46,17 +46,17 @@ public class GroupAdapter extends BaseNodeAdapter implements DraggableModule {
                 return ((CardGroupSectionFirstNode)(oldItem)).getCardGroup().getName() == ((CardGroupSectionFirstNode)(newItem)).getCardGroup().getName();
             }
             else if(oldItem instanceof CardGroupSectionSecondNode && newItem instanceof CardGroupSectionSecondNode){
-                return ((CardGroupSectionSecondNode)(oldItem)).getSkillcard().first == ((CardGroupSectionSecondNode)(newItem)).getSkillcard().first;
+                return ((CardGroupSectionSecondNode)(oldItem)).getSkillcard().getId() == ((CardGroupSectionSecondNode)(newItem)).getSkillcard().getId();
             }
             return false;
         }
         @Override
         public boolean areContentsTheSame(@NonNull BaseNode oldItem, @NonNull BaseNode newItem) {
             if(oldItem instanceof CardGroupSectionFirstNode && newItem instanceof CardGroupSectionFirstNode){
-                return ((CardGroupSectionFirstNode)(oldItem)).getCardGroup().getUpdate() == ((CardGroupSectionFirstNode)(newItem)).getCardGroup().getUpdate();
+                return ((CardGroupSectionFirstNode)(oldItem)).getCardGroup().getName().equals(((CardGroupSectionFirstNode)(newItem)).getCardGroup().getName());
             }
             else if(oldItem instanceof CardGroupSectionSecondNode && newItem instanceof CardGroupSectionSecondNode){
-                return ((CardGroupSectionSecondNode)(oldItem)).getSkillcard().second.equals(((CardGroupSectionSecondNode)(newItem)).getSkillcard().second);
+                return ((CardGroupSectionSecondNode)(oldItem)).getSkillcard().getId() == ((CardGroupSectionSecondNode)(newItem)).getSkillcard().getId();
             }
             return false;
         }

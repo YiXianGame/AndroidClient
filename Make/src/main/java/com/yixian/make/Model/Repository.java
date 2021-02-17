@@ -8,12 +8,11 @@ import androidx.room.Room;
 import com.yixian.make.Repository.CardItemRepository;
 import com.yixian.make.Repository.ConfigRepository;
 import com.yixian.make.Repository.FriendRepository;
-import com.yixian.make.Repository.LocalRepository;
-import com.yixian.make.Repository.RemoteRepository;
+import com.yixian.make.Repository.Base.LocalRepository;
+import com.yixian.make.Repository.Base.RemoteRepository;
 import com.yixian.make.Repository.SkillCardRepository;
 import com.yixian.make.Repository.UserRepository;
 import com.yixian.material.Room.DataBase_Room;
-import com.yixian.material.Hilt.Application_Provider;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

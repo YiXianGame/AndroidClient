@@ -28,7 +28,7 @@ public class BattleRepository_ViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    public void updateUserAttribute(User user){
+    public void updateCardGroups(User user){
         repository.userRepository.updateCardGroups(user);
     }
 

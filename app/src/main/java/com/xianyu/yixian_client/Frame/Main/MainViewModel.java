@@ -26,10 +26,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainViewModel extends ViewModel {
-    public MutableLiveData<String> message = new MutableLiveData<>();
-    public MutableLiveData<List<User>> users_live = new MutableLiveData<>();
     private final CompositeDisposable disposable = new CompositeDisposable();
-    public MutableLiveData<List<User>> friends_live = new MutableLiveData<>();
     private Repository repository;
     public MainViewModel(){
 
@@ -39,14 +36,11 @@ public class MainViewModel extends ViewModel {
         this.repository = repository;
     }
 
-    public void refreshFriends(long id){
-        disposable.add(repository.friendRepository.queryUsers(id).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                .subscribe(friends -> {
-                    friends_live.postValue(friends);
-                }));
-    }
     public void syncUserAttribute(MutableLiveData<User> user_live){
         disposable.add(repository.userRepository.syncAttribute(user_live.getValue()).subscribe(user_live::postValue));
+    }
+    public void syncUserFriend(MutableLiveData<User> user_live){
+        disposable.add(repository.userRepository.syncFriend(user_live.getValue()).subscribe(Core.liveFriends::postValue));
     }
     public void syncSkillCard(MutableLiveData<User> user_live){
         disposable.add(repository.skillCardRepository.sync(Core.liveConfig.getValue().getSkillCardUpdate()).subscribe(result ->{

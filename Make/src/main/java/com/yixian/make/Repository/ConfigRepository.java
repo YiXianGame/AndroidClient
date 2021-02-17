@@ -2,6 +2,8 @@ package com.yixian.make.Repository;
 
 import android.annotation.SuppressLint;
 
+import com.yixian.make.Repository.Base.LocalRepository;
+import com.yixian.make.Repository.Base.RemoteRepository;
 import com.yixian.material.Entity.Config;
 
 import java.util.List;

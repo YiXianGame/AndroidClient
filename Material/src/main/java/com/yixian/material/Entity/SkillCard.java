@@ -8,7 +8,7 @@ import androidx.room.TypeConverters;
 import com.google.gson.annotations.Expose;
 import com.yixian.material.Room.Convert.AttributeConvert;
 import com.yixian.material.Room.Convert.BuffConvert;
-import com.yixian.material.Room.Convert.CategoryConvert;
+import com.yixian.material.Room.Convert.SkillCardCategoryConvert;
 
 import java.util.ArrayList;
 
@@ -26,7 +26,7 @@ import java.util.ArrayList;
  */
 @Entity(tableName = "skillcard")
 public class SkillCard {
-    @TypeConverters(CategoryConvert.class)
+    @TypeConverters(SkillCardCategoryConvert.class)
     public enum Category {Physics,Magic,Attack,Cure,Eternal };
     @Expose
     @PrimaryKey

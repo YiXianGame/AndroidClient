@@ -5,16 +5,17 @@ import androidx.room.TypeConverter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yixian.material.Entity.CardGroup;
+import com.yixian.material.Utils.Utils;
 
 import java.util.ArrayList;
 
 public class GroupConvert {
     @TypeConverter
-    public String arrayListToString(ArrayList<CardGroup> buffs){
-        return new Gson().toJson(buffs);
+    public String arrayListToString(ArrayList<CardGroup> groups){
+        return  Utils.gson.toJson(groups);
     }
     @TypeConverter
-    public ArrayList<CardGroup> stringToArrayList(String buffs){
-        return new Gson().fromJson(buffs, new TypeToken<ArrayList<CardGroup>>(){}.getType());
+    public ArrayList<CardGroup> stringToArrayList(String groups){
+        return Utils.gson.fromJson(groups, new TypeToken<ArrayList<CardGroup>>(){}.getType());
     }
 }

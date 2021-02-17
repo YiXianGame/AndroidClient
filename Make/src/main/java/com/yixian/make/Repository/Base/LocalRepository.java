@@ -1,4 +1,4 @@
-package com.yixian.make.Repository;
+package com.yixian.make.Repository.Base;
 
 import com.yixian.make.Repository.Interface.ILocalRepository;
 import com.yixian.material.Room.DataBase_Room;

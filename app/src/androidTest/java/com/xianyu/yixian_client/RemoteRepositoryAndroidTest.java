@@ -2,7 +2,7 @@ package com.xianyu.yixian_client;
 
 import androidx.test.filters.SmallTest;
 
-import com.yixian.make.Repository.RemoteRepository;
+import com.yixian.make.Repository.Base.RemoteRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,7 @@ public class RemoteRepositoryAndroidTest {
     RemoteRepository repository;
     @Before
     public void init(){
-        repository = new com.yixian.make.Repository.RemoteRepository();
+        repository = new RemoteRepository();
     }
     @Test
     public void SendMessage(){

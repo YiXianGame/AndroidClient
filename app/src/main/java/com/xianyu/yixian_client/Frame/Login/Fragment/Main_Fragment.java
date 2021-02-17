@@ -18,6 +18,7 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.DepthPageTransformer;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.Login_Fragment_Adapter;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
+import com.xianyu.yixian_client.Frame.Login.Login_Activity;
 import com.yixian.material.Entity.Config;
 import com.yixian.material.Entity.SkillCard;
 import com.yixian.material.Entity.User;
@@ -179,6 +180,7 @@ public class Main_Fragment extends Fragment {
                             .setMessage("欢迎您的回归！")
                             .setPositiveButton(R.string.confirm_dialog, (dialog, which) -> {
                                 dialog.dismiss();
+
                                 Navigation.findNavController(binding.getRoot()).navigate(R.id.action_login_Activity_to_main_navigation);
                             })
                             .show();

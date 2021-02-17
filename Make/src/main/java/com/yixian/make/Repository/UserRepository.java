@@ -2,12 +2,12 @@ package com.yixian.make.Repository;
 
 import android.annotation.SuppressLint;
 
-import com.yixian.material.Entity.CardGroup;
+import com.yixian.make.Repository.Base.LocalRepository;
+import com.yixian.make.Repository.Base.RemoteRepository;
 import com.yixian.material.Entity.CardItem;
+import com.yixian.material.Entity.Friend;
 import com.yixian.material.Entity.SkillCard;
 import com.yixian.material.Entity.User;
-import com.yixian.material.Exception.SkillCardException;
-import com.yixian.material.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ public class UserRepository {
     public Maybe<User> syncAttribute(User user){
         return RxNull(() -> {
             //先在远程确认一下更新日期是否相同
-            User value = remote.userRequest.Sync_UserAttribute(user.getAttribute_update());
+            User value = remote.userRequest.Sync_Attribute(user.getAttribute_update());
             //不相同的话，将新数据插入到本地数据库
             if(value != null){
                 local.updateUserAttribute(value);
@@ -71,21 +71,59 @@ public class UserRepository {
             else {
                 //相同的话从本地数据库取数据
                 value = local.db.userDao().queryByIdSync(user.getId());
-                //本地数据库的数据找不到了，从远程取一下.
-                if(value == null){
-                    value = remote.userRequest.Query_UserAttributeById(user.getId());
-                    if(value != null){
-                        local.db.userDao().insert(value);
-                    }
-                }
             }
             return value;
+        });
+    }
+    public ArrayList<User> queryUsersSync(ArrayList<Long> users){
+        ArrayList<User> result = new ArrayList<>();
+        ArrayList<User> sync = new ArrayList<User>(){};
+        for(Long item : users){
+            User queryUser = local.db.userDao().queryByIdSync(item);
+            User temp = new User();
+            temp.setId(item);
+            if(queryUser ==null){//本地没有就存起来，待会一块从远程查找
+                temp.setAttribute_update(-1);
+            }
+            else {
+                temp.setAttribute_update(queryUser.getAttribute_update());
+            }
+            sync.add(temp);
+        }
+        sync = remote.userRequest.Sync_Attribute(sync);
+        for(User item : sync){
+            if(item!=null){
+                local.db.userDao().insertSync(item);
+            }
+        }
+        for(Long item : users){
+            User user = local.db.userDao().queryByIdSync(item);
+            result.add(user);
+        }
+        return result;
+    }
+    public Single<ArrayList<User>> syncFriend(User user){
+        return Rx(() -> {
+            //先在远程确认一下更新日期是否相同
+            List<Friend> value = remote.userRequest.Sync_Friend(user.getFriend_update());
+            ArrayList<Long> usersId = new ArrayList<>();
+            if(value == null){
+                //相同的话从本地数据库取数据
+                value = local.db.friendDao().query_Sync(user.getId());
+            }
+            for(Friend item : value){
+                if(item.getUser_1()!=user.getId())usersId.add(item.getUser_1());
+                else usersId.add(item.getUser_2());
+            }
+            ArrayList<User> friends = this.queryUsersSync(usersId);
+            local.db.friendDao().insert(value.toArray(new Friend[0]));
+            return friends;
         });
     }
     public Maybe<ArrayList<SkillCard>> syncUserSkillCard(User user){
         return RxNull(() -> {
             //先在远程确认一下更新日期是否相同
-            ArrayList<CardItem> value = remote.userRequest.Sync_UserSkillCards(user.getId(),user.getSkillCard_update());
+            ArrayList<CardItem> value = remote.userRequest.Sync_SkillCards(user.getId(),user.getSkillCard_update());
             ArrayList<SkillCard> skillCards = new ArrayList<>();
             ArrayList<Long> none = new ArrayList<>();
             if(value != null){
@@ -116,6 +154,9 @@ public class UserRepository {
     public void local_updateSKillCardUpdate(User user) {
         RxVoid(()->local.db.userDao().updateSKillCardUpdate(user.getId(), user.getSkillCard_update()));
     }
+    public void local_updateFriendUpdate(User user) {
+        RxVoid(()->local.db.userDao().local_updateFriendUpdate(user.getId(), user.getSkillCard_update()));
+    }
     public Maybe<User> local_query(long id) {
         return local.db.userDao().queryById(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
@@ -130,21 +171,6 @@ public class UserRepository {
 
     public Maybe<User> local_queryById(long id) {
         return local.db.userDao().queryById(id);
-    }
-
-    public Maybe<User> syncUserCardGroup(User user) {
-        return RxNull(()->{
-            ArrayList<CardGroup> cardGroups = remote.userRequest.Sync_UserCardGroup(user.getCardGroup_update());
-            if(cardGroups!=null){
-                for (CardGroup item:cardGroups) {
-                    System.out.println(item.getCards().get(0).second);
-                }
-                user.setCardGroups(cardGroups);
-                local.db.userDao().updateCardGroup(user.getId(), Utils.gson.toJson(cardGroups));
-                return user;
-            }
-            else return null;
-        });
     }
 
     @SuppressLint("CheckResult")

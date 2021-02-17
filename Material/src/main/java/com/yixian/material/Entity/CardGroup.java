@@ -25,24 +25,13 @@ public class CardGroup {
     @Expose
     String name;
     @Expose
-    @TypeConverters(ArrayList.class)
-    ArrayList<Pair<Long,String>> cards = new ArrayList<>();
-    @Expose
-    long update;
+    ArrayList<Long> cards = new ArrayList<>();
 
-    public long getUpdate() {
-        return update;
-    }
-
-    public void setUpdate(long update) {
-        this.update = update;
-    }
-
-    public ArrayList<Pair<Long, String>> getCards() {
+    public ArrayList<Long> getCards() {
         return cards;
     }
 
-    public void setCards(ArrayList<Pair<Long, String>> cards) {
+    public void setCards(ArrayList<Long> cards) {
         this.cards = cards;
     }
 

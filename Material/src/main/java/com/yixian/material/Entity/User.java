@@ -76,11 +76,21 @@ public class User
     @Expose
     long cardGroup_update;//卡组更新日期
     @Expose
+    long friend_update;//好友更新日期
+    @Expose
     @TypeConverters(GroupConvert.class)
     ArrayList<CardGroup> cardGroups = new ArrayList<>();
     @Expose
     @TypeConverters(HistoryConvert.class)
     ArrayList<History> history = new ArrayList<>();
+
+    public long getFriend_update() {
+        return friend_update;
+    }
+
+    public void setFriend_update(long friend_update) {
+        this.friend_update = friend_update;
+    }
 
     public String getPassword() {
         return password;
