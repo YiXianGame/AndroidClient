@@ -35,7 +35,7 @@ public class ReadyInvite_Adapt extends BaseQuickAdapter<User, ReadyInvite_Adapt.
             filters.sort((o1, o2) -> o1.getLv() - o2.getLv());
         }
         if(bluePrint.isActive()){
-            filters.sort((o1, o2) -> o1.getActive().compareTo((User.State) o2.getActive()));
+            filters.sort((o1, o2) -> o1.getState().compareTo((User.State) o2.getState()));
         }
         if(bluePrint.isReverse()){
             Collections.reverse(filters);
@@ -46,7 +46,7 @@ public class ReadyInvite_Adapt extends BaseQuickAdapter<User, ReadyInvite_Adapt.
     protected void convert(@NotNull ViewHolder holder, User friend) {
         holder.nickname_text.setText(friend.getNickname());
         holder.level_text.setText(Integer.toString(friend.getLv()));
-        holder.active_text.setText(friend.getActive().toString());
+        holder.active_text.setText(friend.getState().toString());
         holder.head_image.setImageResource(R.drawable.touxiang);
     }
 

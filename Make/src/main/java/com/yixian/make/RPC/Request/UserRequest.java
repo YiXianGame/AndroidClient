@@ -15,6 +15,7 @@ public interface UserRequest {
     Long Update_CardGroups(User user);
     User Sync_Attribute(Long date);
     ArrayList<User> Sync_Attribute(ArrayList<User> dates);
+    ArrayList<User> Sync_CardGroups(ArrayList<User> dates);
     ArrayList<Friend> Sync_Friend(Long date);
     ArrayList<CardItem> Sync_SkillCards(Long id, Long date);
     User Query_UserAttributeById(Long id);

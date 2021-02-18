@@ -2,7 +2,6 @@ package com.yixian.material.Entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -60,23 +59,23 @@ public class User
     private String title = "炼气";//称号
     @Expose
     @TypeConverters(ActiveConvert.class)
-    private State active = State.Offline;//玩家当前游戏状态
+    private State state = State.Offline;//玩家当前游戏状态
     @Expose
     private int kills;//击杀数
     @Expose
     private int deaths;//死亡数
     @Expose
-    long registerDate;//注册日期
+    long registerDate = -1 ;//注册日期
     @Expose
-    long attribute_update;//个人信息更新日期
+    long attribute_update = -1 ;//个人信息更新日期
     @Expose
-    long skillCard_update;//卡牌更新日期
+    long skillCard_update = -1 ;//卡牌更新日期
     @Expose
-    long headImage_update;//头像更新日期
+    long headImage_update = -1 ;//头像更新日期
     @Expose
-    long cardGroup_update;//卡组更新日期
+    long cardGroups_update = -1 ;//卡组更新日期
     @Expose
-    long friend_update;//好友更新日期
+    long friend_update = -1 ;//好友更新日期
     @Expose
     @TypeConverters(GroupConvert.class)
     ArrayList<CardGroup> cardGroups = new ArrayList<>();
@@ -100,12 +99,12 @@ public class User
         this.password = password;
     }
 
-    public long getCardGroup_update() {
-        return cardGroup_update;
+    public long getCardGroups_update() {
+        return cardGroups_update;
     }
 
-    public void setCardGroup_update(long cardGroup_update) {
-        this.cardGroup_update = cardGroup_update;
+    public void setCardGroups_update(long cardGroups_update) {
+        this.cardGroups_update = cardGroups_update;
     }
 
     public long getSkillCard_update() {
@@ -168,7 +167,7 @@ public class User
                 ", exp=" + exp +
                 ", lv=" + lv +
                 ", title='" + title + '\'' +
-                ", active=" + active +
+                ", state=" + state +
                 ", kills=" + kills +
                 ", deaths=" + deaths +
                 '}';
@@ -256,12 +255,12 @@ public class User
         this.title = title;
     }
 
-    public State getActive() {
-        return active;
+    public State getState() {
+        return state;
     }
 
-    public void setActive(State active) {
-        this.active = active;
+    public void setState(State state) {
+        this.state = state;
     }
 
     public int getKills() {

@@ -13,6 +13,6 @@ public class UserAdapt {
     }
     public static void SetFriendUpdate(Long update){
         Core.liveUser.getValue().setFriend_update(update);
-        Core.repository.userRepository.local_updateSKillCardUpdate(Core.liveUser.getValue());
+        Core.repository.userRepository.local_updateFriendUpdate(Core.liveUser.getValue());
     }
 }

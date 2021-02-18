@@ -3,6 +3,7 @@ package com.yixian.material.Room.Dao;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.RoomWarnings;
 import androidx.room.Update;
@@ -16,7 +17,7 @@ import io.reactivex.Single;
 
 @Dao
 public interface FriendDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insert(Friend... friends);
 
     @Update

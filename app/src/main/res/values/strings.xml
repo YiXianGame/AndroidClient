@@ -64,7 +64,7 @@
     <string name="active_sort">在线</string>
     <string name="level_sort">等级</string>
     <string name="reverse_sort">倒序</string>
-    <string name="active">玩家状态</string>
+    <string name="state">玩家状态</string>
     <string name="back">返回</string>
     <string name="conversation">聊天</string>
     <string name="personal_information">个人信息</string>

@@ -48,6 +48,8 @@ public class Main_Activity extends AppCompatActivity {
         viewModel.syncSkillCard(Core.liveUser);
         //同步好友
         viewModel.syncUserFriend(Core.liveUser);
+        //同步好友
+        viewModel.syncUserCardGroups(Core.liveUser);
     }
 
     @Override

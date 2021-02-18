@@ -36,8 +36,8 @@ public interface UserDao {
     void insert(User... user);
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long[] insertSync(User... user);
-    @Query("UPDATE user SET cardGroups=:cardGroups WHERE id=:id")
-    void updateCardGroup(long id,String cardGroups);
+    @Query("UPDATE user SET cardGroups=:cardGroups,cardGroups_update=:timestamp WHERE id=:id")
+    void updateCardGroup(long id,String cardGroups,long timestamp);
     @Query("UPDATE user SET username=:username,password=:password WHERE id=:id")
     void updateAccount(long id,String username,String password);
     @Query("UPDATE user SET skillCard_update=:timestamp WHERE id=:id")
@@ -46,7 +46,7 @@ public interface UserDao {
     void local_updateFriendUpdate(long id,long timestamp);
     @TypeConverters(ActiveConvert.class)
     @Query("UPDATE user SET username=:username,nickname=:nickname,upgrade_num=:upgrade_num,create_num=:create_num," +
-            "money=:money,personalSignature=:personalSignature,battleCount=:battleCount,exp=:exp,lv=:lv,title=:title,active=:active," +
+            "money=:money,personalSignature=:personalSignature,battleCount=:battleCount,exp=:exp,lv=:lv,title=:title,state=:active," +
             "kills=:kills,deaths=:deaths,registerDate=:registerDate,attribute_update=:attribute_update,cardGroups=:cardgroups " +
             "WHERE id = :id")
     void updateUserAttribute(long id, String username, String nickname, int upgrade_num,

@@ -42,6 +42,9 @@ public class MainViewModel extends ViewModel {
     public void syncUserFriend(MutableLiveData<User> user_live){
         disposable.add(repository.userRepository.syncFriend(user_live.getValue()).subscribe(Core.liveFriends::postValue));
     }
+    public void syncUserCardGroups(MutableLiveData<User> user_live){
+        disposable.add(repository.userRepository.syncCardGroups(user_live.getValue()).subscribe(Core.liveUser::postValue));
+    }
     public void syncSkillCard(MutableLiveData<User> user_live){
         disposable.add(repository.skillCardRepository.sync(Core.liveConfig.getValue().getSkillCardUpdate()).subscribe(result ->{
             if(result){

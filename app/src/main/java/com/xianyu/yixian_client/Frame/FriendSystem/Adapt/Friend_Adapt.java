@@ -35,7 +35,7 @@ public class Friend_Adapt extends BaseQuickAdapter<User,Friend_Adapt.ViewHolder>
             filters.sort((o1, o2) -> o1.getLv() - o2.getLv());
         }
         if(bluePrint.isActive()){
-            filters.sort((o1, o2) -> o1.getActive().compareTo((User.State) o2.getActive()));
+            filters.sort((o1, o2) -> o1.getState().compareTo((User.State) o2.getState()));
         }
         setDiffNewData(filters);
         friends_filters = filters;
@@ -53,7 +53,7 @@ public class Friend_Adapt extends BaseQuickAdapter<User,Friend_Adapt.ViewHolder>
         holder.deleteFriend_button.setOnClickListener(v -> {
             remove(friend);//这步没有同步到数据库
         });
-        holder.active_text.setText(friend.getActive().toString());
+        holder.active_text.setText(friend.getState().toString());
     }
 
     public static class ViewHolder extends BaseViewHolder {

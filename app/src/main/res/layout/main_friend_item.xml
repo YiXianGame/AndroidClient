@@ -61,7 +61,7 @@
           android:fontFamily="@font/mashanzheng"
           android:textColor="@color/white"
           android:textStyle="bold"
-          android:text="@string/active"
+          android:text="@string/state"
           android:textAppearance="@style/TextAppearance.YiXian.Body4" />
 
     </LinearLayout>

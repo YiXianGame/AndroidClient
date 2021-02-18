@@ -95,7 +95,7 @@ public class CustomHeartbeatHandler extends ChannelHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("---" + ctx.channel().remoteAddress() + " is active---");
+        System.out.println("---" + ctx.channel().remoteAddress() + " is state---");
     }
 
     @Override

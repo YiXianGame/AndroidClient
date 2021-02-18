@@ -8,6 +8,7 @@ import com.yixian.material.Entity.CardItem;
 import com.yixian.material.Entity.Friend;
 import com.yixian.material.Entity.SkillCard;
 import com.yixian.material.Entity.User;
+import com.yixian.material.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,8 +108,10 @@ public class UserRepository {
             //先在远程确认一下更新日期是否相同
             List<Friend> value = remote.userRequest.Sync_Friend(user.getFriend_update());
             ArrayList<Long> usersId = new ArrayList<>();
+            boolean is_remote = true;
             if(value == null){
                 //相同的话从本地数据库取数据
+                is_remote = false;
                 value = local.db.friendDao().query_Sync(user.getId());
             }
             for(Friend item : value){
@@ -116,8 +119,24 @@ public class UserRepository {
                 else usersId.add(item.getUser_2());
             }
             ArrayList<User> friends = this.queryUsersSync(usersId);
-            local.db.friendDao().insert(value.toArray(new Friend[0]));
+            if(is_remote)local.db.friendDao().insert(value.toArray(new Friend[0]));
             return friends;
+        });
+    }
+    public Single<User> syncCardGroups(User user){
+        return Rx(() -> {
+            ArrayList<User> users = new ArrayList<>();
+            users.add(user);
+            //先在远程确认一下更新日期是否相同
+            ArrayList<User> value = remote.userRequest.Sync_CardGroups(users);
+            for (User item:value) {
+                if(item!=null){
+                    user.setCardGroups_update(item.getCardGroups_update());
+                    user.setCardGroups(item.getCardGroups());
+                    local.db.userDao().updateCardGroup(item.getId(), Utils.gson.toJson(item.getCardGroups()),item.getCardGroups_update());
+                }
+            }
+            return user;
         });
     }
     public Maybe<ArrayList<SkillCard>> syncUserSkillCard(User user){

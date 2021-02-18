@@ -29,7 +29,7 @@ public class LocalRepository implements ILocalRepository {
     public void updateUserAttribute(User user) {
         db.userDao().updateUserAttribute(user.getId(), user.getUsername(), user.getNickname(), user.getUpgrade_num(),
                 user.getCreate_num(), user.getMoney(), user.getPersonalSignature(), user.getBattleCount(),
-                user.getExp(), user.getLv(), user.getTitle(), user.getActive(), user.getKills(), user.getDeaths(), user.getRegisterDate(),
+                user.getExp(), user.getLv(), user.getTitle(), user.getState(), user.getKills(), user.getDeaths(), user.getRegisterDate(),
                 user.getAttribute_update(), Utils.gson.toJson(user.getCardGroups()));
     }
 }

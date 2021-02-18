@@ -43,7 +43,6 @@ public class Friend {
     @Expose
     @TypeConverters(FriendConvert.class)
     private Category category = Category.Friend;//玩家当前游戏状态
-    String solution;
 
     public Category getCategory() {
         return category;
@@ -67,14 +66,6 @@ public class Friend {
 
     public void setUser_2(long user_2) {
         this.user_2 = user_2;
-    }
-
-    public String getSolution() {
-        return solution;
-    }
-
-    public void setSolution(String solution) {
-        this.solution = solution;
     }
 
     public Friend(){
