@@ -11,17 +11,17 @@ import java.util.HashMap;
 
 import kotlin.Triple;
 
-public class RPCServerFactory {
+public class RPCAdaptFactory {
     //Java没有自带三元组，这里就引用Kotlin了.
-    public static HashMap<Triple<String,String,String>, RPCServerProxy> services = new HashMap<>();
+    public static HashMap<Triple<String,String,String>, RPCAdaptProxy> services = new HashMap<>();
 
     public static void Register(@NonNull Class classImp,@NonNull String serviceName,@NonNull String hostname,@NonNull String port,@NonNull RPCType type){
         Triple<String,String,String> key = new Triple<>(serviceName,hostname,port);
-        RPCServerProxy service = services.get(key);
+        RPCAdaptProxy service = services.get(key);
         if(service == null){
             try{
                 RPCClientFactory.GetClient(new Pair<>(hostname,port));
-                service = new RPCServerProxy();
+                service = new RPCAdaptProxy();
                 service.Register(classImp,type);
                 services.put(key,service);
             }

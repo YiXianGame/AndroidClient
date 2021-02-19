@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">YiXian_Client</string>
+    <!-- 登陆界面 -->
     <string name="login">游戏登录</string>
     <string name="register">游戏注册</string>
     <string name="pw_forget">忘记密码</string>
@@ -10,6 +11,7 @@
     <string name="verification_code">验证码</string>
     <string name="confirm_dialog">确认</string>
 
+    <!-- 技能卡属性 -->
     <string name="skillCard_name">卡牌名</string>
     <string name="skillCard_description">卡牌描述</string>
     <string name="skillCard_disable">禁用</string>
@@ -24,18 +26,14 @@
     <string name="skillCard_max_auxiliary">灵命数</string>
     <string name="skillCard_mp">仙气值</string>
     <string name="num">0</string>
-
-
     <string name="attribute_physics">物理</string>
     <string name="attribute_magic">魔法</string>
     <string name="attribute_cure">治疗</string>
     <string name="attribute_attack">攻击</string>
     <string name="attribute_eternal">永恒</string>
-
-
     <string name="buff_freeze">冻结</string>
 
-
+    <!-- 用户主界面 -->
     <string name="user_log">用户头像</string>
     <string name="game_notice">公告</string>
     <string name="game_Shopping">商城</string>
@@ -48,7 +46,12 @@
     <string name="user_coin">1000枚精粹</string>
     <string name="user_experience">经验值</string>
     <string name="user_username">昵称</string>
-
+    <string name="skin">皮肤</string>
+    <string name="repository">魂海</string>
+    <string name="battle_repository">战备</string>
+    <string name="task">任务</string>
+    <string name="wiki">百科</string>
+    <!-- 历史记录 -->
     <string name="history_result">胜负</string>
     <string name="history_title">平均境界</string>
     <string name="history_time">游戏时间</string>
@@ -58,7 +61,7 @@
     <string name="history_death">死亡数</string>
     <string name="victory">胜利</string>
     <string name="defeat">失败</string>
-
+    <!-- 好友信息 -->
     <string name="nickname">玩家昵称</string>
     <string name="level">等级</string>
     <string name="active_sort">在线</string>
@@ -70,20 +73,16 @@
     <string name="personal_information">个人信息</string>
     <string name="delete">删除好友</string>
     <string name="screen">筛选</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="skin">皮肤</string>
-    <string name="repository">魂海</string>
-    <string name="battle_repository">战备</string>
-    <string name="task">任务</string>
-    <string name="wiki">百科</string>
+    <!-- 个人信息 -->
     <string name="personal_profile">个人信息</string>
     <string name="game_history">游戏战绩</string>
     <string name="personal_signature">个性签名</string>
     <string name="history_score">得分</string>
-    <string name="main_invite">邀请</string>
+    <!-- 游戏模式选择界面 -->
+    <string name="invite">邀请</string>
+    <string name="match">开始匹配</string>
     <string name="solo_mode">单挑模式</string>
     <string name="team_mode">团队模式</string>
-    <string name="servive_mode">生存模式</string>
-    <string name="main_change_pos">换位</string>
+    <string name="survive_mode">生存模式</string>
+    <string name="change_pos">换位</string>
 </resources>

@@ -19,7 +19,7 @@
     app:layout_constraintTop_toBottomOf="@id/head_image"
     app:layout_constraintLeft_toLeftOf="@id/head_image"
     app:layout_constraintRight_toRightOf="@id/head_image"
-    android:text="@string/main_change_pos"
+    android:text="@string/change_pos"
     android:textAppearance="@style/TextAppearance.YiXian.Body4"
     />
 </androidx.constraintlayout.widget.ConstraintLayout>

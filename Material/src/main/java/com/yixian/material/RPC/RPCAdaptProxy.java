@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 
-public class RPCServerProxy {
+public class RPCAdaptProxy {
     private HashMap<String,Method> methods = new HashMap<>();
     private RPCType type;
     public HashMap<String, Method> getMethods() {

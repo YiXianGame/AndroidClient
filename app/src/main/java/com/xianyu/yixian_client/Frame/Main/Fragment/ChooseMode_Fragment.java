@@ -34,12 +34,12 @@ public class ChooseMode_Fragment extends Fragment {
     private void init() {
         Button solo_button = binding.getRoot().findViewById(R.id.soloGame_button);
         solo_button.setOnClickListener(v ->{
-            ChooseMode_FragmentDirections.ActionChooseModeDestToReadyFragment action = ChooseMode_FragmentDirections.actionChooseModeDestToReadyFragment(Room.Room_Type.Round_Solo);
+            ChooseMode_FragmentDirections.ActionChooseModeDestToReadyFragment action = ChooseMode_FragmentDirections.actionChooseModeDestToReadyFragment(Room.RoomType.Round_Solo);
             if(ChooseMode_FragmentArgs.fromBundle(getArguments()).getGameMode() == 0){
-                action.setRoomMode(Room.Room_Type.Round_Solo);
+                action.setRoomMode(Room.RoomType.Round_Solo);
             }
             else {
-                action.setRoomMode(Room.Room_Type.RealTime_Solo);
+                action.setRoomMode(Room.RoomType.RealTime_Solo);
             }
             Navigation.findNavController(v).navigate(R.id.action_chooseMode_dest_to_readyFragment);
         });

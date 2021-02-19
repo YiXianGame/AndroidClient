@@ -1,4 +1,4 @@
-package com.xianyu.yixian_client.Frame.Main.Adapt;
+package com.xianyu.yixian_client.Frame.Ready.Adapt;
 
 import android.view.View;
 import android.widget.Button;
@@ -10,14 +10,18 @@ import androidx.recyclerview.widget.DiffUtil;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.xianyu.yixian_client.Frame.Ready.ReadyViewModel;
+import com.yixian.make.Core;
+import com.yixian.material.Entity.Friend;
 import com.yixian.material.Entity.User;
 import com.xianyu.yixian_client.R;
 
 import org.jetbrains.annotations.NotNull;
 
 public class ReadyUser_Adapt extends BaseQuickAdapter<User,ReadyUser_Adapt.ViewHolder> {
-    public ReadyUser_Adapt(){
-        super(R.layout.main_ready_user_item);
+    private ReadyViewModel viewModel;
+    public ReadyUser_Adapt(ReadyViewModel viewModel){
+        super(R.layout.ready_user_item);
         setDiffCallback(new DiffCallBack());
     }
 

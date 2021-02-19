@@ -59,7 +59,7 @@
     android:id="@+id/readyFragment"
     android:name="com.xianyu.yixian_client.Frame.Main.Fragment.Ready_Fragment"
     android:label="ready_fragment"
-    tools:layout="@layout/main_ready_fragment" >
+    tools:layout="@layout/ready_ready_fragment" >
         <argument
             android:name="roomMode"
             app:argType="com.yixian.material.Entity.Room$Room_Type" />

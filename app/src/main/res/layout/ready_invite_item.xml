@@ -81,15 +81,17 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_weight="1" />
-<com.google.android.material.button.MaterialButton
-    android:layout_width="50dp"
-    android:layout_height="30dp"
-    android:layout_marginStart="40dp"
-    android:layout_marginTop="10dp"
-    android:text="@string/main_invite"
-    android:fontFamily="@font/ziti"
-    android:textAppearance="@style/TextAppearance.YiXian.Body4"
-    >
-</com.google.android.material.button.MaterialButton>
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/invite_button"
+      android:layout_width="50dp"
+      android:layout_height="30dp"
+      android:layout_marginStart="40dp"
+      android:layout_marginTop="10dp"
+      android:text="@string/invite"
+      android:visibility="visible"
+      android:fontFamily="@font/ziti"
+      android:textAppearance="@style/TextAppearance.YiXian.Body4"
+      >
+  </com.google.android.material.button.MaterialButton>
 
 </LinearLayout>

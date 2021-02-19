@@ -192,6 +192,13 @@ public class UserRepository {
         return local.db.userDao().queryById(id);
     }
 
+    public Single<Boolean> invite(long id){
+        return Rx(()->remote.userRequest.Invite(id));
+    }
+
+    public Single<Boolean> startMatch(long id,String roomType){
+        return Rx(()->remote.userRequest.StartMatch(id,roomType));
+    }
     @SuppressLint("CheckResult")
     private <T,R> Single<R> Rx(Function0<R> functions){
         return Single.create(new SingleOnSubscribe<R>() {
