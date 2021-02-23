@@ -1,4 +1,4 @@
-package com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section;
+package com.xianyu.yixian_client.Frame.Ready.Adapt.Section;
 
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.yixian.material.Entity.SkillCard;

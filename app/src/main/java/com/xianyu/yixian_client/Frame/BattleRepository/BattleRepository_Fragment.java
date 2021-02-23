@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +24,10 @@ import com.chad.library.adapter.base.module.BaseDraggableModule;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputEditText;
-import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.GroupAdapter;
-import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionFirst;
 import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionFirstNode;
 import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionSecondNode;
-import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.SkillCardAdapt;
+import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.SkillCard_Adapt;
+import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Group_Adapt;
 import com.yixian.make.Core;
 import com.yixian.make.Model.Repository;
 import com.yixian.material.Entity.CardGroup;
@@ -85,7 +83,7 @@ public class BattleRepository_Fragment extends Fragment {
 //        }
 //        Core.liveUser.getValue().setCardGroups(list);
         RecyclerView recyclerView = binding.getRoot().findViewById(R.id.skillcards_recycle);
-        SkillCardAdapt skillCardAdapt = new SkillCardAdapt();
+        SkillCard_Adapt skillCardAdapt = new SkillCard_Adapt();
         skillCardAdapt.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInLeft);
         skillCardAdapt.setAnimationFirstOnly(false);
         View head = BattleRepositoryHeadBinding.inflate(getLayoutInflater()).getRoot();
@@ -159,29 +157,29 @@ public class BattleRepository_Fragment extends Fragment {
             skillCardAdapt.filter(new ArrayList<>(Core.liveSkillcards.getValue().values()));});
 
         RecyclerView group_recycle = binding.getRoot().findViewById(R.id.group_layout);
-        GroupAdapter groupAdapter = new GroupAdapter();
-        groupAdapter.setAnimationFirstOnly(false);
-        groupAdapter.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInLeft);
-        group_recycle.setAdapter(groupAdapter);
+        Group_Adapt groupAdapt = new Group_Adapt();
+        groupAdapt.setAnimationFirstOnly(false);
+        groupAdapt.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInLeft);
+        group_recycle.setAdapter(groupAdapt);
         Core.liveUser.observe(requireActivity(), owner -> {
             List<BaseNode> roots = new ArrayList<>();
             for(CardGroup item : owner.getCardGroups()){
                 roots.add(new CardGroupSectionFirstNode(item));
             }
-            groupAdapter.setDiffNewData(roots);
+            groupAdapt.setDiffNewData(roots);
         });
-        groupAdapter.setOnItemClickListener((group_adapt, view, position) -> {
-            ((GroupAdapter)(group_adapt)).expandOrCollapse(position);
+        groupAdapt.setOnItemClickListener((group_adapt, view, position) -> {
+            ((Group_Adapt)(group_adapt)).expandOrCollapse(position);
         });
-        BaseDraggableModule groupDraggableModule = groupAdapter.getDraggableModule();
+        BaseDraggableModule groupDraggableModule = groupAdapt.getDraggableModule();
         groupDraggableModule.setDragEnabled(true);
         groupDraggableModule.setSwipeEnabled(true);
         groupDraggableModule.setOnItemDragListener(new OnItemDragListener() {
             @Override
             public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
                 if(viewHolder.getItemViewType() == 1){
-                    CardGroupSectionFirstNode parent = (CardGroupSectionFirstNode)groupAdapter.getData().get(groupAdapter.findParentNode(pos));
-                    CardGroupSectionSecondNode node = (CardGroupSectionSecondNode)groupAdapter.getData().get(pos);
+                    CardGroupSectionFirstNode parent = (CardGroupSectionFirstNode) groupAdapt.getData().get(groupAdapt.findParentNode(pos));
+                    CardGroupSectionSecondNode node = (CardGroupSectionSecondNode) groupAdapt.getData().get(pos);
                     parent.getChildNode().remove(node);
                     parent.getCardGroup().getCards().remove(node.getSkillcard().getId());
                 }
@@ -197,12 +195,12 @@ public class BattleRepository_Fragment extends Fragment {
                 if(viewHolder.getItemViewType() == 1){
                     CardGroupSectionFirstNode parent = null;
                     for(int i=pos;i>=0;i--){
-                        if(groupAdapter.getItemViewType(i) == 0){
-                            parent = (CardGroupSectionFirstNode)groupAdapter.getItem(i);
+                        if(groupAdapt.getItemViewType(i) == 0){
+                            parent = (CardGroupSectionFirstNode) groupAdapt.getItem(i);
                             break;
                         }
                     }
-                    CardGroupSectionSecondNode node = (CardGroupSectionSecondNode)groupAdapter.getItem(pos);
+                    CardGroupSectionSecondNode node = (CardGroupSectionSecondNode) groupAdapt.getItem(pos);
                     parent.getCardGroup().getCards().add(node.getSkillcard().getId());
                     parent.getChildNode().add(node);
                     viewModel.updateCardGroups(Core.liveUser.getValue());
@@ -213,13 +211,13 @@ public class BattleRepository_Fragment extends Fragment {
             @Override
             public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
                 if(viewHolder.getItemViewType() == 0){
-                    CardGroupSectionFirstNode node = (CardGroupSectionFirstNode)groupAdapter.getData().get(pos);
-                    groupAdapter.removeAt(pos);
+                    CardGroupSectionFirstNode node = (CardGroupSectionFirstNode) groupAdapt.getData().get(pos);
+                    groupAdapt.removeAt(pos);
                     Core.liveUser.getValue().getCardGroups().remove(node.getCardGroup());
                 }
                 else if(viewHolder.getItemViewType() == 1){
-                    CardGroupSectionFirstNode parent = (CardGroupSectionFirstNode)groupAdapter.getData().get(groupAdapter.findParentNode(pos));
-                    CardGroupSectionSecondNode node = (CardGroupSectionSecondNode)groupAdapter.getData().get(pos);
+                    CardGroupSectionFirstNode parent = (CardGroupSectionFirstNode) groupAdapt.getData().get(groupAdapt.findParentNode(pos));
+                    CardGroupSectionSecondNode node = (CardGroupSectionSecondNode) groupAdapt.getData().get(pos);
                     parent.getChildNode().remove(node);
                     parent.getCardGroup().getCards().remove(node.getSkillcard().getId());
                 }
@@ -242,12 +240,12 @@ public class BattleRepository_Fragment extends Fragment {
             }
         });
         //选择右边卡组
-        groupAdapter.setOnItemClickListener(new OnItemClickListener() {
+        groupAdapt.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
                 if(adapter.getItemViewType(position) == 0){
                     section = (CardGroupSectionFirstNode) adapter.getItem(position);
-                    groupAdapter.expandOrCollapse(position);
+                    groupAdapt.expandOrCollapse(position);
                 }
             }
         });
@@ -257,7 +255,7 @@ public class BattleRepository_Fragment extends Fragment {
             public boolean onItemLongClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
                 if(section != null) {
                     SkillCard card = (SkillCard) adapter.getData().get(position);
-                    groupAdapter.nodeAddData(section,new CardGroupSectionSecondNode(Core.liveSkillcards.getValue().get(card.getId())));
+                    groupAdapt.nodeAddData(section,new CardGroupSectionSecondNode(Core.liveSkillcards.getValue().get(card.getId())));
                     section.getCardGroup().getCards().add(card.getId());
                     viewModel.updateCardGroups(Core.liveUser.getValue());
                 }

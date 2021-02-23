@@ -9,7 +9,9 @@
     <string name="gm_login">游戏登录</string>
     <string name="sure_password">确认密码</string>
     <string name="verification_code">验证码</string>
+    <!-- 对话框 -->
     <string name="confirm_dialog">确认</string>
+    <string name="reject_dialog">拒绝</string>
 
     <!-- 技能卡属性 -->
     <string name="skillCard_name">卡牌名</string>
@@ -85,4 +87,7 @@
     <string name="team_mode">团队模式</string>
     <string name="survive_mode">生存模式</string>
     <string name="change_pos">换位</string>
+    <!-- 装备选择界面 -->
+    <string name="confirm">确定</string>
+    <string name="card_group_name">卡组名</string>
 </resources>

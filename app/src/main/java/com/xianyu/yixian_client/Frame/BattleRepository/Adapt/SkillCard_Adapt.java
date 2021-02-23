@@ -19,26 +19,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class SkillCardAdapt extends BaseQuickAdapter<SkillCard, SkillCardAdapt.ViewHolder > implements LoadMoreModule{
+public class SkillCard_Adapt extends BaseQuickAdapter<SkillCard, SkillCard_Adapt.ViewHolder > implements LoadMoreModule{
     public BluePrint bluePrint = new BluePrint();
     public List<SkillCard> skillCards_filterBases;
-    public SkillCardAdapt(){
+    public SkillCard_Adapt(){
         super(R.layout.battle_repository_card_item);
         setDiffCallback(new DiffCallBack());
     }
     @Override
-    protected void convert(@NotNull SkillCardAdapt.ViewHolder holder, SkillCard skillCard) {
+    protected void convert(@NotNull SkillCard_Adapt.ViewHolder holder, SkillCard skillCard) {
         holder.name_text.setText(skillCard.getName());
         holder.mp_text.setText(String.format(Locale.CHINESE,"%d", skillCard.getMp()));
-        BuffAdapt auxiliary_buff_adapt = new BuffAdapt();
+        Buff_Adapt auxiliary_buff_adapt = new Buff_Adapt();
         auxiliary_buff_adapt.setDiffNewData(new ArrayList<>(skillCard.getAuxiliaryBuff()));
         holder.auxiliary_buffs_recycle.setAdapter(auxiliary_buff_adapt);
 
-        BuffAdapt enemy_buff_adapt = new BuffAdapt();
+        Buff_Adapt enemy_buff_adapt = new Buff_Adapt();
         enemy_buff_adapt.setDiffNewData(new ArrayList<>(skillCard.getEnemyBuff()));
         holder.enemy_buffs_recycle.setAdapter(enemy_buff_adapt);
 
-        AttributeAdapt attribute_adapt = new AttributeAdapt();
+        Attribute_Adapt attribute_adapt = new Attribute_Adapt();
         attribute_adapt.setDiffNewData(new ArrayList<>(skillCard.getCategory()));
         holder.attributes_recycle.setAdapter(attribute_adapt);
     }

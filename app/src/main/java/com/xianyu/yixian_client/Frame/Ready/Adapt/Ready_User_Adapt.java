@@ -10,24 +10,24 @@ import androidx.recyclerview.widget.DiffUtil;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.xianyu.yixian_client.Frame.Ready.Model.UserWithCardGroupItem;
 import com.xianyu.yixian_client.Frame.Ready.ReadyViewModel;
-import com.yixian.make.Core;
-import com.yixian.material.Entity.Friend;
-import com.yixian.material.Entity.User;
 import com.xianyu.yixian_client.R;
+import com.yixian.material.Entity.User;
 
 import org.jetbrains.annotations.NotNull;
 
-public class ReadyUser_Adapt extends BaseQuickAdapter<User,ReadyUser_Adapt.ViewHolder> {
+public class Ready_User_Adapt extends BaseQuickAdapter<User, Ready_User_Adapt.ViewHolder> {
     private ReadyViewModel viewModel;
-    public ReadyUser_Adapt(ReadyViewModel viewModel){
+    public Ready_User_Adapt(ReadyViewModel viewModel){
         super(R.layout.ready_user_item);
         setDiffCallback(new DiffCallBack());
     }
 
     @Override
     protected void convert(@NotNull ViewHolder viewHolder, User user) {
-        Glide.with(viewHolder.itemView).load(user.getHeadImage()).into(viewHolder.head_image);
+        if(user.getHeadImage()!=null)Glide.with(viewHolder.itemView).load(user.getHeadImage()).into(viewHolder.head_image);
+        else viewHolder.head_image.setImageResource(R.drawable.touxiang);
     }
 
     protected class DiffCallBack extends DiffUtil.ItemCallback<User>{

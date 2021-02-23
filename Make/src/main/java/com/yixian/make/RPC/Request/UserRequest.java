@@ -18,7 +18,8 @@ public interface UserRequest {
     ArrayList<User> Sync_CardGroups(ArrayList<User> dates);
     ArrayList<Friend> Sync_Friend(Long date);
     ArrayList<CardItem> Sync_SkillCards(Long id, Long date);
-    Boolean Invite(Long id);
-    Boolean StartMatch(Long id,String roomType);
+    Boolean InviteSquad(Long id);
+    ArrayList<User> EnterSquad(Long id,String secretKey);
+    String CreateSquad(String roomType);
     User Query_UserAttributeById(Long id);
 }

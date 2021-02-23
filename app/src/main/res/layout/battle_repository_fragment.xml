@@ -15,7 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_weight="3"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/group_layout"
+        app:layout_constraintRight_toLeftOf="@id/cardGroups_recycler"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_weight="6"
         app:spanCount="3"
@@ -26,7 +26,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/group_layout"
+        android:id="@+id/cardGroups_recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"

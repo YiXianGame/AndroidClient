@@ -57,12 +57,21 @@
         tools:layout="@layout/repository_fragment" />
     <fragment
     android:id="@+id/readyFragment"
-    android:name="com.xianyu.yixian_client.Frame.Main.Fragment.Ready_Fragment"
+    android:name="com.xianyu.yixian_client.Frame.Ready.ReadyFragment"
     android:label="ready_fragment"
     tools:layout="@layout/ready_ready_fragment" >
         <argument
             android:name="roomMode"
             app:argType="com.yixian.material.Entity.Room$Room_Type" />
+        <action
+            android:id="@+id/action_readyFragment_to_equipFragment"
+            app:destination="@id/equipFragment"
+            app:popUpTo="@id/equipFragment"
+            app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/equipFragment"
+        android:name="com.xianyu.yixian_client.Frame.Ready.Fragment.EquipFragment"
+        android:label="EquipFragment" />
 
 </navigation>

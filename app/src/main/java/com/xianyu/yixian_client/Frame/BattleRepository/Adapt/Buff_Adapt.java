@@ -15,9 +15,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-public class BuffAdapt extends BaseQuickAdapter<Buff,BuffAdapt.ViewHolder> {
+public class Buff_Adapt extends BaseQuickAdapter<Buff, Buff_Adapt.ViewHolder> {
 
-    public BuffAdapt() {
+    public Buff_Adapt() {
         super(R.layout.repository_buff_item);
         setDiffCallback(new DiffCallBack());
     }

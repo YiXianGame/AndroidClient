@@ -15,10 +15,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-public class AttributeAdapt extends BaseQuickAdapter<SkillCard.Category,AttributeAdapt.ViewHolder> {
+public class Attribute_Adapt extends BaseQuickAdapter<SkillCard.Category, Attribute_Adapt.ViewHolder> {
 
 
-    public AttributeAdapt() {
+    public Attribute_Adapt() {
         super(R.layout.repository_attribute_item);
         setDiffCallback(new DiffCallBack());
     }

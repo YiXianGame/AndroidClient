@@ -180,7 +180,6 @@ public class Main_Fragment extends Fragment {
                             .setMessage("欢迎您的回归！")
                             .setPositiveButton(R.string.confirm_dialog, (dialog, which) -> {
                                 dialog.dismiss();
-
                                 Navigation.findNavController(binding.getRoot()).navigate(R.id.action_login_Activity_to_main_navigation);
                             })
                             .show();

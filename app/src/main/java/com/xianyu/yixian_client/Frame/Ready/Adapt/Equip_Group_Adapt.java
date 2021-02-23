@@ -1,4 +1,4 @@
-package com.xianyu.yixian_client.Frame.BattleRepository.Adapt;
+package com.xianyu.yixian_client.Frame.Ready.Adapt;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.DiffUtil;
 import com.chad.library.adapter.base.BaseNodeAdapter;
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.chad.library.adapter.base.module.DraggableModule;
-import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionFirst;
-import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionFirstNode;
-import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionSecond;
-import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionSecondNode;
+import com.xianyu.yixian_client.Frame.Ready.Adapt.Section.CardGroupSectionFirst;
+import com.xianyu.yixian_client.Frame.Ready.Adapt.Section.CardGroupSectionFirstNode;
+import com.xianyu.yixian_client.Frame.Ready.Adapt.Section.CardGroupSectionSecond;
+import com.xianyu.yixian_client.Frame.Ready.Adapt.Section.CardGroupSectionSecondNode;
 import com.yixian.material.Entity.CardGroup;
 
 import org.jetbrains.annotations.NotNull;
@@ -17,9 +17,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupAdapter extends BaseNodeAdapter implements DraggableModule {
+public class Equip_Group_Adapt extends BaseNodeAdapter implements DraggableModule {
     private ArrayList<CardGroup> groups;
-    public GroupAdapter() {
+    public Equip_Group_Adapt() {
         super();
         // 需要占满一行的，使用此方法（例如section）
         addFullSpanNodeProvider(new CardGroupSectionFirst());
@@ -43,7 +43,7 @@ public class GroupAdapter extends BaseNodeAdapter implements DraggableModule {
         @Override
         public boolean areItemsTheSame(@NonNull BaseNode oldItem, @NonNull BaseNode newItem) {
             if(oldItem instanceof CardGroupSectionFirstNode && newItem instanceof CardGroupSectionFirstNode){
-                return ((CardGroupSectionFirstNode)(oldItem)).getCardGroup().getName() == ((CardGroupSectionFirstNode)(newItem)).getCardGroup().getName();
+                return ((CardGroupSectionFirstNode) (oldItem)).getCardGroup().getName().equals(((CardGroupSectionFirstNode) (newItem)).getCardGroup().getName());
             }
             else if(oldItem instanceof CardGroupSectionSecondNode && newItem instanceof CardGroupSectionSecondNode){
                 return ((CardGroupSectionSecondNode)(oldItem)).getSkillcard().getId() == ((CardGroupSectionSecondNode)(newItem)).getSkillcard().getId();

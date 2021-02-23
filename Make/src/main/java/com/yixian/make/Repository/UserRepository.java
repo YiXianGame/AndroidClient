@@ -59,7 +59,9 @@ public class UserRepository {
     public void local_insert(User user) {
         RxVoid(()->local.db.userDao().insert(user));
     }
-
+    public Single<ArrayList<User>> queryUsers(ArrayList<Long> users) {
+        return Rx(()->queryUsersSync(users));
+    }
 
     public Maybe<User> syncAttribute(User user){
         return RxNull(() -> {
@@ -192,12 +194,14 @@ public class UserRepository {
         return local.db.userDao().queryById(id);
     }
 
-    public Single<Boolean> invite(long id){
-        return Rx(()->remote.userRequest.Invite(id));
+    public Single<Boolean> inviteSquad(long id){
+        return Rx(()->remote.userRequest.InviteSquad(id));
     }
-
-    public Single<Boolean> startMatch(long id,String roomType){
-        return Rx(()->remote.userRequest.StartMatch(id,roomType));
+    public Single<ArrayList<User>> enterSquad(long id,String secretKey){
+        return Rx(()->remote.userRequest.EnterSquad(id,secretKey));
+    }
+    public Single<String> createSquad(String roomType){
+        return Rx(()->remote.userRequest.CreateSquad(roomType));
     }
     @SuppressLint("CheckResult")
     private <T,R> Single<R> Rx(Function0<R> functions){

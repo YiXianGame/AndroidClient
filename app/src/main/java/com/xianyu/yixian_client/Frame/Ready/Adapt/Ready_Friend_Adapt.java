@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.LoadMoreModule;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
@@ -25,11 +26,11 @@ import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
 
-public class ReadyInvite_Adapt extends BaseQuickAdapter<User, ReadyInvite_Adapt.ViewHolder> implements LoadMoreModule {
+public class Ready_Friend_Adapt extends BaseQuickAdapter<User, Ready_Friend_Adapt.ViewHolder> implements LoadMoreModule {
     private final CompositeDisposable disposable = new CompositeDisposable();
     public Filter_BluePrint bluePrint = new Filter_BluePrint();
     private ReadyViewModel viewModel;
-    public ReadyInvite_Adapt(ReadyViewModel viewModel){
+    public Ready_Friend_Adapt(ReadyViewModel viewModel){
         super(R.layout.ready_invite_item);
         setDiffCallback(new DiffCallBack());
         this.viewModel = viewModel;
@@ -56,7 +57,8 @@ public class ReadyInvite_Adapt extends BaseQuickAdapter<User, ReadyInvite_Adapt.
         holder.nickname_text.setText(friend.getNickname());
         holder.level_text.setText(Integer.toString(friend.getLv()));
         holder.active_text.setText(friend.getState().toString());
-        holder.head_image.setImageResource(R.drawable.touxiang);
+        if(friend.getHeadImage()!=null) Glide.with(holder.itemView).load(friend.getHeadImage()).into(holder.head_image);
+        else holder.head_image.setImageResource(R.drawable.touxiang);
         if(friend.getState().equals(User.State.Leisure)){
             holder.invite_button.setVisibility(View.VISIBLE);
         }
