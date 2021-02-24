@@ -3,10 +3,9 @@ package com.yixian.material.RPC;
 import android.util.Log;
 import android.util.Pair;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.yixian.material.Exception.RPCException;
 import com.yixian.material.Log.Log.Tag;
+import com.yixian.material.RPC.Annotation.RPCMethod;
 import com.yixian.material.Tcp.SocketClient;
 import com.yixian.material.Utils.Utils;
 
@@ -14,7 +13,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Random;
 
 public  class RPCRequestProxy implements InvocationHandler {
@@ -33,29 +31,40 @@ public  class RPCRequestProxy implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) {
         try{
             StringBuilder methodId = new StringBuilder(method.getName());
-            String type_name;
             Type factType;
             Class<?> cls;
             String[] array = new String[args.length+1];
-            for(int i=0,j=1;i<args.length;i++,j++){
-                cls = args[i].getClass();
-                type_name = type.getAbstractName().get(cls);
-                if(type_name != null) {
-                    methodId.append("-").append(type_name);
-                    array[j] = Utils.gson.toJson(args[i],cls);
-                }
-                else {
-                    factType = cls.getGenericSuperclass();
-                    type_name = type.getAbstractName().get(factType);
-                    if(type_name != null){
-                        methodId.append("-").append(type_name);
-                        array[j] = Utils.gson.toJson(args[i],factType);
+            RPCMethod annotation = method.getAnnotation(RPCMethod.class);
+            if(annotation != null){
+                String[] types_name = annotation.parameters().split("-");
+                if(args.length == types_name.length){
+                    for(int i=0,j=1;i<args.length;i++,j++){
+                        factType = type.getAbstractType().get(types_name[i]);
+                        if(factType!=null){
+                            methodId.append("-" + types_name[i]);
+                            array[j] = Utils.gson.toJson(args[i],factType);
+                        }
+                        else throw new RPCException(String.format("方法体%s中的抽象类型为%s的类型尚未注册！",method.getName(),types_name[i]));
                     }
-                    else throw new RPCException(String.format("Java中的%s类型参数尚未注册！", args[i].getClass().getName()+"||"+ args[i].getClass().getGenericSuperclass().getTypeName()));
                 }
+                else throw new RPCException(String.format("方法体%s中RPCMethod注解与实际参数数量不符,@RPCMethod:%d个,Method:%d个",method.getName(),types_name.length,args.length));
+            }
+            else {
+                if(args.length == method.getParameterCount()){
+                    for(int i=0,j=1;i<args.length;i++,j++){
+                        String type_name;
+                        cls = args[i].getClass();
+                        type_name = type.getAbstractName().get(cls);
+                        if(type_name != null) {
+                            methodId.append("-").append(type_name);
+                            array[j] = Utils.gson.toJson(args[i],cls);
+                        }
+                        else throw new RPCException(String.format("Java中的%s类型参数尚未注册！", args[i].getClass().getName()));
+                    }
+                }
+                else throw new RPCException(String.format("方法体%s中RPCMethod注解与实际参数数量不符,@RPCMethod:%d个,Method:%d个",method.getName(),method.getParameterCount(),args.length));
             }
             ClientRequestModel request = new ClientRequestModel("2.0", service, methodId.toString(),array);
-
             SocketClient socketClient = RPCClientFactory.GetClient(clientKey);
             Class<?> return_type = method.getReturnType();
             if(return_type.equals(Void.TYPE)){

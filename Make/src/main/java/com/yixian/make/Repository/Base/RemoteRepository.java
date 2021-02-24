@@ -12,6 +12,7 @@ import com.yixian.material.Log.Log.Tag;
 import com.yixian.make.RPC.Request.SkillCardRequest;
 import com.yixian.material.RPC.RPCAdaptFactory;
 import com.yixian.material.Exception.RPCException;
+import com.yixian.material.RPC.RPCClientFactory;
 import com.yixian.material.RPC.RPCRequestProxyFactory;
 import com.yixian.material.RPC.RPCType;
 import com.yixian.make.RPC.Request.UserRequest;
@@ -45,6 +46,7 @@ public class RemoteRepository implements IRemoteRepository {
             type.add(Long.class,"long");
             type.add(SkillCard.class,"skillCard");
             type.add(User.class,"user");
+            type.add(new ArrayList<Long>(){}.getClass().getGenericSuperclass(),"longs");
             type.add(new ArrayList<SkillCard>(){}.getClass().getGenericSuperclass(),"skillCards");
             type.add(new ArrayList<CardItem>(){}.getClass().getGenericSuperclass(),"cardItem");
             type.add(new ArrayList<CardGroup>(){}.getClass().getGenericSuperclass(),"cardGroups");
@@ -60,6 +62,7 @@ public class RemoteRepository implements IRemoteRepository {
         RPCAdaptFactory.Register(UserAdapt.class,"UserClient","192.168.0.105","28015",type);
         skillCardRequest = RPCRequestProxyFactory.Register(SkillCardRequest.class,"SkillCardServer","192.168.0.105","28015",type);
         RPCAdaptFactory.Register(SkillCardAdapt.class,"SkillCardClient","192.168.0.105","28015",type);
+        RPCClientFactory.StartClient("192.168.0.105","28015");
         //Observable.create((ObservableOnSubscribe<Void>) emitter -> Log.d(Tag.Debug,userDao.hello("你好"))).subscribeOn(Schedulers.io()).subscribe();
     }
 }

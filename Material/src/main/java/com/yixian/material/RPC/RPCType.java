@@ -13,10 +13,19 @@ public class RPCType {
         Object convert(String obj);
     }
     private HashMap<Type, String> abstractName = new HashMap<>();
+    private HashMap<String, Type> abstractType = new HashMap<>();
     private HashMap<String, IConvert> convert = new HashMap<>();
 
     public HashMap<Type, String> getAbstractName() {
         return abstractName;
+    }
+
+    public HashMap<String, Type> getAbstractType() {
+        return abstractType;
+    }
+
+    public void setAbstractType(HashMap<String, Type> abstractType) {
+        this.abstractType = abstractType;
     }
 
     public void setAbstractName(HashMap<Type, String> abstractName) {
@@ -35,6 +44,7 @@ public class RPCType {
         if (convert.containsKey(abstractName) || this.abstractName.containsKey(type)) throw new RPCException(String.format("类型:{1}转{2}发生异常,存在重复键",type, abstractName));
         else{
             this.abstractName.put(type, abstractName);
+            this.abstractType.put(abstractName,type);
             convert.put(abstractName, obj -> Utils.gson.fromJson(obj,type));
         }
     }
@@ -42,6 +52,7 @@ public class RPCType {
         if (this.convert.containsKey(abstractName) || this.abstractName.containsKey(type)) throw new RPCException(String.format("类型:{1}转{2}发生异常,存在重复键",type, abstractName));
         else{
             this.abstractName.put(type, abstractName);
+            this.abstractType.put(abstractName,type);
             this.convert.put(abstractName,convert);
         }
     }

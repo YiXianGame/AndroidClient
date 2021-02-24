@@ -58,6 +58,7 @@ public class MainViewModel extends ViewModel {
                     public void onSuccess(@NonNull ArrayList<SkillCard> skillCards) {
                         Core.liveSkillcards.getValue().clear();
                         for(SkillCard item : skillCards)Core.liveSkillcards.getValue().put(item.getId(),item);
+                        syncUserCardGroups(user_live);
                     }
 
                     @Override

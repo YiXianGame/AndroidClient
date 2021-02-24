@@ -69,7 +69,7 @@ public class User
     @Expose
     long attribute_update = -1 ;//个人信息更新日期
     @Expose
-    long skillCard_update = -1 ;//卡牌更新日期
+    long cardRepository_update = -1 ;//卡牌更新日期
     @Expose
     long headImage_update = -1 ;//头像更新日期
     @Expose
@@ -107,12 +107,12 @@ public class User
         this.cardGroups_update = cardGroups_update;
     }
 
-    public long getSkillCard_update() {
-        return skillCard_update;
+    public long getCardRepository_update() {
+        return cardRepository_update;
     }
 
-    public void setSkillCard_update(long skillCard_update) {
-        this.skillCard_update = skillCard_update;
+    public void setCardRepository_update(long cardRepository_update) {
+        this.cardRepository_update = cardRepository_update;
     }
 
     public long getHeadImage_update() {

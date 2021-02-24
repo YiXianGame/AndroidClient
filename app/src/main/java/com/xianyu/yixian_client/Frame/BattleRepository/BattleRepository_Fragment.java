@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.node.BaseNode;
+import com.chad.library.adapter.base.listener.OnItemChildLongClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnItemDragListener;
 import com.chad.library.adapter.base.listener.OnItemLongClickListener;
@@ -24,6 +25,7 @@ import com.chad.library.adapter.base.module.BaseDraggableModule;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.textfield.TextInputEditText;
+import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionFirst;
 import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionFirstNode;
 import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section.CardGroupSectionSecondNode;
 import com.xianyu.yixian_client.Frame.BattleRepository.Adapt.SkillCard_Adapt;
@@ -156,7 +158,7 @@ public class BattleRepository_Fragment extends Fragment {
             skillCardAdapt.bluePrint.setEternal(isChecked);
             skillCardAdapt.filter(new ArrayList<>(Core.liveSkillcards.getValue().values()));});
 
-        RecyclerView group_recycle = binding.getRoot().findViewById(R.id.group_layout);
+        RecyclerView group_recycle = binding.getRoot().findViewById(R.id.cardGroups_recycler);
         Group_Adapt groupAdapt = new Group_Adapt();
         groupAdapt.setAnimationFirstOnly(false);
         groupAdapt.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInLeft);
@@ -192,6 +194,16 @@ public class BattleRepository_Fragment extends Fragment {
 
             @Override
             public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
+                if(viewHolder.getItemViewType() == 0){
+                    Core.liveUser.getValue().getCardGroups().clear();
+                    for (BaseNode baseNode : groupAdapt.getData()){
+                        if(baseNode instanceof CardGroupSectionFirstNode){
+                            Core.liveUser.getValue().getCardGroups().add(((CardGroupSectionFirstNode) baseNode).getCardGroup());
+                        }
+                    }
+                    viewModel.updateCardGroups(Core.liveUser.getValue());
+                    Core.liveUser.postValue(Core.liveUser.getValue());
+                }
                 if(viewHolder.getItemViewType() == 1){
                     CardGroupSectionFirstNode parent = null;
                     for(int i=pos;i>=0;i--){
@@ -200,10 +212,12 @@ public class BattleRepository_Fragment extends Fragment {
                             break;
                         }
                     }
-                    CardGroupSectionSecondNode node = (CardGroupSectionSecondNode) groupAdapt.getItem(pos);
-                    parent.getCardGroup().getCards().add(node.getSkillcard().getId());
-                    parent.getChildNode().add(node);
-                    viewModel.updateCardGroups(Core.liveUser.getValue());
+                    if(parent != null){
+                        CardGroupSectionSecondNode node = (CardGroupSectionSecondNode) groupAdapt.getItem(pos);
+                        parent.getCardGroup().getCards().add(node.getSkillcard().getId());
+                        parent.getChildNode().add(node);
+                        viewModel.updateCardGroups(Core.liveUser.getValue());
+                    }
                 }
             }
         });
@@ -245,20 +259,34 @@ public class BattleRepository_Fragment extends Fragment {
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
                 if(adapter.getItemViewType(position) == 0){
                     section = (CardGroupSectionFirstNode) adapter.getItem(position);
-                    groupAdapt.expandOrCollapse(position);
                 }
+            }
+        });
+        groupAdapt.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                groupAdapt.expandOrCollapse(position);
             }
         });
         //左侧卡牌单击后添加至右边卡组栏
         skillCardAdapt.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-                if(section != null) {
+                if(section == null){
+                    if(Core.liveUser.getValue().getCardGroups() == null)Core.liveUser.getValue().setCardGroups(new ArrayList<>());
+                    CardGroup cardGroup = new CardGroup();
+                    cardGroup.setName("卡组");
+                    SkillCard card = (SkillCard) adapter.getData().get(position);
+                    cardGroup.getCards().add(card.getId());
+                    Core.liveUser.getValue().getCardGroups().add(cardGroup);
+                    Core.liveUser.postValue(Core.liveUser.getValue());
+                }
+                else {
                     SkillCard card = (SkillCard) adapter.getData().get(position);
                     groupAdapt.nodeAddData(section,new CardGroupSectionSecondNode(Core.liveSkillcards.getValue().get(card.getId())));
                     section.getCardGroup().getCards().add(card.getId());
-                    viewModel.updateCardGroups(Core.liveUser.getValue());
                 }
+                viewModel.updateCardGroups(Core.liveUser.getValue());
                 return true;
             }
         });

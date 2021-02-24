@@ -41,7 +41,7 @@ public class ChooseMode_Fragment extends Fragment {
             else {
                 action.setRoomMode(Room.RoomType.RealTime_Solo);
             }
-            Navigation.findNavController(v).navigate(R.id.action_chooseMode_dest_to_readyFragment);
+            Navigation.findNavController(v).navigate(action);
         });
     }
 

@@ -26,7 +26,7 @@ public class ReadyViewModel extends ViewModel {
         this.repository = repository;
     }
     public Single<Boolean> inviteFriend(long id){
-        return repository.userRepository.invite(id);
+        return repository.userRepository.inviteSquad(id);
     }
     public Single<String> createSquad(String roomType){
         return repository.userRepository.createSquad(roomType);

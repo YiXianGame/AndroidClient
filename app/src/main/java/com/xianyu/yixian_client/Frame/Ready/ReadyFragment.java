@@ -16,7 +16,6 @@ import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-import com.xianyu.yixian_client.Frame.Main.Fragment.Ready_FragmentArgs;
 import com.xianyu.yixian_client.Frame.Ready.Adapt.Ready_Friend_Adapt;
 import com.xianyu.yixian_client.Frame.Ready.Adapt.Ready_User_Adapt;
 import com.xianyu.yixian_client.Frame.Ready.Model.UserWithCardGroupItem;
@@ -51,13 +50,13 @@ public class ReadyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = ReadyReadyFragmentBinding.inflate(inflater,container,false);
-        assert getArguments() != null;
-        viewModel.roomType = Ready_FragmentArgs.fromBundle(getArguments()).getRoomMode();
         viewModel = new ViewModelProvider(requireActivity()).get(ReadyViewModel.class);
         viewModel.initialization(repository);
+        assert getArguments() != null;
+        viewModel.roomType = ReadyFragmentArgs.fromBundle(requireArguments()).getRoomMode();
         viewModel.liveTeammates.setValue(new HashMap<>());
         viewModel.liveEnemies.setValue(new HashMap<>());
-        if(Core.liveSquad.getValue()==null)Core.liveSquad.postValue(new ArrayList<>());
+        if(Core.liveSquad.getValue()==null)Core.liveSquad.setValue(new ArrayList<>());
         else Core.liveSquad.getValue().clear();
         Core.liveSquad.getValue().add(Core.liveUser.getValue());
         init();

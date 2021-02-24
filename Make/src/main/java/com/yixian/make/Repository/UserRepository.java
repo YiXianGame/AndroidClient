@@ -2,8 +2,10 @@ package com.yixian.make.Repository;
 
 import android.annotation.SuppressLint;
 
+import com.google.gson.reflect.TypeToken;
 import com.yixian.make.Repository.Base.LocalRepository;
 import com.yixian.make.Repository.Base.RemoteRepository;
+import com.yixian.material.Entity.CardGroup;
 import com.yixian.material.Entity.CardItem;
 import com.yixian.material.Entity.Friend;
 import com.yixian.material.Entity.SkillCard;
@@ -50,8 +52,8 @@ public class UserRepository {
         RxVoid(()->{
             long timestamp = remote.userRequest.Update_CardGroups(user);
             if(timestamp != -1){
-                user.setAttribute_update(timestamp);
-                local.updateUserAttribute(user);
+                user.setCardGroups_update(timestamp);
+                local.db.userDao().updateCardGroups(user.getId(),Utils.gson.toJson(user.getCardGroups(),new TypeToken<ArrayList<CardGroup>>(){}.getType()),timestamp);
             }
         });
     }
@@ -59,6 +61,7 @@ public class UserRepository {
     public void local_insert(User user) {
         RxVoid(()->local.db.userDao().insert(user));
     }
+
     public Single<ArrayList<User>> queryUsers(ArrayList<Long> users) {
         return Rx(()->queryUsersSync(users));
     }
@@ -71,10 +74,8 @@ public class UserRepository {
             if(value != null){
                 local.updateUserAttribute(value);
             }
-            else {
-                //相同的话从本地数据库取数据
-                value = local.db.userDao().queryByIdSync(user.getId());
-            }
+            //相同的话从本地数据库取数据
+            value = local.db.userDao().queryByIdSync(user.getId());
             return value;
         });
     }
@@ -127,7 +128,7 @@ public class UserRepository {
     }
     public Single<User> syncCardGroups(User user){
         return Rx(() -> {
-            ArrayList<User> users = new ArrayList<>();
+            ArrayList<User> users = new ArrayList<User>(){};
             users.add(user);
             //先在远程确认一下更新日期是否相同
             ArrayList<User> value = remote.userRequest.Sync_CardGroups(users);
@@ -135,7 +136,7 @@ public class UserRepository {
                 if(item!=null){
                     user.setCardGroups_update(item.getCardGroups_update());
                     user.setCardGroups(item.getCardGroups());
-                    local.db.userDao().updateCardGroup(item.getId(), Utils.gson.toJson(item.getCardGroups()),item.getCardGroups_update());
+                    local.db.userDao().updateCardGroups(item.getId(), Utils.gson.toJson(item.getCardGroups()),item.getCardGroups_update());
                 }
             }
             return user;
@@ -144,7 +145,7 @@ public class UserRepository {
     public Maybe<ArrayList<SkillCard>> syncUserSkillCard(User user){
         return RxNull(() -> {
             //先在远程确认一下更新日期是否相同
-            ArrayList<CardItem> value = remote.userRequest.Sync_SkillCards(user.getId(),user.getSkillCard_update());
+            ArrayList<CardItem> value = remote.userRequest.Sync_CardRepository(user.getId(),user.getCardRepository_update());
             ArrayList<SkillCard> skillCards = new ArrayList<>();
             ArrayList<Long> none = new ArrayList<>();
             if(value != null){
@@ -172,14 +173,11 @@ public class UserRepository {
     public void local_updateAccount(User user) {
         RxVoid(()->local.db.userDao().updateAccount(user.getId(), user.getUsername(), user.getPassword()));
     }
-    public void local_updateSKillCardUpdate(User user) {
-        RxVoid(()->local.db.userDao().updateSKillCardUpdate(user.getId(), user.getSkillCard_update()));
+    public void local_updateCardRepositoryUpdate(User user) {
+        RxVoid(()->local.db.userDao().updateCardRepositoryUpdate(user.getId(), user.getCardRepository_update()));
     }
     public void local_updateFriendUpdate(User user) {
-        RxVoid(()->local.db.userDao().local_updateFriendUpdate(user.getId(), user.getSkillCard_update()));
-    }
-    public Maybe<User> local_query(long id) {
-        return local.db.userDao().queryById(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        RxVoid(()->local.db.userDao().updateFriendUpdate(user.getId(), user.getCardRepository_update()));
     }
 
     public Single<List<User>> local_queryAll() {

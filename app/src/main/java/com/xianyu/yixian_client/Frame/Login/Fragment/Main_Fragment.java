@@ -1,5 +1,6 @@
 package com.xianyu.yixian_client.Frame.Login.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.DepthPageTransformer;
 import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.Login_Fragment_Adapter;
 import com.xianyu.yixian_client.Frame.Login.LoginViewModel;
 import com.xianyu.yixian_client.Frame.Login.Login_Activity;
+import com.xianyu.yixian_client.Frame.Main.Main_Activity;
 import com.yixian.material.Entity.Config;
 import com.yixian.material.Entity.SkillCard;
 import com.yixian.material.Entity.User;
@@ -150,6 +152,9 @@ public class Main_Fragment extends Fragment {
                 else if(result == -2){
                     MessageDialog.Error_Dialog(getContext(),"登录失败","账户或密码错误");
                 }
+                else if(result == -2){
+                    MessageDialog.Error_Dialog(getContext(),"登录失败","用户已登录");
+                }
                 else {
                     Core.liveUser.getValue().setId(result);
                     Core.liveConfig.getValue().setId(result);
@@ -180,7 +185,10 @@ public class Main_Fragment extends Fragment {
                             .setMessage("欢迎您的回归！")
                             .setPositiveButton(R.string.confirm_dialog, (dialog, which) -> {
                                 dialog.dismiss();
-                                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_login_Activity_to_main_navigation);
+                                Intent intent = new Intent();
+                                intent.setClass(getContext(),Main_Activity.class);
+                                startActivity(intent);
+                                requireActivity().finish();
                             })
                             .show();
                 }

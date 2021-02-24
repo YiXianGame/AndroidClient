@@ -6,7 +6,7 @@
     <!--            icon="@mipmap/..." -->
     <!--            labelTemplate="@array/..." /> -->
     <!--        <fulfillment urlTemplate="Action content URI or URL"> -->
-    <!--            <parameter-mapping -->
+    <!--            <parameters-mapping -->
     <!--                intentParameter="Parameter name in Intent URI" -->
     <!--                urlParameter="Parameter name in URL" /> -->
     <!--        </fulfillment> -->

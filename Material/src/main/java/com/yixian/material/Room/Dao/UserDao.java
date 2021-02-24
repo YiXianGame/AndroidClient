@@ -37,22 +37,24 @@ public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long[] insertSync(User... user);
     @Query("UPDATE user SET cardGroups=:cardGroups,cardGroups_update=:timestamp WHERE id=:id")
-    void updateCardGroup(long id,String cardGroups,long timestamp);
+    void updateCardGroups(long id, String cardGroups, long timestamp);
     @Query("UPDATE user SET username=:username,password=:password WHERE id=:id")
     void updateAccount(long id,String username,String password);
-    @Query("UPDATE user SET skillCard_update=:timestamp WHERE id=:id")
-    void updateSKillCardUpdate(long id,long timestamp);
+    @Query("UPDATE user SET cardRepository_update=:timestamp WHERE id=:id")
+    void updateCardRepositoryUpdate(long id, long timestamp);
     @Query("UPDATE user SET friend_update=:timestamp WHERE id=:id")
-    void local_updateFriendUpdate(long id,long timestamp);
+    void updateFriendUpdate(long id, long timestamp);
+    @Query("UPDATE user SET cardGroups_update=:timestamp  WHERE id=:id")
+    void updateCardGroupsUpdate(long id, long timestamp);
     @TypeConverters(ActiveConvert.class)
     @Query("UPDATE user SET username=:username,nickname=:nickname,upgrade_num=:upgrade_num,create_num=:create_num," +
             "money=:money,personalSignature=:personalSignature,battleCount=:battleCount,exp=:exp,lv=:lv,title=:title,state=:active," +
-            "kills=:kills,deaths=:deaths,registerDate=:registerDate,attribute_update=:attribute_update,cardGroups=:cardgroups " +
+            "kills=:kills,deaths=:deaths,registerDate=:registerDate,attribute_update=:attribute_update " +
             "WHERE id = :id")
     void updateUserAttribute(long id, String username, String nickname, int upgrade_num,
                              int create_num, long money, String personalSignature,
                              int battleCount, long exp, int lv, String title, User.State active, int kills, int deaths, long registerDate,
-                             long attribute_update,String cardgroups);
+                             long attribute_update);
     @Query("UPDATE user SET password = :password WHERE id = :id")
     void updateUserPassword(long id, String password);
     @Delete

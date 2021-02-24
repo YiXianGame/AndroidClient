@@ -7,16 +7,5 @@
     <fragment
         android:id="@+id/main_Fragment"
         android:name="com.xianyu.yixian_client.Frame.Login.Fragment.Main_Fragment"
-        android:label="Login_Fragment" >
-        <action
-            android:id="@+id/action_login_Activity_to_main_navigation"
-            app:destination="@id/main_Activity"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/main_Activity"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <activity
-        android:id="@+id/main_Activity"
-        android:name="com.xianyu.yixian_client.Frame.Main.Main_Activity"
-        android:label="Main_Activity" />
+        android:label="Login_Fragment" />
 </navigation>

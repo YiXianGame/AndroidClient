@@ -30,6 +30,6 @@ public class LocalRepository implements ILocalRepository {
         db.userDao().updateUserAttribute(user.getId(), user.getUsername(), user.getNickname(), user.getUpgrade_num(),
                 user.getCreate_num(), user.getMoney(), user.getPersonalSignature(), user.getBattleCount(),
                 user.getExp(), user.getLv(), user.getTitle(), user.getState(), user.getKills(), user.getDeaths(), user.getRegisterDate(),
-                user.getAttribute_update(), Utils.gson.toJson(user.getCardGroups()));
+                user.getAttribute_update());
     }
 }

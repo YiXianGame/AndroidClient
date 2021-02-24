@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
     app:startDestination="@id/main_dest">
+
     <fragment
         android:id="@+id/main_dest"
         android:name="com.xianyu.yixian_client.Frame.Main.Fragment.Main_Fragment"
@@ -62,7 +63,7 @@
     tools:layout="@layout/ready_ready_fragment" >
         <argument
             android:name="roomMode"
-            app:argType="com.yixian.material.Entity.Room$Room_Type" />
+            app:argType="com.yixian.material.Entity.Room$RoomType" />
         <action
             android:id="@+id/action_readyFragment_to_equipFragment"
             app:destination="@id/equipFragment"
@@ -73,5 +74,4 @@
         android:id="@+id/equipFragment"
         android:name="com.xianyu.yixian_client.Frame.Ready.Fragment.EquipFragment"
         android:label="EquipFragment" />
-
 </navigation>

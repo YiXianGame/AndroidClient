@@ -1,6 +1,7 @@
 package com.yixian.material.RPC;
 
 import com.yixian.material.Exception.RPCException;
+import com.yixian.material.RPC.Annotation.RPCMethod;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -24,13 +25,19 @@ public class RPCAdaptProxy {
             int modifier = method.getModifiers();
             if(Modifier.isPublic(modifier) && Modifier.isStatic(modifier) && !Modifier.isInterface(modifier)){
                 methodId.append(method.getName());
-                String type_name;
-                for(Class<?> parameter_type : method.getParameterTypes()){
-                    type_name = type.getAbstractName().get(parameter_type);
-                    if(type_name != null) {
-                        methodId.append("-").append(type_name);
+                RPCMethod annotation = method.getAnnotation(RPCMethod.class);
+                if(annotation != null){
+                    methodId.append("-" + annotation.parameters());
+                }
+                else {
+                    String type_name;
+                    for(Class<?> parameter_type : method.getParameterTypes()){
+                        type_name = type.getAbstractName().get(parameter_type);
+                        if(type_name != null) {
+                            methodId.append("-").append(type_name);
+                        }
+                        else throw new RPCException(String.format("Java中的%s类型参数尚未注册,请注意是否是泛型导致！",parameter_type.getName()));
                     }
-                    else throw new RPCException(String.format("Java中的%s类型参数尚未注册！",parameter_type.getName()));
                 }
                 methods.put(methodId.toString(),method);
                 methodId.setLength(0);
