@@ -4,7 +4,6 @@ import android.content.Context;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.xianyu.yixian_client.R;
 
-
 /**
  * @ProjectName: YiXian_Client
  * @Package: com.yixian.material.Utils.ShortCode

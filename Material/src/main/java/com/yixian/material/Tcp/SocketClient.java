@@ -41,7 +41,6 @@ public class SocketClient {
     private Bootstrap bootstrap;
     public ConcurrentHashMap<Integer,ClientRequestModel> tasks = new ConcurrentHashMap<>();
     private Random random = new Random();
-    public AtomicInteger remain = new AtomicInteger(0);
     public SocketClient(String host, String port) {
         this.host = host;
         this.port = port;

@@ -31,8 +31,8 @@ public class ReadyViewModel extends ViewModel {
     public Single<String> createSquad(String roomType){
         return repository.userRepository.createSquad(roomType);
     }
-    public Single<ArrayList<User>> startMatch(ArrayList<Long> users){
-        return repository.userRepository.queryUsers(users);
+    public void startMatch(){
+        repository.userRepository.startMatch();
     }
     @Override
     protected void onCleared() {

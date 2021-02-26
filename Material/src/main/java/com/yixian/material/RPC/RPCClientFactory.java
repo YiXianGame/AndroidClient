@@ -11,7 +11,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class RPCClientFactory {
         static ConcurrentHashMap<Pair<String,String>, SocketClient> clients = new ConcurrentHashMap<>();
-        public static SocketClient GetClient(Pair<String,String> key){
+        public static SocketClient StartClient(String host,String port){
+            Pair<String,String> key = new Pair<>(host,port);
             SocketClient socketClient = null;
             socketClient = clients.get(key);
             if(socketClient == null){
@@ -24,18 +25,16 @@ public class RPCClientFactory {
                     e.printStackTrace();
                 }
             }
-            socketClient.remain.getAndIncrement();
             return socketClient;
+        }
+        public static SocketClient GetClient(Pair<String,String> key){
+            return clients.get(key);
         }
         public static void Destory(Pair<String,String> key){
             SocketClient echoClient;
             echoClient = clients.get(key);
             if(echoClient != null){
-                echoClient.remain.getAndDecrement();
-                if(echoClient.remain.get() <= 0){
-                    echoClient.disconnect();
-                    clients.remove(key);
-                }
+                echoClient.disconnect();
             }
         }
 }

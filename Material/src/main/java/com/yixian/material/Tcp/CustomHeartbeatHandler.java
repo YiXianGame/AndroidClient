@@ -54,7 +54,7 @@ public class CustomHeartbeatHandler extends ChannelHandlerAdapter {
                 method = adapt.getMethods().get(request.MethodId);
                 if(method!= null){
                     adapt.ConvertParams(request.MethodId,request.Params);
-                    method.invoke(null,request.Params);
+                    method.invoke(adapt.getInstance(),request.Params);
                 }
                 else {
                     Log.e(Tag.RemoteRepository,"\n------------------未找到该方法--------------------");

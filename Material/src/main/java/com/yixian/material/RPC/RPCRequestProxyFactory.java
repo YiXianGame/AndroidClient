@@ -19,15 +19,6 @@ public class RPCRequestProxyFactory {
         if(service == null){
             SocketClient socketClient = null;
             Pair<String,String> clientKey = new Pair<String,String>(hostname,port);
-            try{
-                socketClient = RPCClientFactory.GetClient(clientKey);
-            }
-            catch (Exception err){
-                if(socketClient == null){
-                    socketClient = RPCClientFactory.GetClient(clientKey);
-                }
-                else socketClient.doConnect();
-            }
             service = RPCRequestProxy.Register(interface_class,serviceName,clientKey,type);
             services.put(key,service);
         }

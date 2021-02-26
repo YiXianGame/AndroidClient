@@ -17,6 +17,5 @@ public class Core {
     public static MutableLiveData<ArrayList<User>> liveSquad = new MutableLiveData<>();
     public static MutableLiveData<ArrayList<User>> liveFriends = new MutableLiveData<ArrayList<User>>();
     public static MutableLiveData<HashMap<Long,SkillCard>> liveSkillcards = new MutableLiveData<>();
-    public static ReadyEvent readyEvent = new ReadyEvent();
     public static Repository repository;
 }

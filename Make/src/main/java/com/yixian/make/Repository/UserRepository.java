@@ -201,6 +201,9 @@ public class UserRepository {
     public Single<String> createSquad(String roomType){
         return Rx(()->remote.userRequest.CreateSquad(roomType));
     }
+    public void startMatch(){
+        remote.userRequest.StartMatch();
+    }
     @SuppressLint("CheckResult")
     private <T,R> Single<R> Rx(Function0<R> functions){
         return Single.create(new SingleOnSubscribe<R>() {

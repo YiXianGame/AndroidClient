@@ -68,7 +68,6 @@ public class Main_Fragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()){
-                    case 0:break;
                     case 1:{
                         Navigation.findNavController(binding.getRoot()).navigate(Main_FragmentDirections.actionMainDestToRepositoryFragment());
                         break;

@@ -15,19 +15,31 @@ public class RPCAdaptFactory {
     //Java没有自带三元组，这里就引用Kotlin了.
     public static HashMap<Triple<String,String,String>, RPCAdaptProxy> services = new HashMap<>();
 
-    public static void Register(@NonNull Class classImp,@NonNull String serviceName,@NonNull String hostname,@NonNull String port,@NonNull RPCType type){
+    public static void Register(@NonNull Object instance,@NonNull String serviceName,@NonNull String hostname,@NonNull String port,@NonNull RPCType type){
         Triple<String,String,String> key = new Triple<>(serviceName,hostname,port);
         RPCAdaptProxy service = services.get(key);
         if(service == null){
             try{
-                RPCClientFactory.GetClient(new Pair<>(hostname,port));
                 service = new RPCAdaptProxy();
-                service.Register(classImp,type);
+                service.Register(instance,type);
                 services.put(key,service);
             }
             catch (Exception err){
                 Log.e(Tag.RemoteRepository,serviceName + "异常报错，销毁注册\n" + err.getMessage());
-
+            }
+        }
+    }
+    public static void Register(@NonNull Class instanceClass,@NonNull String serviceName,@NonNull String hostname,@NonNull String port,@NonNull RPCType type){
+        Triple<String,String,String> key = new Triple<>(serviceName,hostname,port);
+        RPCAdaptProxy service = services.get(key);
+        if(service == null){
+            try{
+                service = new RPCAdaptProxy();
+                service.Register(instanceClass,type);
+                services.put(key,service);
+            }
+            catch (Exception err){
+                Log.e(Tag.RemoteRepository,serviceName + "异常报错，销毁注册\n" + err.getMessage());
             }
         }
     }

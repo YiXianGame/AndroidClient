@@ -40,10 +40,15 @@ public class ClientRequestModel {
         }
     }
 
-    public ClientResponseModel getResult() throws InterruptedException {
+    public ClientResponseModel getResult()  {
         synchronized (this){
             if (Result == null){
-                this.wait();
+                try {
+                    this.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    return new ClientResponseModel();
+                }
             }
             return Result;
         }

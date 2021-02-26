@@ -152,7 +152,7 @@ public class Main_Fragment extends Fragment {
                 else if(result == -2){
                     MessageDialog.Error_Dialog(getContext(),"登录失败","账户或密码错误");
                 }
-                else if(result == -2){
+                else if(result == -3){
                     MessageDialog.Error_Dialog(getContext(),"登录失败","用户已登录");
                 }
                 else {

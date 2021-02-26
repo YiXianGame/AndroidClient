@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+import com.xianyu.yixian_client.Frame.Ready.Adapt.RPC.ReadyAdapt;
 import com.xianyu.yixian_client.Frame.Ready.Adapt.Ready_Friend_Adapt;
 import com.xianyu.yixian_client.Frame.Ready.Adapt.Ready_User_Adapt;
 import com.xianyu.yixian_client.Frame.Ready.Model.UserWithCardGroupItem;
@@ -27,7 +28,14 @@ import com.yixian.make.Event.ReadyEvent.Args.InviteUserArgs;
 import com.yixian.make.Event.ReadyEvent.Args.MatchSuccessArgs;
 import com.yixian.make.Event.ReadyEvent.ReadyDelegate;
 import com.yixian.make.Model.Repository;
+import com.yixian.material.Entity.CardGroup;
+import com.yixian.material.Entity.CardItem;
+import com.yixian.material.Entity.Friend;
+import com.yixian.material.Entity.SkillCard;
 import com.yixian.material.Entity.User;
+import com.yixian.material.Exception.RPCException;
+import com.yixian.material.RPC.RPCAdaptFactory;
+import com.yixian.material.RPC.RPCType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,9 +44,10 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
-
+@AndroidEntryPoint
 public class ReadyFragment extends Fragment {
     private ReadyReadyFragmentBinding binding;
     private ReadyViewModel viewModel;
@@ -63,6 +72,24 @@ public class ReadyFragment extends Fragment {
         return binding.getRoot();
     }
     private void init() {
+        RPCType type = new RPCType();
+        try{
+            type.add(Integer.class,"int");
+            type.add(String.class,"string");
+            type.add(Boolean.class,"bool");
+            type.add(Long.class,"long");
+            type.add(SkillCard.class,"skillCard");
+            type.add(User.class,"user");
+            type.add(new ArrayList<Long>(){}.getClass().getGenericSuperclass(),"longs");
+            type.add(new ArrayList<SkillCard>(){}.getClass().getGenericSuperclass(),"skillCards");
+            type.add(new ArrayList<CardItem>(){}.getClass().getGenericSuperclass(),"cardItem");
+            type.add(new ArrayList<CardGroup>(){}.getClass().getGenericSuperclass(),"cardGroups");
+            type.add(new ArrayList<Friend>(){}.getClass().getGenericSuperclass(),"friends");
+            type.add(new ArrayList<User>(){}.getClass().getGenericSuperclass(),"users");
+        } catch (RPCException e) {
+            e.printStackTrace();
+        }
+        RPCAdaptFactory.Register(new ReadyAdapt(binding,viewModel),"ReadyClient","192.168.0.105","28015",type);
         //好友
         RecyclerView recyclerView = binding.getRoot().findViewById(R.id.invite_recycle);
         Ready_Friend_Adapt friend_adapt = new Ready_Friend_Adapt(viewModel);
@@ -106,75 +133,8 @@ public class ReadyFragment extends Fragment {
         });
         recyclerView.setAdapter(readyUser_adapt);
 
-        //注册事件监听
-        readyDelegate = (sender, args) -> {
-            if(args instanceof MatchSuccessArgs){
-                MatchSuccessArgs matchSuccessArgs = (MatchSuccessArgs) args;
-                ArrayList<User> teammates;
-                ArrayList<User> enemies;
-                if(matchSuccessArgs.getIdx() == 0){
-                    teammates = matchSuccessArgs.getGroup_1();
-                    enemies = matchSuccessArgs.getGroup_2();
-                }
-                else {
-                    teammates = matchSuccessArgs.getGroup_2();
-                    enemies = matchSuccessArgs.getGroup_1();
-                }
-                viewModel.liveEnemies.getValue().clear();
-                viewModel.liveTeammates.getValue().clear();
-                for (User item: teammates) {
-                    viewModel.liveTeammates.getValue().replace(item.getId(),new UserWithCardGroupItem(item));
-                }
-                viewModel.liveTeammates.postValue(viewModel.liveTeammates.getValue());
-                for (User item: enemies) {
-                    viewModel.liveEnemies.getValue().replace(item.getId(),new UserWithCardGroupItem(item));
-                }
-
-                viewModel.liveEnemies.postValue(viewModel.liveEnemies.getValue());
-
-                new MaterialAlertDialogBuilder(requireContext())
-                        .setTitle("匹配成功")
-                        .setMessage("即将进入卡组配置界面")
-                        .setPositiveButton(R.string.confirm_dialog, (dialog, which) -> {
-                            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_readyFragment_to_equipFragment);
-                        })
-                        .show();
-            }
-            else if(args instanceof InviteUserArgs){
-                new MaterialAlertDialogBuilder(requireContext())
-                        .setTitle("[邀请系统]")
-                        .setMessage("您收到来自"+((InviteUserArgs) args).getInviter().getNickname()+"的邀请")
-                        .setPositiveButton(R.string.confirm_dialog, (dialog, which) -> {
-                            Core.repository.userRepository.enterSquad(((InviteUserArgs) args).getInviter().getId(),((InviteUserArgs) args).getSecretKey())
-                                    .as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(getLifecycle()))).subscribe(new Consumer<ArrayList<User>>() {
-                                @Override
-                                public void accept(ArrayList<User> users) throws Exception {
-                                    if(users!=null){
-                                        Core.liveSquad.setValue(users);
-                                    }
-                                }
-                            });
-                            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_readyFragment_to_equipFragment);
-                        })
-                        .setNegativeButton(R.string.reject_dialog,((dialog, which) -> {
-
-                        }))
-                        .show();
-            }
-        };
-        Core.readyEvent.register(readyDelegate);
 
         Button match_button = binding.getRoot().findViewById(R.id.match_button);
-        match_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewModel.createSquad(viewModel.roomType.toString()).as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(getLifecycle()))).subscribe(value->{
-                    if(!value.equals("-1")){
-                        MessageDialog.Dialog(getContext(),"[匹配系统]","开始匹配");
-                    }
-                    else MessageDialog.Dialog(getContext(),"[匹配系统]","匹配失败");
-                });
-            }
-        });
+        match_button.setOnClickListener(v -> viewModel.startMatch());
     }
 }
