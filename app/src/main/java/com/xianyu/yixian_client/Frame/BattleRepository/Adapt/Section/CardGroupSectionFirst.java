@@ -1,5 +1,7 @@
 package com.xianyu.yixian_client.Frame.BattleRepository.Adapt.Section;
 
+import android.widget.Button;
+
 import com.chad.library.adapter.base.entity.node.BaseNode;
 import com.chad.library.adapter.base.provider.BaseNodeProvider;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
@@ -24,5 +26,4 @@ public class CardGroupSectionFirst extends BaseNodeProvider {
         MaterialTextView name_text = baseViewHolder.findView(R.id.name_text);
         name_text.setText(((CardGroupSectionFirstNode)baseNode).getCardGroup().getName());
     }
-
 }

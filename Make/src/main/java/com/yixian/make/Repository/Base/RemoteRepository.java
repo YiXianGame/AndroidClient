@@ -2,6 +2,7 @@ package com.yixian.make.Repository.Base;
 
 import android.util.Log;
 
+import com.yixian.make.Core;
 import com.yixian.make.RPC.Adapt.SkillCardAdapt;
 import com.yixian.make.RPC.Adapt.UserAdapt;
 import com.yixian.material.Entity.CardGroup;
@@ -36,7 +37,6 @@ import java.util.ArrayList;
 public class RemoteRepository implements IRemoteRepository {
     public UserRequest userRequest;
     public SkillCardRequest skillCardRequest;
-
     public RemoteRepository(){
         RPCType type = new RPCType();
         try{
@@ -46,6 +46,7 @@ public class RemoteRepository implements IRemoteRepository {
             type.add(Long.class,"long");
             type.add(SkillCard.class,"skillCard");
             type.add(User.class,"user");
+            type.add(CardGroup.class,"cardGroup");
             type.add(new ArrayList<Long>(){}.getClass().getGenericSuperclass(),"longs");
             type.add(new ArrayList<SkillCard>(){}.getClass().getGenericSuperclass(),"skillCards");
             type.add(new ArrayList<CardItem>(){}.getClass().getGenericSuperclass(),"cardItem");
@@ -58,10 +59,10 @@ public class RemoteRepository implements IRemoteRepository {
             e.printStackTrace();
         }
         //每一个Service都可以拥有自己的TypeConvert.
-        userRequest = RPCRequestProxyFactory.Register(UserRequest.class,"UserServer","10.163.193.51","28015",type);
-        skillCardRequest = RPCRequestProxyFactory.Register(SkillCardRequest.class,"SkillCardServer","10.163.193.51","28015",type);
-        RPCAdaptFactory.Register(SkillCardAdapt.class,"SkillCardClient","10.163.193.51","28015",type);
-        RPCAdaptFactory.Register(UserAdapt.class,"UserClient","10.163.193.51","28015",type);
-        RPCClientFactory.StartClient("10.163.193.51","28015");
+        userRequest = RPCRequestProxyFactory.register(UserRequest.class,"UserServer", Core.userServer.first,Core.userServer.second,type);
+        skillCardRequest = RPCRequestProxyFactory.register(SkillCardRequest.class,"SkillCardServer",Core.userServer.first,Core.userServer.second,type);
+        RPCAdaptFactory.register(SkillCardAdapt.class,"SkillCardClient",Core.userServer.first,Core.userServer.second,type);
+        RPCAdaptFactory.register(UserAdapt.class,"UserClient",Core.userServer.first,Core.userServer.second,type);
+        RPCClientFactory.StartClient(Core.userServer.first,Core.userServer.second);
     }
 }

@@ -66,24 +66,7 @@ public class BattleRepository_Fragment extends Fragment {
 
     @SuppressLint("CheckResult")
     private void init() {
-//        ArrayList<CardGroup> list = new ArrayList<>();
-//        list.add(new CardGroup());
-//        list.add(new CardGroup());
-//        list.add(new CardGroup());
-//        list.get(0).setName("一");
-//        list.get(1).setName("二");
-//        list.get(2).setName("三");
-//        ArrayList<SkillCard> arrayList = new ArrayList<>(Core.liveSkillcards.getValue().values());
-//        for(int i=0;i<10;i++){
-//            list.get(0).getCards().add(arrayList.get(i).getId());
-//        }
-//        for(int i=10;i<20;i++){
-//            list.get(1).getCards().add(arrayList.get(i).getId());
-//        }
-//        for(int i=0;i<10;i++){
-//            list.get(2).getCards().add(arrayList.get(i).getId());
-//        }
-//        Core.liveUser.getValue().setCardGroups(list);
+
         RecyclerView recyclerView = binding.getRoot().findViewById(R.id.skillcards_recycle);
         SkillCard_Adapt skillCardAdapt = new SkillCard_Adapt();
         skillCardAdapt.setAnimationWithDefault(BaseQuickAdapter.AnimationType.SlideInLeft);
@@ -265,7 +248,7 @@ public class BattleRepository_Fragment extends Fragment {
         groupAdapt.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                groupAdapt.expandOrCollapse(position);
+                ((Group_Adapt)adapter).expandOrCollapse(position);
             }
         });
         //左侧卡牌单击后添加至右边卡组栏

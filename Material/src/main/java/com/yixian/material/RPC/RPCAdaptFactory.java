@@ -15,7 +15,7 @@ public class RPCAdaptFactory {
     //Java没有自带三元组，这里就引用Kotlin了.
     public static HashMap<Triple<String,String,String>, RPCAdaptProxy> services = new HashMap<>();
 
-    public static void Register(@NonNull Object instance,@NonNull String serviceName,@NonNull String hostname,@NonNull String port,@NonNull RPCType type){
+    public static void register(@NonNull Object instance, @NonNull String serviceName, @NonNull String hostname, @NonNull String port, @NonNull RPCType type){
         Triple<String,String,String> key = new Triple<>(serviceName,hostname,port);
         RPCAdaptProxy service = services.get(key);
         if(service == null){
@@ -29,7 +29,7 @@ public class RPCAdaptFactory {
             }
         }
     }
-    public static void Register(@NonNull Class instanceClass,@NonNull String serviceName,@NonNull String hostname,@NonNull String port,@NonNull RPCType type){
+    public static void register(@NonNull Class instanceClass, @NonNull String serviceName, @NonNull String hostname, @NonNull String port, @NonNull RPCType type){
         Triple<String,String,String> key = new Triple<>(serviceName,hostname,port);
         RPCAdaptProxy service = services.get(key);
         if(service == null){
@@ -43,11 +43,14 @@ public class RPCAdaptFactory {
             }
         }
     }
-    public static void Destory(String serviceName,String hostname,String port){
+    public static void destory(String serviceName, String hostname, String port){
         Triple<String,String,String> key = new Triple<>(serviceName,hostname,port);
         if(services.containsKey(key)){
             services.remove(key);
-            RPCClientFactory.Destory(new Pair<>(hostname,port));
         }
+    }
+    public static RPCAdaptProxy get(String serviceName, String hostname, String port){
+        Triple<String,String,String> key = new Triple<>(serviceName,hostname,port);
+        return services.get(key);
     }
 }

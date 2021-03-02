@@ -1,25 +1,21 @@
 package com.yixian.make.RPC.Adapt;
 import com.yixian.make.Core;
-import com.yixian.make.Event.ReadyEvent.Args.InviteUserArgs;
-import com.yixian.make.Event.ReadyEvent.Args.MatchSuccessArgs;
-import com.yixian.material.Entity.User;
-import com.yixian.material.RPC.Annotation.RPCMethod;
-
-import java.util.ArrayList;
+import com.yixian.material.RPC.Annotation.RPCAdapt;
+import com.yixian.material.RPC.Annotation.RPCRequest;
 
 public class UserAdapt {
-    @RPCMethod()
+    @RPCAdapt
     public static void SetSkillCardUpdate(Long update)
     {
         Core.liveUser.getValue().setCardRepository_update(update);
         Core.repository.userRepository.local_updateCardRepositoryUpdate(Core.liveUser.getValue());
     }
-    @RPCMethod()
+    @RPCAdapt
     public static void SetFriendUpdate(Long update){
         Core.liveUser.getValue().setFriend_update(update);
         Core.repository.userRepository.local_updateFriendUpdate(Core.liveUser.getValue());
     }
-    @RPCMethod()
+    @RPCAdapt
     public static void SetCardRepositoryUpdate(Long timestamp)
     {
         Core.liveUser.getValue().setCardRepository_update(timestamp);

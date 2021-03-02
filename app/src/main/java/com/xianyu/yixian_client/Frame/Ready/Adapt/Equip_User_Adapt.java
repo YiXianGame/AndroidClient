@@ -40,7 +40,7 @@ public class Equip_User_Adapt extends BaseQuickAdapter<UserWithCardGroupItem, Eq
         }
         @Override
         public boolean areContentsTheSame(@NonNull UserWithCardGroupItem oldItem, @NonNull UserWithCardGroupItem newItem) {
-            return oldItem.getUser().getAttribute_update() == newItem.getUser().getAttribute_update();
+            return (oldItem.getUser().getAttribute_update() == newItem.getUser().getAttribute_update() && oldItem.getCardGroup().getName().equals(newItem.getCardGroup().getName()));
         }
     }
     public class ViewHolder extends BaseViewHolder {

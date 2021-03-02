@@ -1,11 +1,9 @@
 package com.yixian.material.RPC;
 
-import android.util.Log;
 import android.util.Pair;
 
 import com.yixian.material.Exception.RPCException;
-import com.yixian.material.Log.Log.Tag;
-import com.yixian.material.RPC.Annotation.RPCMethod;
+import com.yixian.material.RPC.Annotation.RPCRequest;
 import com.yixian.material.Tcp.SocketClient;
 import com.yixian.material.Utils.Utils;
 
@@ -30,7 +28,7 @@ public  class RPCRequestProxy implements InvocationHandler {
     }
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws RPCException, InvocationTargetException, IllegalAccessException {
-        RPCMethod annotation = method.getAnnotation(RPCMethod.class);
+        RPCRequest annotation = method.getAnnotation(RPCRequest.class);
         if(annotation != null){
             StringBuilder methodId = new StringBuilder(method.getName());
             Type factType;
@@ -63,7 +61,7 @@ public  class RPCRequestProxy implements InvocationHandler {
                         else throw new RPCException(String.format("方法体%s中的抽象类型为%s的类型尚未注册！",method.getName(),types_name[i]));
                     }
                 }
-                else throw new RPCException(String.format("方法体%s中RPCMethod注解与实际参数数量不符,@RPCMethod:%d个,Method:%d个",method.getName(),types_name.length,args.length));
+                else throw new RPCException(String.format("方法体%s中RPCMethod注解与实际参数数量不符,@RPCRequest:%d个,Method:%d个",method.getName(),types_name.length,args.length));
             }
             ClientRequestModel request = new ClientRequestModel("2.0", service, methodId.toString(),array);
             SocketClient socketClient = RPCClientFactory.GetClient(clientKey);

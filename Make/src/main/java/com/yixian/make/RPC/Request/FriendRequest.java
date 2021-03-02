@@ -1,17 +1,17 @@
 package com.yixian.make.RPC.Request;
 
 import com.yixian.material.Entity.Friend;
-import com.yixian.material.RPC.Annotation.RPCMethod;
+import com.yixian.material.RPC.Annotation.RPCRequest;
 
 import java.util.List;
 
 public interface FriendRequest {
-    @RPCMethod()
+    @RPCRequest()
     public void insertFriend(Friend... friends);
-    @RPCMethod()
+    @RPCRequest()
     public void deleteFriend(Friend... friends);
-    @RPCMethod()
+    @RPCRequest()
     public void updateFriend(Friend... friends);
-    @RPCMethod()
+    @RPCRequest()
     public List<Friend> queryFriends(Long user_id);
 }

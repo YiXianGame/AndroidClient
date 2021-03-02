@@ -10,6 +10,7 @@ import com.xianyu.yixian_client.Frame.Ready.Adapt.Section.CardGroupSectionFirst;
 import com.xianyu.yixian_client.Frame.Ready.Adapt.Section.CardGroupSectionFirstNode;
 import com.xianyu.yixian_client.Frame.Ready.Adapt.Section.CardGroupSectionSecond;
 import com.xianyu.yixian_client.Frame.Ready.Adapt.Section.CardGroupSectionSecondNode;
+import com.xianyu.yixian_client.Frame.Ready.ReadyViewModel;
 import com.yixian.material.Entity.CardGroup;
 
 import org.jetbrains.annotations.NotNull;
@@ -19,10 +20,10 @@ import java.util.List;
 
 public class Equip_Group_Adapt extends BaseNodeAdapter implements DraggableModule {
     private ArrayList<CardGroup> groups;
-    public Equip_Group_Adapt() {
+    public Equip_Group_Adapt(ReadyViewModel viewModel) {
         super();
         // 需要占满一行的，使用此方法（例如section）
-        addFullSpanNodeProvider(new CardGroupSectionFirst());
+        addFullSpanNodeProvider(new CardGroupSectionFirst(viewModel));
         // 普通的item provider
         addNodeProvider(new CardGroupSectionSecond());
         setDiffCallback(new DiffCallBack());

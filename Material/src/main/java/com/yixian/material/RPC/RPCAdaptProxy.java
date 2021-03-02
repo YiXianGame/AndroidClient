@@ -1,7 +1,8 @@
 package com.yixian.material.RPC;
 
 import com.yixian.material.Exception.RPCException;
-import com.yixian.material.RPC.Annotation.RPCMethod;
+import com.yixian.material.RPC.Annotation.RPCAdapt;
+import com.yixian.material.RPC.Annotation.RPCRequest;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -45,7 +46,7 @@ public class RPCAdaptProxy {
         for(Method method : instanceClass.getMethods())
         {
             int modifier = method.getModifiers();
-            RPCMethod annotation = method.getAnnotation(RPCMethod.class);
+            RPCAdapt annotation = method.getAnnotation(RPCAdapt.class);
             if(annotation!=null){
                 if(!Modifier.isInterface(modifier)){
                     methodId.append(method.getName());

@@ -192,18 +192,10 @@ public class UserRepository {
         return local.db.userDao().queryById(id);
     }
 
-    public Single<Boolean> inviteSquad(long id){
-        return Rx(()->remote.userRequest.InviteSquad(id));
-    }
-    public Single<ArrayList<User>> enterSquad(long id,String secretKey){
-        return Rx(()->remote.userRequest.EnterSquad(id,secretKey));
-    }
     public Single<String> createSquad(String roomType){
         return Rx(()->remote.userRequest.CreateSquad(roomType));
     }
-    public void startMatch(){
-        remote.userRequest.StartMatch();
-    }
+
     @SuppressLint("CheckResult")
     private <T,R> Single<R> Rx(Function0<R> functions){
         return Single.create(new SingleOnSubscribe<R>() {

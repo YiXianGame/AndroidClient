@@ -61,6 +61,7 @@ public class ReadyFragment extends Fragment {
         binding = ReadyReadyFragmentBinding.inflate(inflater,container,false);
         viewModel = new ViewModelProvider(requireActivity()).get(ReadyViewModel.class);
         viewModel.initialization(repository);
+        viewModel.readyAdapt.setView(binding.getRoot());
         assert getArguments() != null;
         viewModel.roomType = ReadyFragmentArgs.fromBundle(requireArguments()).getRoomMode();
         viewModel.liveTeammates.setValue(new HashMap<>());
@@ -72,24 +73,6 @@ public class ReadyFragment extends Fragment {
         return binding.getRoot();
     }
     private void init() {
-        RPCType type = new RPCType();
-        try{
-            type.add(Integer.class,"int");
-            type.add(String.class,"string");
-            type.add(Boolean.class,"bool");
-            type.add(Long.class,"long");
-            type.add(SkillCard.class,"skillCard");
-            type.add(User.class,"user");
-            type.add(new ArrayList<Long>(){}.getClass().getGenericSuperclass(),"longs");
-            type.add(new ArrayList<SkillCard>(){}.getClass().getGenericSuperclass(),"skillCards");
-            type.add(new ArrayList<CardItem>(){}.getClass().getGenericSuperclass(),"cardItem");
-            type.add(new ArrayList<CardGroup>(){}.getClass().getGenericSuperclass(),"cardGroups");
-            type.add(new ArrayList<Friend>(){}.getClass().getGenericSuperclass(),"friends");
-            type.add(new ArrayList<User>(){}.getClass().getGenericSuperclass(),"users");
-        } catch (RPCException e) {
-            e.printStackTrace();
-        }
-        RPCAdaptFactory.Register(new ReadyAdapt(binding,viewModel),"ReadyClient","10.163.193.51","28015",type);
         //好友
         RecyclerView recyclerView = binding.getRoot().findViewById(R.id.invite_recycle);
         Ready_Friend_Adapt friend_adapt = new Ready_Friend_Adapt(viewModel);
@@ -133,8 +116,9 @@ public class ReadyFragment extends Fragment {
         });
         recyclerView.setAdapter(readyUser_adapt);
 
-
         Button match_button = binding.getRoot().findViewById(R.id.match_button);
         match_button.setOnClickListener(v -> viewModel.startMatch());
+
+
     }
 }

@@ -12,7 +12,7 @@ import kotlin.Triple;
 
 public class RPCRequestProxyFactory {
     static HashMap<Triple<String,String,String>,Object> services = new HashMap<>();
-    public static <T> T Register(@NonNull Class<T> interface_class,@NonNull String serviceName,@NonNull String hostname,@NonNull String port,@NonNull RPCType type){
+    public static <T> T register(@NonNull Class<T> interface_class, @NonNull String serviceName, @NonNull String hostname, @NonNull String port, @NonNull RPCType type){
         T service = null;
         Triple<String,String,String> key = new Triple<String,String,String>(serviceName,hostname,port);
         service = (T)services.get(key);
@@ -24,11 +24,11 @@ public class RPCRequestProxyFactory {
         }
         return service;
     }
-    public static void Destory(String serviceName,String hostname,String port){
+    public static void destory(String serviceName, String hostname, String port){
         Triple<String,String,String> key = new Triple<>(serviceName,hostname,port);
         if(services.containsKey(key)){
             services.remove(key);
-            RPCClientFactory.Destory(new Pair<>(hostname,port));
         }
     }
+
 }

@@ -1,13 +1,13 @@
 package com.yixian.make.RPC.Request;
 
 import com.yixian.material.Entity.SkillCard;
-import com.yixian.material.RPC.Annotation.RPCMethod;
+import com.yixian.material.RPC.Annotation.RPCRequest;
 
 import java.util.ArrayList;
 
 public interface SkillCardRequest {
-    @RPCMethod()
+    @RPCRequest()
     ArrayList<SkillCard> Sync(Long timestamp);
-    @RPCMethod(parameters = "longs")
+    @RPCRequest(parameters = "longs")
     ArrayList<SkillCard> Query(ArrayList<Long> skillCardIds);
 }

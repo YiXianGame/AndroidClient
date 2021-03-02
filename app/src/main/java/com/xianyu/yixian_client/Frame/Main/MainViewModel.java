@@ -84,6 +84,7 @@ public class MainViewModel extends ViewModel {
     public Single<String> createSquad(String roomType){
         return repository.userRepository.createSquad(roomType);
     }
+
     @Override
     protected void onCleared() {
         super.onCleared();
