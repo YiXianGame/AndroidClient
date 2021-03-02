@@ -42,14 +42,14 @@ public class RPCAdaptProxy {
     public void Register(Class instanceClass,RPCType type) throws RPCException {
         StringBuilder methodId = new StringBuilder();
         this.type = type;
-        for(Method method : instance.getClass().getMethods())
+        for(Method method : instanceClass.getMethods())
         {
             int modifier = method.getModifiers();
             RPCMethod annotation = method.getAnnotation(RPCMethod.class);
             if(annotation!=null){
                 if(!Modifier.isInterface(modifier)){
                     methodId.append(method.getName());
-                    if(!annotation.parameters().equals("")){
+                    if(annotation.parameters().equals("")){
                         String type_name;
                         for(Class<?> parameter_type : method.getParameterTypes()){
                             type_name = type.getAbstractName().get(parameter_type);
@@ -67,7 +67,6 @@ public class RPCAdaptProxy {
                             }
                             else throw new RPCException(String.format("Java中的%s抽象类型参数尚未注册,请注意是否是泛型导致！",type_name));
                         }
-                        methodId.append("-").append(annotation.parameters());
                     }
                     methods.put(methodId.toString(),method);
                     methodId.setLength(0);

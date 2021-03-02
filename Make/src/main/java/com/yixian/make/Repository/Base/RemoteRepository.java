@@ -58,11 +58,10 @@ public class RemoteRepository implements IRemoteRepository {
             e.printStackTrace();
         }
         //每一个Service都可以拥有自己的TypeConvert.
-        userRequest = RPCRequestProxyFactory.Register(UserRequest.class,"UserServer","192.168.0.105","28015",type);
-        skillCardRequest = RPCRequestProxyFactory.Register(SkillCardRequest.class,"SkillCardServer","192.168.0.105","28015",type);
-        RPCAdaptFactory.Register(SkillCardAdapt.class,"SkillCardClient","192.168.0.105","28015",type);
-        RPCAdaptFactory.Register(UserAdapt.class,"UserClient","192.168.0.105","28015",type);
-        RPCClientFactory.StartClient("192.168.0.105","28015");
-        //Observable.create((ObservableOnSubscribe<Void>) emitter -> Log.d(Tag.Debug,userDao.hello("你好"))).subscribeOn(Schedulers.io()).subscribe();
+        userRequest = RPCRequestProxyFactory.Register(UserRequest.class,"UserServer","10.163.193.51","28015",type);
+        skillCardRequest = RPCRequestProxyFactory.Register(SkillCardRequest.class,"SkillCardServer","10.163.193.51","28015",type);
+        RPCAdaptFactory.Register(SkillCardAdapt.class,"SkillCardClient","10.163.193.51","28015",type);
+        RPCAdaptFactory.Register(UserAdapt.class,"UserClient","10.163.193.51","28015",type);
+        RPCClientFactory.StartClient("10.163.193.51","28015");
     }
 }

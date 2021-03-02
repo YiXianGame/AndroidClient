@@ -89,7 +89,7 @@ public class ReadyFragment extends Fragment {
         } catch (RPCException e) {
             e.printStackTrace();
         }
-        RPCAdaptFactory.Register(new ReadyAdapt(binding,viewModel),"ReadyClient","192.168.0.105","28015",type);
+        RPCAdaptFactory.Register(new ReadyAdapt(binding,viewModel),"ReadyClient","10.163.193.51","28015",type);
         //好友
         RecyclerView recyclerView = binding.getRoot().findViewById(R.id.invite_recycle);
         Ready_Friend_Adapt friend_adapt = new Ready_Friend_Adapt(viewModel);
