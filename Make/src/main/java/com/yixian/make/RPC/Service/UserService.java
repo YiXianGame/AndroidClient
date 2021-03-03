@@ -1,21 +1,20 @@
-package com.yixian.make.RPC.Adapt;
+package com.yixian.make.RPC.Service;
 import com.yixian.make.Core;
-import com.yixian.material.RPC.Annotation.RPCAdapt;
-import com.yixian.material.RPC.Annotation.RPCRequest;
+import com.yixian.material.RPC.Annotation.RPCService;
 
-public class UserAdapt {
-    @RPCAdapt
+public class UserService {
+    @RPCService
     public static void SetSkillCardUpdate(Long update)
     {
         Core.liveUser.getValue().setCardRepository_update(update);
         Core.repository.userRepository.local_updateCardRepositoryUpdate(Core.liveUser.getValue());
     }
-    @RPCAdapt
+    @RPCService
     public static void SetFriendUpdate(Long update){
         Core.liveUser.getValue().setFriend_update(update);
         Core.repository.userRepository.local_updateFriendUpdate(Core.liveUser.getValue());
     }
-    @RPCAdapt
+    @RPCService
     public static void SetCardRepositoryUpdate(Long timestamp)
     {
         Core.liveUser.getValue().setCardRepository_update(timestamp);

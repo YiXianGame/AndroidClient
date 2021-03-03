@@ -8,34 +8,18 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.uber.autodispose.AutoDispose;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-import com.xianyu.yixian_client.Frame.Ready.Adapt.RPC.ReadyAdapt;
 import com.xianyu.yixian_client.Frame.Ready.Adapt.Ready_Friend_Adapt;
 import com.xianyu.yixian_client.Frame.Ready.Adapt.Ready_User_Adapt;
-import com.xianyu.yixian_client.Frame.Ready.Model.UserWithCardGroupItem;
-import com.xianyu.yixian_client.Model.MessageDialog;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.ReadyReadyFragmentBinding;
 import com.yixian.make.Core;
-import com.yixian.make.Event.ReadyEvent.Args.InviteUserArgs;
-import com.yixian.make.Event.ReadyEvent.Args.MatchSuccessArgs;
 import com.yixian.make.Event.ReadyEvent.ReadyDelegate;
 import com.yixian.make.Model.Repository;
-import com.yixian.material.Entity.CardGroup;
-import com.yixian.material.Entity.CardItem;
-import com.yixian.material.Entity.Friend;
-import com.yixian.material.Entity.SkillCard;
 import com.yixian.material.Entity.User;
-import com.yixian.material.Exception.RPCException;
-import com.yixian.material.RPC.RPCAdaptFactory;
-import com.yixian.material.RPC.RPCType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +30,7 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
+
 @AndroidEntryPoint
 public class ReadyFragment extends Fragment {
     private ReadyReadyFragmentBinding binding;

@@ -1,14 +1,12 @@
 package com.yixian.material.RPC;
 
 import com.yixian.material.Exception.RPCException;
-import com.yixian.material.RPC.Annotation.RPCAdapt;
-import com.yixian.material.RPC.Annotation.RPCRequest;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 
-public class RPCAdaptProxy {
+public class RPCService {
     private HashMap<String,Method> methods = new HashMap<>();
     private RPCType type;
     private Object instance = null;
@@ -46,7 +44,7 @@ public class RPCAdaptProxy {
         for(Method method : instanceClass.getMethods())
         {
             int modifier = method.getModifiers();
-            RPCAdapt annotation = method.getAnnotation(RPCAdapt.class);
+            com.yixian.material.RPC.Annotation.RPCService annotation = method.getAnnotation(com.yixian.material.RPC.Annotation.RPCService.class);
             if(annotation!=null){
                 if(!Modifier.isInterface(modifier)){
                     methodId.append(method.getName());

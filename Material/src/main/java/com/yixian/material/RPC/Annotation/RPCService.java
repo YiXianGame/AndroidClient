@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Documented
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RPCAdapt {
+public @interface RPCService {
         String parameters() default "";
 }

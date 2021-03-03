@@ -1,12 +1,10 @@
 package com.xianyu.yixian_client.Frame.Ready;
 
-import android.app.DownloadManager;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.xianyu.yixian_client.Frame.Ready.Adapt.RPC.ReadyAdapt;
-import com.xianyu.yixian_client.Frame.Ready.Adapt.RPC.ReadyRequest;
+import com.xianyu.yixian_client.Frame.Ready.RPC.ReadyService;
+import com.xianyu.yixian_client.Frame.Ready.RPC.ReadyRequest;
 import com.xianyu.yixian_client.Frame.Ready.Model.UserWithCardGroupItem;
 import com.yixian.make.Core;
 import com.yixian.make.Model.Repository;
@@ -17,7 +15,7 @@ import com.yixian.material.Entity.Room;
 import com.yixian.material.Entity.SkillCard;
 import com.yixian.material.Entity.User;
 import com.yixian.material.Exception.RPCException;
-import com.yixian.material.RPC.RPCAdaptFactory;
+import com.yixian.material.RPC.RPCServiceFactory;
 import com.yixian.material.RPC.RPCRequestProxyFactory;
 import com.yixian.material.RPC.RPCType;
 
@@ -34,7 +32,7 @@ public class ReadyViewModel extends ViewModel {
     private Repository repository;
     public Room.RoomType roomType;
     public ReadyRequest readyRequest;
-    public ReadyAdapt readyAdapt;
+    public ReadyService readyAdapt;
     public MutableLiveData<Map<Long, UserWithCardGroupItem>> liveTeammates = new MutableLiveData<>();
     public MutableLiveData<Map<Long, UserWithCardGroupItem>> liveEnemies = new MutableLiveData<>();
     public boolean confirm = false;
@@ -58,8 +56,8 @@ public class ReadyViewModel extends ViewModel {
         } catch (RPCException e) {
             e.printStackTrace();
         }
-        readyAdapt = new ReadyAdapt(this);
-        RPCAdaptFactory.register(readyAdapt,"ReadyClient", Core.userServer.first,Core.userServer.second,type);
+        readyAdapt = new ReadyService(this);
+        RPCServiceFactory.register(readyAdapt,"ReadyClient", Core.userServer.first,Core.userServer.second,type);
         readyRequest = RPCRequestProxyFactory.register(ReadyRequest.class,"ReadyServer", Core.userServer.first,Core.userServer.second,type);
     }
     public Single<Boolean> inviteFriend(long id){
@@ -81,11 +79,19 @@ public class ReadyViewModel extends ViewModel {
             }
         };
     }
+    public Single<Boolean> confirmCardGroup(){
+        return new Single<Boolean>() {
+            @Override
+            protected void subscribeActual(@NonNull SingleObserver<? super Boolean> observer) {
+                observer.onSuccess(readyRequest.ConfirmCardGroup());
+            }
+        };
+    }
     @Override
     protected void onCleared() {
         super.onCleared();
         disposable.clear();
-        RPCAdaptFactory.destory("ReadyClient", Core.userServer.first,Core.userServer.second);
+        RPCServiceFactory.destory("ReadyClient", Core.userServer.first,Core.userServer.second);
         RPCRequestProxyFactory.destory("ReadyServer", Core.userServer.first,Core.userServer.second);
     }
 }

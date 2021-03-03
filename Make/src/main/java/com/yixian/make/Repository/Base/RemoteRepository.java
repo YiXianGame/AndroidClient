@@ -3,15 +3,15 @@ package com.yixian.make.Repository.Base;
 import android.util.Log;
 
 import com.yixian.make.Core;
-import com.yixian.make.RPC.Adapt.SkillCardAdapt;
-import com.yixian.make.RPC.Adapt.UserAdapt;
+import com.yixian.make.RPC.Service.SkillCardService;
+import com.yixian.make.RPC.Service.UserService;
 import com.yixian.material.Entity.CardGroup;
 import com.yixian.material.Entity.CardItem;
 import com.yixian.material.Entity.Friend;
 import com.yixian.material.Entity.User;
 import com.yixian.material.Log.Log.Tag;
 import com.yixian.make.RPC.Request.SkillCardRequest;
-import com.yixian.material.RPC.RPCAdaptFactory;
+import com.yixian.material.RPC.RPCServiceFactory;
 import com.yixian.material.Exception.RPCException;
 import com.yixian.material.RPC.RPCClientFactory;
 import com.yixian.material.RPC.RPCRequestProxyFactory;
@@ -61,8 +61,8 @@ public class RemoteRepository implements IRemoteRepository {
         //每一个Service都可以拥有自己的TypeConvert.
         userRequest = RPCRequestProxyFactory.register(UserRequest.class,"UserServer", Core.userServer.first,Core.userServer.second,type);
         skillCardRequest = RPCRequestProxyFactory.register(SkillCardRequest.class,"SkillCardServer",Core.userServer.first,Core.userServer.second,type);
-        RPCAdaptFactory.register(SkillCardAdapt.class,"SkillCardClient",Core.userServer.first,Core.userServer.second,type);
-        RPCAdaptFactory.register(UserAdapt.class,"UserClient",Core.userServer.first,Core.userServer.second,type);
+        RPCServiceFactory.register(SkillCardService.class,"SkillCardClient",Core.userServer.first,Core.userServer.second,type);
+        RPCServiceFactory.register(UserService.class,"UserClient",Core.userServer.first,Core.userServer.second,type);
         RPCClientFactory.StartClient(Core.userServer.first,Core.userServer.second);
     }
 }

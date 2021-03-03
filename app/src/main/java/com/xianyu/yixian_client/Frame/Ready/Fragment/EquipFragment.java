@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.node.BaseNode;
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import com.xianyu.yixian_client.Frame.Ready.Adapt.Equip_User_Adapt;
 import com.xianyu.yixian_client.Frame.Ready.Adapt.Equip_Group_Adapt;
 import com.xianyu.yixian_client.Frame.Ready.Adapt.Section.CardGroupSectionFirstNode;
@@ -77,8 +79,13 @@ public class EquipFragment extends Fragment {
         Button confirm_button = binding.getRoot().findViewById(R.id.confirm_button);
         confirm_button.setOnClickListener(v -> {
             if(viewModel.liveTeammates.getValue().get(Core.liveUser.getValue().getId()).getCardGroup()!=null){
-                viewModel.confirm = true;
-                viewModel.readyRequest.ConfirmCardGroup();
+                viewModel.confirmCardGroup().as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(value->{
+                    if(value){
+                        viewModel.confirm = true;
+                        confirm_button.setEnabled(false);
+                    }
+                    else viewModel.confirm = false;
+                });
             }
             else MessageDialog.Error_Dialog(getContext(),"[备战系统]","您当前未选择卡组");
         });

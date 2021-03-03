@@ -5,8 +5,8 @@ import android.util.Log;
 import com.yixian.material.Log.Log.Tag;
 import com.yixian.material.RPC.ClientRequestModel;
 import com.yixian.material.RPC.ClientResponseModel;
-import com.yixian.material.RPC.RPCAdaptFactory;
-import com.yixian.material.RPC.RPCAdaptProxy;
+import com.yixian.material.RPC.RPCServiceFactory;
+import com.yixian.material.RPC.RPCService;
 import com.yixian.material.RPC.ServerRequestModel;
 
 import java.lang.reflect.Method;
@@ -47,9 +47,9 @@ public class CustomHeartbeatHandler extends ChannelHandlerAdapter {
         }
         else if(msg instanceof ServerRequestModel){
             ServerRequestModel request = (ServerRequestModel)msg;
-            RPCAdaptProxy adapt;
+            RPCService adapt;
             Method method;
-            adapt = RPCAdaptFactory.services.get(new Triple<>(((ServerRequestModel) msg).Service, socketClient.host, socketClient.port));
+            adapt = RPCServiceFactory.services.get(new Triple<>(((ServerRequestModel) msg).Service, socketClient.host, socketClient.port));
             if(adapt != null){
                 method = adapt.getMethods().get(request.MethodId);
                 if(method!= null){

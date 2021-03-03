@@ -1,11 +1,10 @@
-package com.yixian.make.RPC.Adapt;
+package com.yixian.make.RPC.Service;
 
 import com.yixian.make.Core;
-import com.yixian.material.RPC.Annotation.RPCAdapt;
-import com.yixian.material.RPC.Annotation.RPCRequest;
+import com.yixian.material.RPC.Annotation.RPCService;
 
-public class SkillCardAdapt {
-    @RPCAdapt
+public class SkillCardService {
+    @RPCService
     public static void SetSkillCardUpdate(Long timestamp)
     {
         Core.liveConfig.getValue().setSkillCardUpdate(timestamp);

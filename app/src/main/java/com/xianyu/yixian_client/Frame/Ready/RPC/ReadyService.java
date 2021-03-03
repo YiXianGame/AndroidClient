@@ -1,4 +1,4 @@
-package com.xianyu.yixian_client.Frame.Ready.Adapt.RPC;
+package com.xianyu.yixian_client.Frame.Ready.RPC;
 
 import android.view.View;
 
@@ -12,15 +12,13 @@ import com.xianyu.yixian_client.R;
 import com.yixian.make.Core;
 import com.yixian.material.Entity.CardGroup;
 import com.yixian.material.Entity.User;
-import com.yixian.material.RPC.Annotation.RPCAdapt;
-import com.yixian.material.RPC.Annotation.RPCAdapt;
+import com.yixian.material.RPC.Annotation.RPCService;
 
 import java.util.ArrayList;
 
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
 
-public class ReadyAdapt {
+public class ReadyService {
     private View view;
 
     public View getView() {
@@ -33,7 +31,7 @@ public class ReadyAdapt {
 
     private ReadyViewModel viewModel;
     private final CompositeDisposable disposable = new CompositeDisposable();
-    public ReadyAdapt(ReadyViewModel viewModel) {
+    public ReadyService(ReadyViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
@@ -43,14 +41,14 @@ public class ReadyAdapt {
         disposable.clear();
     }
 
-    @RPCAdapt
+    @RPCService
     public void StartMatch(){
         view.post(()->{
-            //Core.readyEvent.OnEvent("UserAdapt",new StartMatchArgs());
+            //Core.readyEvent.OnEvent("UserService",new StartMatchArgs());
             MessageDialog.Confirm_Dialog(view.getContext(),"[匹配系统]","开始匹配");
         });
     }
-    @RPCAdapt(parameters = "users-users-int-string-string-string")
+    @RPCService(parameters = "users-users-int-string-string-string")
     public void MatchSuccess(ArrayList<User> group_1, ArrayList<User> group_2, int idx, String hostname, String port, String secretKey){
         ArrayList<User> teammates;
         ArrayList<User> enemies;
@@ -89,11 +87,11 @@ public class ReadyAdapt {
                     .show();
         });
     }
-    @RPCAdapt(parameters = "user-users")
+    @RPCService(parameters = "user-users")
     public void RefreshSquad(User user, ArrayList<User> users){
 
     }
-    @RPCAdapt
+    @RPCService
     public void InviteSquad(User inviter,String secretKey){
         new MaterialAlertDialogBuilder(view.getContext())
                 .setTitle("[邀请系统]")
@@ -111,7 +109,7 @@ public class ReadyAdapt {
                 }))
                 .show();
     }
-    @RPCAdapt
+    @RPCService
     public void SwitchCardGroup(Long id,Boolean isTeammates,CardGroup cardGroup){
         if(isTeammates){
             viewModel.liveTeammates.getValue().get(id).setCardGroup(cardGroup);

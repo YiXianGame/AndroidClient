@@ -1,4 +1,4 @@
-package com.xianyu.yixian_client.Frame.Ready.Adapt.RPC;
+package com.xianyu.yixian_client.Frame.Ready.RPC;
 
 import com.yixian.material.Entity.CardGroup;
 import com.yixian.material.Entity.User;
@@ -16,5 +16,5 @@ public interface ReadyRequest {
     @RPCRequest
     void SwitchCardGroup(CardGroup cardGroup);
     @RPCRequest
-    void ConfirmCardGroup();
+    Boolean ConfirmCardGroup();
 }
