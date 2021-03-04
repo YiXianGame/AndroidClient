@@ -46,11 +46,9 @@ public class Main_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if(binding == null){
-            binding = LoginMainFragmentBinding.inflate(inflater,container,false);
-            viewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
-            init();
-        }
+        binding = LoginMainFragmentBinding.inflate(inflater,container,false);
+        viewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
+        init();
         return binding.getRoot();
     }
 

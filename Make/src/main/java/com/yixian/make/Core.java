@@ -21,5 +21,4 @@ public class Core {
     public static MutableLiveData<HashMap<Long,SkillCard>> liveSkillcards = new MutableLiveData<>();
     public static Repository repository;
     public static Pair<String,String> userServer = new Pair<>("10.163.193.51","28015");
-    public static Pair<String,String> playerServer = new Pair<>("10.163.193.51","28016");
 }

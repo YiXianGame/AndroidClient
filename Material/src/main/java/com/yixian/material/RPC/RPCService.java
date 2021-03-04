@@ -48,7 +48,7 @@ public class RPCService {
             if(annotation!=null){
                 if(!Modifier.isInterface(modifier)){
                     methodId.append(method.getName());
-                    if(annotation.parameters().equals("")){
+                    if(annotation.parameters().length == 0){
                         String type_name;
                         for(Class<?> parameter_type : method.getParameterTypes()){
                             type_name = type.getAbstractName().get(parameter_type);
@@ -59,7 +59,7 @@ public class RPCService {
                         }
                     }
                     else {
-                        String[] types_name = annotation.parameters().split("-");
+                        String[] types_name = annotation.parameters();
                         for(String type_name : types_name){
                             if(type.getAbstractType().containsKey(type_name)){
                                 methodId.append("-").append(type_name);

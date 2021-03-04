@@ -5,16 +5,19 @@ import android.view.View;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.xianyu.yixian_client.Frame.Ready.Model.UserWithCardGroupItem;
 import com.xianyu.yixian_client.Frame.Ready.ReadyViewModel;
 import com.xianyu.yixian_client.Model.MessageDialog;
 import com.xianyu.yixian_client.R;
 import com.yixian.make.Core;
 import com.yixian.material.Entity.CardGroup;
+import com.yixian.material.Entity.Player;
+import com.yixian.material.Entity.Room;
+import com.yixian.material.Entity.Team;
 import com.yixian.material.Entity.User;
 import com.yixian.material.RPC.Annotation.RPCService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -48,36 +51,23 @@ public class ReadyService {
             MessageDialog.Confirm_Dialog(view.getContext(),"[匹配系统]","开始匹配");
         });
     }
-    @RPCService(parameters = "users-users-int-string-string-string")
-    public void MatchSuccess(ArrayList<User> group_1, ArrayList<User> group_2, int idx, String hostname, String port, String secretKey){
-        ArrayList<User> teammates;
-        ArrayList<User> enemies;
-        if(idx == 0){
-            teammates = group_1;
-            enemies = group_2;
-        }
-        else {
-            teammates = group_2;
-            enemies = group_1;
-        }
-        viewModel.liveEnemies.getValue().clear();
-        viewModel.liveTeammates.getValue().clear();
-        if(teammates!=null){
-            for (User item: teammates) {
-                viewModel.liveTeammates.getValue().put(item.getId(),new UserWithCardGroupItem(item));
-            }
-            viewModel.liveTeammates.postValue(viewModel.liveTeammates.getValue());
-        }
-
-        if(enemies!=null){
-            for (User item: enemies) {
-                viewModel.liveEnemies.getValue().put(item.getId(),new UserWithCardGroupItem(item));
-            }
-            viewModel.liveEnemies.postValue(viewModel.liveEnemies.getValue());
-        }
-
-
+    @RPCService(parameters = "List<Team>")
+    public void MatchSuccess(ArrayList<Team> teams){
         view.post(()->{
+            viewModel.liveTeammates.setValue(new HashMap<>());
+            viewModel.liveEnemies.setValue(new HashMap<>());
+            for (Team team : teams) {
+                if (team.getTeammates().containsKey(Core.liveUser.getValue().getId())) {
+                    for (Player player : team.getTeammates().values()){
+                        viewModel.liveTeammates.getValue().put(player.getId(),player);
+                    }
+                }
+                else {
+                    for (Player player : team.getTeammates().values()){
+                        viewModel.liveEnemies.getValue().put(player.getId(),player);
+                    }
+                }
+            }
             new MaterialAlertDialogBuilder(view.getContext())
                     .setTitle("匹配成功")
                     .setMessage("即将进入卡组配置界面")
@@ -87,8 +77,8 @@ public class ReadyService {
                     .show();
         });
     }
-    @RPCService(parameters = "user-users")
-    public void RefreshSquad(User user, ArrayList<User> users){
+    @RPCService(parameters = {"List<User>"})
+    public void RefreshSquad(ArrayList<User> users){
 
     }
     @RPCService
@@ -110,8 +100,8 @@ public class ReadyService {
                 .show();
     }
     @RPCService
-    public void SwitchCardGroup(Long id,Boolean isTeammates,CardGroup cardGroup){
-        if(isTeammates){
+    public void SwitchCardGroup(Long id,CardGroup cardGroup){
+        if(viewModel.liveTeammates.getValue().containsKey(id)){
             viewModel.liveTeammates.getValue().get(id).setCardGroup(cardGroup);
             viewModel.liveTeammates.setValue(viewModel.liveTeammates.getValue());
         }
@@ -119,5 +109,9 @@ public class ReadyService {
             viewModel.liveEnemies.getValue().get(id).setCardGroup(cardGroup);
             viewModel.liveEnemies.setValue(viewModel.liveTeammates.getValue());
         }
+    }
+    @RPCService
+    public void ConnectPlayerServer(String ip,String port,String roomId){
+
     }
 }

@@ -40,19 +40,19 @@ public class RemoteRepository implements IRemoteRepository {
     public RemoteRepository(){
         RPCType type = new RPCType();
         try{
-            type.add(Integer.class,"int");
-            type.add(String.class,"string");
-            type.add(Boolean.class,"bool");
-            type.add(Long.class,"long");
-            type.add(SkillCard.class,"skillCard");
-            type.add(User.class,"user");
-            type.add(CardGroup.class,"cardGroup");
-            type.add(new ArrayList<Long>(){}.getClass().getGenericSuperclass(),"longs");
-            type.add(new ArrayList<SkillCard>(){}.getClass().getGenericSuperclass(),"skillCards");
-            type.add(new ArrayList<CardItem>(){}.getClass().getGenericSuperclass(),"cardItem");
-            type.add(new ArrayList<CardGroup>(){}.getClass().getGenericSuperclass(),"cardGroups");
-            type.add(new ArrayList<Friend>(){}.getClass().getGenericSuperclass(),"friends");
-            type.add(new ArrayList<User>(){}.getClass().getGenericSuperclass(),"users");
+            type.add(Integer.class,"Int");
+            type.add(String.class,"String");
+            type.add(Boolean.class,"Bool");
+            type.add(Long.class,"Long");
+            type.add(SkillCard.class,"SkillCard");
+            type.add(User.class,"User");
+            type.add(CardGroup.class,"CardGroup");
+            type.add(new ArrayList<Long>(){}.getClass().getGenericSuperclass(),"List<long>");
+            type.add(new ArrayList<SkillCard>(){}.getClass().getGenericSuperclass(),"List<SkillCard>");
+            type.add(new ArrayList<CardItem>(){}.getClass().getGenericSuperclass(),"List<CardItem>");
+            type.add(new ArrayList<CardGroup>(){}.getClass().getGenericSuperclass(),"List<CardGroup>");
+            type.add(new ArrayList<Friend>(){}.getClass().getGenericSuperclass(),"List<Friend>");
+            type.add(new ArrayList<User>(){}.getClass().getGenericSuperclass(),"List<User>");
         }
         catch (RPCException e){
             Log.e(Tag.RemoteRepository,e.getMessage());

@@ -10,15 +10,15 @@ import androidx.recyclerview.widget.DiffUtil;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.xianyu.yixian_client.Frame.Ready.Model.UserWithCardGroupItem;
 import com.xianyu.yixian_client.Frame.Ready.ReadyViewModel;
 import com.xianyu.yixian_client.R;
+import com.yixian.material.Entity.Player;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-public class Equip_User_Adapt extends BaseQuickAdapter<UserWithCardGroupItem, Equip_User_Adapt.ViewHolder> {
+public class Equip_User_Adapt extends BaseQuickAdapter<Player, Equip_User_Adapt.ViewHolder> {
     private ReadyViewModel viewModel;
     public Equip_User_Adapt(ReadyViewModel viewModel){
         super(R.layout.ready_equip_user_item);
@@ -26,21 +26,21 @@ public class Equip_User_Adapt extends BaseQuickAdapter<UserWithCardGroupItem, Eq
     }
 
     @Override
-    protected void convert(@NotNull ViewHolder holder, UserWithCardGroupItem user) {
-        if(user.getUser().getHeadImage()!=null)Glide.with(holder.itemView).load(user.getUser().getHeadImage()).into(holder.head_image);
+    protected void convert(@NotNull ViewHolder holder, Player user) {
+        if(user.getHeadImage()!=null)Glide.with(holder.itemView).load(user.getHeadImage()).into(holder.head_image);
         else holder.head_image.setImageResource(R.drawable.touxiang);
-        holder.nickname_text.setText(user.getUser().getNickname());
+        holder.nickname_text.setText(user.getNickname());
         if(user.getCardGroup()!=null)holder.cardGroup_name_text.setText(String.format(Locale.getDefault(),"%s",user.getCardGroup().getName()));
     }
 
-    protected class DiffCallBack extends DiffUtil.ItemCallback<UserWithCardGroupItem>{
+    protected class DiffCallBack extends DiffUtil.ItemCallback<Player>{
         @Override
-        public boolean areItemsTheSame(@NonNull UserWithCardGroupItem oldItem, @NonNull UserWithCardGroupItem newItem) {
-            return oldItem.getUser().getId() == newItem.getUser().getId();
+        public boolean areItemsTheSame(@NonNull Player oldItem, @NonNull Player newItem) {
+            return oldItem.getId() == newItem.getId();
         }
         @Override
-        public boolean areContentsTheSame(@NonNull UserWithCardGroupItem oldItem, @NonNull UserWithCardGroupItem newItem) {
-            return (oldItem.getUser().getAttribute_update() == newItem.getUser().getAttribute_update() && oldItem.getCardGroup().getName().equals(newItem.getCardGroup().getName()));
+        public boolean areContentsTheSame(@NonNull Player oldItem, @NonNull Player newItem) {
+            return (oldItem.getCardGroup().getName().equals(newItem.getCardGroup().getName()));
         }
     }
     public class ViewHolder extends BaseViewHolder {

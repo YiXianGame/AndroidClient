@@ -8,6 +8,6 @@ import java.util.ArrayList;
 public interface SkillCardRequest {
     @RPCRequest()
     ArrayList<SkillCard> Sync(Long timestamp);
-    @RPCRequest(parameters = "longs")
+    @RPCRequest(parameters = {"List<Long>"})
     ArrayList<SkillCard> Query(ArrayList<Long> skillCardIds);
 }

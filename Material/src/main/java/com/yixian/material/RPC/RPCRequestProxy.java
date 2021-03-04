@@ -37,7 +37,7 @@ public  class RPCRequestProxy implements InvocationHandler {
             if(args!=null)param_count = args.length;
             else param_count = 0;
             String[] array = new String[param_count+1];
-            if(annotation.parameters().equals("")){
+            if(annotation.parameters().length == 0){
                 for(int i=0,j=1;i<param_count;i++,j++){
                     String type_name;
                     cls = args[i].getClass();
@@ -50,7 +50,7 @@ public  class RPCRequestProxy implements InvocationHandler {
                 }
             }
             else {
-                String[] types_name = annotation.parameters().split("-");
+                String[] types_name = annotation.parameters();
                 if(param_count == types_name.length){
                     for(int i=0,j=1;i<args.length;i++,j++){
                         factType = type.getAbstractType().get(types_name[i]);

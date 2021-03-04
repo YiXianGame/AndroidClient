@@ -42,7 +42,6 @@ public class EquipFragment extends Fragment {
         return binding.getRoot();
     }
     private void init() {
-
         RecyclerView teammates_recycler = binding.getRoot().findViewById(R.id.teammates_recycler);
         Equip_User_Adapt teammates_user_adapt = new Equip_User_Adapt(viewModel);
         viewModel.liveTeammates.observe(getViewLifecycleOwner(),value->{

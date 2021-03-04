@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DiffUtil;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
-import com.xianyu.yixian_client.Frame.Ready.Model.UserWithCardGroupItem;
 import com.xianyu.yixian_client.Frame.Ready.ReadyViewModel;
 import com.xianyu.yixian_client.R;
 import com.yixian.material.Entity.User;

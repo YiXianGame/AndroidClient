@@ -5,14 +5,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.xianyu.yixian_client.Frame.Ready.RPC.ReadyService;
 import com.xianyu.yixian_client.Frame.Ready.RPC.ReadyRequest;
-import com.xianyu.yixian_client.Frame.Ready.Model.UserWithCardGroupItem;
 import com.yixian.make.Core;
 import com.yixian.make.Model.Repository;
 import com.yixian.material.Entity.CardGroup;
-import com.yixian.material.Entity.CardItem;
-import com.yixian.material.Entity.Friend;
+import com.yixian.material.Entity.Player;
 import com.yixian.material.Entity.Room;
-import com.yixian.material.Entity.SkillCard;
+import com.yixian.material.Entity.Team;
 import com.yixian.material.Entity.User;
 import com.yixian.material.Exception.RPCException;
 import com.yixian.material.RPC.RPCServiceFactory;
@@ -33,26 +31,22 @@ public class ReadyViewModel extends ViewModel {
     public Room.RoomType roomType;
     public ReadyRequest readyRequest;
     public ReadyService readyAdapt;
-    public MutableLiveData<Map<Long, UserWithCardGroupItem>> liveTeammates = new MutableLiveData<>();
-    public MutableLiveData<Map<Long, UserWithCardGroupItem>> liveEnemies = new MutableLiveData<>();
+    public MutableLiveData<Map<Long, Player>> liveTeammates = new MutableLiveData<>();
+    public MutableLiveData<Map<Long, Player>> liveEnemies = new MutableLiveData<>();
     public boolean confirm = false;
     public void initialization(Repository repository){
         this.repository = repository;
         RPCType type = new RPCType();
         try{
-            type.add(Integer.class,"int");
-            type.add(String.class,"string");
-            type.add(Boolean.class,"bool");
-            type.add(Long.class,"long");
-            type.add(SkillCard.class,"skillCard");
-            type.add(User.class,"user");
-            type.add(CardGroup.class,"cardGroup");
-            type.add(new ArrayList<Long>(){}.getClass().getGenericSuperclass(),"longs");
-            type.add(new ArrayList<SkillCard>(){}.getClass().getGenericSuperclass(),"skillCards");
-            type.add(new ArrayList<CardItem>(){}.getClass().getGenericSuperclass(),"cardItem");
-            type.add(new ArrayList<CardGroup>(){}.getClass().getGenericSuperclass(),"cardGroups");
-            type.add(new ArrayList<Friend>(){}.getClass().getGenericSuperclass(),"friends");
-            type.add(new ArrayList<User>(){}.getClass().getGenericSuperclass(),"users");
+            type.add(Integer.class,"Int");
+            type.add(String.class,"String");
+            type.add(Boolean.class,"Bool");
+            type.add(Long.class,"Long");
+            type.add(User.class,"User");
+            type.add(CardGroup.class,"CardGroup");
+            type.add(new ArrayList<Long>(){}.getClass().getGenericSuperclass(),"List<long>");
+            type.add(new ArrayList<User>(){}.getClass().getGenericSuperclass(),"List<User>");
+            type.add(new ArrayList<Team>(){}.getClass().getGenericSuperclass(),"List<Team>");
         } catch (RPCException e) {
             e.printStackTrace();
         }
