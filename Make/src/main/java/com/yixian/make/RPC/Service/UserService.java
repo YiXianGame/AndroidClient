@@ -1,6 +1,6 @@
 package com.yixian.make.RPC.Service;
 import com.yixian.make.Core;
-import com.yixian.material.RPC.Annotation.RPCService;
+import com.yixian.material.EtherealC.Annotation.RPCService;
 
 public class UserService {
     @RPCService

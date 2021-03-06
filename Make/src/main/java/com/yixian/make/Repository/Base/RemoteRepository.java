@@ -11,11 +11,11 @@ import com.yixian.material.Entity.Friend;
 import com.yixian.material.Entity.User;
 import com.yixian.material.Log.Log.Tag;
 import com.yixian.make.RPC.Request.SkillCardRequest;
-import com.yixian.material.RPC.RPCServiceFactory;
+import com.yixian.material.EtherealC.Service.RPCNetServiceFactory;
 import com.yixian.material.Exception.RPCException;
-import com.yixian.material.RPC.RPCClientFactory;
-import com.yixian.material.RPC.RPCRequestProxyFactory;
-import com.yixian.material.RPC.RPCType;
+import com.yixian.material.EtherealC.Net.RPCNetFactory;
+import com.yixian.material.EtherealC.Request.RPCNetRequestFactory;
+import com.yixian.material.EtherealC.Model.RPCType;
 import com.yixian.make.RPC.Request.UserRequest;
 import com.yixian.make.Repository.Interface.IRemoteRepository;
 import com.yixian.material.Entity.SkillCard;
@@ -59,10 +59,10 @@ public class RemoteRepository implements IRemoteRepository {
             e.printStackTrace();
         }
         //每一个Service都可以拥有自己的TypeConvert.
-        userRequest = RPCRequestProxyFactory.register(UserRequest.class,"UserServer", Core.userServer.first,Core.userServer.second,type);
-        skillCardRequest = RPCRequestProxyFactory.register(SkillCardRequest.class,"SkillCardServer",Core.userServer.first,Core.userServer.second,type);
-        RPCServiceFactory.register(SkillCardService.class,"SkillCardClient",Core.userServer.first,Core.userServer.second,type);
-        RPCServiceFactory.register(UserService.class,"UserClient",Core.userServer.first,Core.userServer.second,type);
-        RPCClientFactory.StartClient(Core.userServer.first,Core.userServer.second);
+        userRequest = RPCNetRequestFactory.register(UserRequest.class,"UserServer", Core.userServer.first,Core.userServer.second,type);
+        skillCardRequest = RPCNetRequestFactory.register(SkillCardRequest.class,"SkillCardServer",Core.userServer.first,Core.userServer.second,type);
+        RPCNetServiceFactory.register(SkillCardService.class,"SkillCardClient",Core.userServer.first,Core.userServer.second,type);
+        RPCNetServiceFactory.register(UserService.class,"UserClient",Core.userServer.first,Core.userServer.second,type);
+        RPCNetFactory.StartClient(Core.userServer.first,Core.userServer.second);
     }
 }

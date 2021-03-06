@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/main_dest"
-        android:name="com.xianyu.yixian_client.Frame.Main.Fragment.Main_Fragment"
+        android:name="com.xianyu.yixian_client.Frame.Main.Fragment.Main.Main_Fragment"
         android:label="Main_Fragment" >
         <action
             android:id="@+id/action_main_dest_to_chooseMode_dest"
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/chooseMode_dest"
-        android:name="com.xianyu.yixian_client.Frame.Main.Fragment.ChooseMode_Fragment"
+        android:name="com.xianyu.yixian_client.Frame.Main.Fragment.ChooseMode.ChooseMode_Fragment"
         android:label="ChooseMode_Fragment" >
         <argument
             android:name="gameMode"
@@ -72,6 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/equipFragment"
-        android:name="com.xianyu.yixian_client.Frame.Ready.Fragment.EquipFragment"
-        android:label="EquipFragment" />
+        android:name="com.xianyu.yixian_client.Frame.Ready.Fragment.Equip.EquipFragment"
+        android:label="EquipFragment" >
+    </fragment>
 </navigation>

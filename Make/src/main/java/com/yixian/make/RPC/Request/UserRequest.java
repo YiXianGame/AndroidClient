@@ -3,7 +3,7 @@ package com.yixian.make.RPC.Request;
 import com.yixian.material.Entity.CardItem;
 import com.yixian.material.Entity.Friend;
 import com.yixian.material.Entity.User;
-import com.yixian.material.RPC.Annotation.RPCRequest;
+import com.yixian.material.EtherealC.Annotation.RPCRequest;
 
 import java.util.ArrayList;
 

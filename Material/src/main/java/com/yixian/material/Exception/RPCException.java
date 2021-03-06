@@ -1,7 +1,7 @@
 package com.yixian.material.Exception;
 
 public class RPCException extends Exception{
-    public enum RpcErrorCode{Main};
+    public enum RpcErrorCode{Main,NoneAuthority};
     public RpcErrorCode Code = RpcErrorCode.Main;
     public RPCException(String message) {
         super(message);

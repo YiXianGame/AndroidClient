@@ -2,7 +2,7 @@ package com.xianyu.yixian_client.Frame.Ready.RPC;
 
 import com.yixian.material.Entity.CardGroup;
 import com.yixian.material.Entity.User;
-import com.yixian.material.RPC.Annotation.RPCRequest;
+import com.yixian.material.EtherealC.Annotation.RPCRequest;
 
 import java.util.ArrayList;
 

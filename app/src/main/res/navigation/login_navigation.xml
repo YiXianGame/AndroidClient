@@ -6,6 +6,6 @@
     app:startDestination="@id/main_Fragment">
     <fragment
         android:id="@+id/main_Fragment"
-        android:name="com.xianyu.yixian_client.Frame.Login.Fragment.Main_Fragment"
+        android:name="com.xianyu.yixian_client.Frame.Login.Fragment.Main.Main_Fragment"
         android:label="Login_Fragment" />
 </navigation>

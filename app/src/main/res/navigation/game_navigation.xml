@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/game_navigation">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/game_navigation"
+    app:startDestination="@id/game_Activity"
+    >
+    <activity
+        android:id="@+id/game_Activity"
+        android:name="com.xianyu.yixian_client.Frame.Game.Game_Activity"
+        android:label="Game_Activity" >
+        <action
+            android:id="@+id/action_game_Activity_to_load_Fragment"
+            app:destination="@id/load_Fragment"
+            app:popUpTo="@id/load_Fragment"
+            app:popUpToInclusive="true" />
+    </activity>
+    <fragment
+        android:id="@+id/load_Fragment"
+        android:name="com.xianyu.yixian_client.Frame.Game.Fragment.Load.Load_Fragment"
+        android:label="Load_Fragment" />
 </navigation>

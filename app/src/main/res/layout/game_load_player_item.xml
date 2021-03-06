@@ -21,6 +21,7 @@
         app:layout_constraintVertical_weight="1"
         >
         <TextView
+            android:layout_margin="4dp"
             android:id="@+id/name_text"
             android:text="@string/nickname"
             android:autoSizeTextType="uniform"

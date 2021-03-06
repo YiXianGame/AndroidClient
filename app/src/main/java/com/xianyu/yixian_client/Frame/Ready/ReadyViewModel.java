@@ -3,7 +3,7 @@ package com.xianyu.yixian_client.Frame.Ready;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.xianyu.yixian_client.Frame.Ready.RPC.ReadyService;
+import com.xianyu.yixian_client.Frame.Ready.Fragment.Equip.RPC.EquipRequest;
 import com.xianyu.yixian_client.Frame.Ready.RPC.ReadyRequest;
 import com.yixian.make.Core;
 import com.yixian.make.Model.Repository;
@@ -13,9 +13,9 @@ import com.yixian.material.Entity.Room;
 import com.yixian.material.Entity.Team;
 import com.yixian.material.Entity.User;
 import com.yixian.material.Exception.RPCException;
-import com.yixian.material.RPC.RPCServiceFactory;
-import com.yixian.material.RPC.RPCRequestProxyFactory;
-import com.yixian.material.RPC.RPCType;
+import com.yixian.material.EtherealC.Service.RPCNetServiceFactory;
+import com.yixian.material.EtherealC.Request.RPCNetRequestFactory;
+import com.yixian.material.EtherealC.Model.RPCType;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -30,12 +30,13 @@ public class ReadyViewModel extends ViewModel {
     private Repository repository;
     public Room.RoomType roomType;
     public ReadyRequest readyRequest;
-    public ReadyService readyAdapt;
+    public EquipRequest equipRequest;
     public MutableLiveData<Map<Long, Player>> liveTeammates = new MutableLiveData<>();
     public MutableLiveData<Map<Long, Player>> liveEnemies = new MutableLiveData<>();
     public boolean confirm = false;
     public void initialization(Repository repository){
         this.repository = repository;
+        //初始化RPC
         RPCType type = new RPCType();
         try{
             type.add(Integer.class,"Int");
@@ -50,9 +51,8 @@ public class ReadyViewModel extends ViewModel {
         } catch (RPCException e) {
             e.printStackTrace();
         }
-        readyAdapt = new ReadyService(this);
-        RPCServiceFactory.register(readyAdapt,"ReadyClient", Core.userServer.first,Core.userServer.second,type);
-        readyRequest = RPCRequestProxyFactory.register(ReadyRequest.class,"ReadyServer", Core.userServer.first,Core.userServer.second,type);
+        this.readyRequest = RPCNetRequestFactory.register(ReadyRequest.class,"ReadyRequest",Core.userServer.first,Core.userServer.second,type);
+        this.equipRequest = RPCNetRequestFactory.register(EquipRequest.class,"EquipRequest",Core.userServer.first,Core.userServer.second,type);
     }
     public Single<Boolean> inviteFriend(long id){
         return new Single<Boolean>() {
@@ -85,7 +85,7 @@ public class ReadyViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
         disposable.clear();
-        RPCServiceFactory.destory("ReadyClient", Core.userServer.first,Core.userServer.second);
-        RPCRequestProxyFactory.destory("ReadyServer", Core.userServer.first,Core.userServer.second);
+        RPCNetServiceFactory.destory("ReadyClient", Core.userServer.first,Core.userServer.second);
+        RPCNetRequestFactory.destory("ReadyServer", Core.userServer.first,Core.userServer.second);
     }
 }

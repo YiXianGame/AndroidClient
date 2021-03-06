@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.xianyu.yixian_client.Frame.Login.Fragment.Bind.DepthPageTransformer;
-import com.xianyu.yixian_client.Frame.PersonalInformation.Fragment.Bind.PersonalInformation_Fragment_Adapter;
+import com.xianyu.yixian_client.Frame.Login.Adapt.Bind.DepthPageTransformer;
+import com.xianyu.yixian_client.Frame.PersonalInformation.Adapt.Bind.PersonalInformation_Fragment_Adapter;
 import com.xianyu.yixian_client.R;
 import com.xianyu.yixian_client.databinding.PersonalProfileFragmentBinding;
 import com.yixian.make.Model.Repository;
