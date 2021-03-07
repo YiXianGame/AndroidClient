@@ -41,14 +41,6 @@ public class SocketClient {
     private Random random = new Random();
     private RPCNetConfig config;
 
-    public RPCNetConfig getConfig() {
-        return config;
-    }
-
-    public void setConfig(RPCNetConfig config) {
-        this.config = config;
-    }
-
     public SocketClient(RPCNetConfig config) {
         this.config = config;
     }

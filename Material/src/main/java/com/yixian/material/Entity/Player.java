@@ -24,7 +24,7 @@ public class Player {
     private int lv = 1;//等级
     private byte[] headImage;
     private Room room;//房间
-    private Team teammates;//队友
+    private Team team;//队友
     private CardGroup cardGroup;
 
     public long getId() {
@@ -115,12 +115,12 @@ public class Player {
         this.room = room;
     }
 
-    public Team getTeammates() {
-        return teammates;
+    public Team getTeam() {
+        return team;
     }
 
-    public void setTeammates(Team teammates) {
-        this.teammates = teammates;
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public CardGroup getCardGroup() {

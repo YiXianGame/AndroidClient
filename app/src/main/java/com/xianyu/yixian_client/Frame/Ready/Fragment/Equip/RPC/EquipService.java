@@ -9,9 +9,12 @@ import com.xianyu.yixian_client.Frame.Game.Game_Activity;
 import com.xianyu.yixian_client.Frame.Ready.Fragment.Equip.EquipFragment;
 import com.yixian.make.Core;
 import com.yixian.material.Entity.CardGroup;
+import com.yixian.material.Entity.Team;
 import com.yixian.material.EtherealC.Annotation.RPCService;
 import com.yixian.material.EtherealC.Request.RPCNetRequestFactory;
 import com.yixian.material.EtherealC.Service.RPCNetServiceFactory;
+
+import java.util.Objects;
 
 /**
  * @ProjectName: YiXian_Client
@@ -34,13 +37,11 @@ public class EquipService extends Fragment{
 
     @RPCService
     public void SwitchCardGroup(Long id, CardGroup cardGroup){
-        if(fragment.getViewModel().liveTeammates.getValue().containsKey(id)){
-            fragment.getViewModel().liveTeammates.getValue().get(id).setCardGroup(cardGroup);
-            fragment.getViewModel().liveTeammates.setValue(fragment.getViewModel().liveTeammates.getValue());
-        }
-        else {
-            fragment.getViewModel().liveEnemies.getValue().get(id).setCardGroup(cardGroup);
-            fragment.getViewModel().liveEnemies.setValue(fragment.getViewModel().liveTeammates.getValue());
+        for(Team team : Objects.requireNonNull(fragment.getViewModel().liveTeams.getValue())){
+            if(team.getTeammates().containsKey(id)){
+                Objects.requireNonNull(team.getTeammates().get(id)).setCardGroup(cardGroup);
+                fragment.getViewModel().liveTeams.postValue(fragment.getViewModel().liveTeams.getValue());
+            }
         }
     }
     @RPCService

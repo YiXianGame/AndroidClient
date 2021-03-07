@@ -28,48 +28,44 @@ import java.util.ArrayList;
 public class SkillCard {
     @TypeConverters(SkillCardCategoryConvert.class)
     public enum Category {Physics,Magic,Attack,Cure,Eternal };
-    @Expose
+    @Expose(serialize = true)
     @PrimaryKey
     long id;//卡牌ID-
-    @Expose
+    @Expose(serialize = false)
     String name = "";//卡牌名字
-    @Expose
+    @Expose(serialize = false)
     String description = "";//卡牌描述
-    @Expose
+    @Expose(serialize = false)
     int mp;//释放卡牌所需消耗的仙气值
-    @Expose
+    @Expose(serialize = false)
     int probability;//卡牌觉醒的概率
-    @Expose
+    @Expose(serialize = false)
     int auxiliaryHp;//己方HP效果
-    @Expose
+    @Expose(serialize = false)
     int auxiliaryMp;//己方MP效果
-    @Expose
+    @Expose(serialize = false)
     int enemyHp;//敌人HP效果
-    @Expose
+    @Expose(serialize = false)
     int enemyMp;//敌人MP效果
-    @Expose
+    @Expose(serialize = false)
     long authorId;//作者ID
-    @Expose
+    @Expose(serialize = false)
     int maxEnemy;//最大锁定敌人数 魂命
-    @Expose
+    @Expose(serialize = false)
     int maxAuxiliary;//最大锁定友军数 灵命
-    @Expose
+    @Expose(serialize = false)
     int registerDate;//卡牌注册日期
-    @Expose
+    @Expose(serialize = true)
     int attributeUpdate;//卡牌更新日期
-    @Expose
+    @Expose(serialize = false)
     @TypeConverters(BuffConvert.class)
     ArrayList<Buff> enemyBuff = new ArrayList<>();
-    @Expose
+    @Expose(serialize = false)
     @TypeConverters(BuffConvert.class)
     ArrayList<Buff> auxiliaryBuff = new ArrayList<>();
-    @Expose
+    @Expose(serialize = false)
     @TypeConverters(AttributeConvert.class)
     ArrayList<Category> category = new ArrayList<>();
-    @Ignore
-    ArrayList<User> enemy = new ArrayList<>();
-    @Ignore
-    ArrayList<User> auxiliary = new ArrayList<>();
 
     public int getRegisterDate() {
         return registerDate;

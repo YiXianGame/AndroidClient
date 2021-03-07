@@ -34,8 +34,8 @@ public class CardGroupSectionFirst extends BaseNodeProvider {
         Button expand_button = baseViewHolder.findView(R.id.expand_button);
         expand_button.setOnClickListener(v -> {
             if(!viewModel.confirm){
-                viewModel.liveTeammates.getValue().get(Core.liveUser.getValue().getId()).setCardGroup(((CardGroupSectionFirstNode) baseNode).cardGroup);
-                viewModel.liveTeammates.postValue(viewModel.liveTeammates.getValue());
+                viewModel.player.setCardGroup(((CardGroupSectionFirstNode) baseNode).cardGroup);
+                viewModel.equipRequest.SwitchCardGroup(viewModel.player.getCardGroup());
             }
         });
     }

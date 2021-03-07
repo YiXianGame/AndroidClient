@@ -16,6 +16,7 @@ import java.util.HashMap;
  */
 public class Team {
     private String name;
+
     private HashMap<Long, Player> teammates = new HashMap<Long, Player>();
 
     public String getName() {

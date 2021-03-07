@@ -35,14 +35,11 @@ public class RPCNetService {
         this.methods = methods;
     }
 
-    public void Register(Object instance,RPCType type) throws RPCException {
+    public void register(Object instance, RPCType type) throws RPCException {
         this.instance = instance;
-        Register(instance.getClass(),type);
-    }
-    public void Register(Class instanceClass,RPCType type) throws RPCException {
         StringBuilder methodId = new StringBuilder();
         this.type = type;
-        for(Method method : instanceClass.getMethods())
+        for(Method method : instance.getClass().getMethods())
         {
             int modifier = method.getModifiers();
             com.yixian.material.EtherealC.Annotation.RPCService annotation = method.getAnnotation(com.yixian.material.EtherealC.Annotation.RPCService.class);

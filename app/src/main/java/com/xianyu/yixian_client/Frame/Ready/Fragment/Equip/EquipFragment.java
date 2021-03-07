@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -26,6 +28,8 @@ import com.yixian.make.Core;
 import com.yixian.material.Entity.CardGroup;
 import com.yixian.material.Entity.Team;
 import com.yixian.material.Entity.User;
+import com.yixian.material.EtherealC.Request.RPCNetRequestConfig;
+import com.yixian.material.EtherealC.Service.RPCNetServiceConfig;
 import com.yixian.material.Exception.RPCException;
 import com.yixian.material.EtherealC.Request.RPCNetRequestFactory;
 import com.yixian.material.EtherealC.Service.RPCNetServiceFactory;
@@ -78,19 +82,26 @@ public class EquipFragment extends Fragment {
         } catch (RPCException e) {
             e.printStackTrace();
         }
-        RPCNetServiceFactory.register(new EquipService(this),"EquipService",Core.userServer.first,Core.userServer.second,type);
-        RecyclerView teammates_recycler = binding.getRoot().findViewById(R.id.teammates_recycler);
-        Equip_User_Adapt teammates_user_adapt = new Equip_User_Adapt(viewModel);
-        viewModel.liveTeammates.observe(getViewLifecycleOwner(),value->{
-            teammates_user_adapt.setDiffNewData(new ArrayList<>(value.values()));
-            teammates_recycler.setAdapter(teammates_user_adapt);
-        });
-
-        RecyclerView enemies_recycler = binding.getRoot().findViewById(R.id.enemies_recycler);
-        Equip_User_Adapt enemies_user_adapt = new Equip_User_Adapt(viewModel);
-        viewModel.liveEnemies.observe(getViewLifecycleOwner(),value->{
-            enemies_user_adapt.setDiffNewData(new ArrayList<>(value.values()));
-            enemies_recycler.setAdapter(enemies_user_adapt);
+        RPCNetServiceConfig config = new RPCNetServiceConfig(type);
+        RPCNetServiceFactory.register(new EquipService(this),"EquipService",Core.userServer.first,Core.userServer.second,config);
+        LinearLayout teammates_layout = binding.getRoot().findViewById(R.id.teammates_layout);
+        LinearLayout enemies_layout = binding.getRoot().findViewById(R.id.enemies_layout);
+        viewModel.liveTeams.observe(getViewLifecycleOwner(),teams->{
+            for (Team team:teams) {
+                RecyclerView recyclerView = new RecyclerView(getContext());
+                Equip_User_Adapt user_adapt = new Equip_User_Adapt(viewModel);
+                user_adapt.setDiffNewData(new ArrayList<>(team.getTeammates().values()));
+                recyclerView.setAdapter(user_adapt);
+                LinearLayoutManager manager = new LinearLayoutManager(getContext());
+                recyclerView.setLayoutManager(manager);
+                if(team.getTeammates().containsKey(Core.liveUser.getValue())){
+                    teammates_layout.addView(recyclerView);
+                    viewModel.player = team.getTeammates().get(Core.liveUser.getValue().getId());
+                }
+                else {
+                    enemies_layout.addView(recyclerView);
+                }
+            }
         });
 
         RecyclerView group_recycle = binding.getRoot().findViewById(R.id.cardGroups_recycler);
@@ -113,13 +124,12 @@ public class EquipFragment extends Fragment {
 
         Button confirm_button = binding.getRoot().findViewById(R.id.confirm_button);
         confirm_button.setOnClickListener(v -> {
-            if(viewModel.liveTeammates.getValue().get(Core.liveUser.getValue().getId()).getCardGroup()!=null){
+            if(viewModel.player.getCardGroup()!=null){
                 viewModel.confirmCardGroup().as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(value->{
                     if(value){
                         viewModel.confirm = true;
                         confirm_button.setEnabled(false);
                     }
-                    else viewModel.confirm = false;
                 });
             }
             else MessageDialog.Error_Dialog(getContext(),"[备战系统]","您当前未选择卡组");

@@ -12,6 +12,7 @@ import com.yixian.material.Entity.Player;
 import com.yixian.material.Entity.Room;
 import com.yixian.material.Entity.Team;
 import com.yixian.material.Entity.User;
+import com.yixian.material.EtherealC.Request.RPCNetRequestConfig;
 import com.yixian.material.Exception.RPCException;
 import com.yixian.material.EtherealC.Service.RPCNetServiceFactory;
 import com.yixian.material.EtherealC.Request.RPCNetRequestFactory;
@@ -31,8 +32,8 @@ public class ReadyViewModel extends ViewModel {
     public Room.RoomType roomType;
     public ReadyRequest readyRequest;
     public EquipRequest equipRequest;
-    public MutableLiveData<Map<Long, Player>> liveTeammates = new MutableLiveData<>();
-    public MutableLiveData<Map<Long, Player>> liveEnemies = new MutableLiveData<>();
+    public MutableLiveData<ArrayList<Team>> liveTeams = new MutableLiveData<>();
+    public Player player;
     public boolean confirm = false;
     public void initialization(Repository repository){
         this.repository = repository;
@@ -51,8 +52,9 @@ public class ReadyViewModel extends ViewModel {
         } catch (RPCException e) {
             e.printStackTrace();
         }
-        this.readyRequest = RPCNetRequestFactory.register(ReadyRequest.class,"ReadyRequest",Core.userServer.first,Core.userServer.second,type);
-        this.equipRequest = RPCNetRequestFactory.register(EquipRequest.class,"EquipRequest",Core.userServer.first,Core.userServer.second,type);
+        RPCNetRequestConfig config = new RPCNetRequestConfig(type);
+        this.readyRequest = RPCNetRequestFactory.register(ReadyRequest.class,"ReadyRequest",Core.userServer.first,Core.userServer.second,config);
+        this.equipRequest = RPCNetRequestFactory.register(EquipRequest.class,"EquipRequest",Core.userServer.first,Core.userServer.second,config);
     }
     public Single<Boolean> inviteFriend(long id){
         return new Single<Boolean>() {
@@ -77,7 +79,7 @@ public class ReadyViewModel extends ViewModel {
         return new Single<Boolean>() {
             @Override
             protected void subscribeActual(@NonNull SingleObserver<? super Boolean> observer) {
-                observer.onSuccess(readyRequest.ConfirmCardGroup());
+                observer.onSuccess(equipRequest.ConfirmCardGroup());
             }
         };
     }

@@ -1,8 +1,10 @@
 package com.xianyu.yixian_client.Frame.Game.Fragment.Load.RPC;
 
+import com.yixian.material.Entity.SkillCard;
 import com.yixian.material.Entity.Team;
 import com.yixian.material.EtherealC.Annotation.RPCRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,5 +21,9 @@ import java.util.List;
  */
 public interface LoadRequest {
     @RPCRequest
-    List<Team> Connect(long id,String password);
+    ArrayList<Team> Connect(long id,String password);
+    @RPCRequest
+    ArrayList<SkillCard> SyncSkillCard(ArrayList<SkillCard> skillCards);
+    @RPCRequest
+    void SyncSkillCardSuccess();
 }

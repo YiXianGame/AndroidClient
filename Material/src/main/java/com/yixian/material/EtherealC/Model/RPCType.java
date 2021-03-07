@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class RPCType {
     public interface IConvert {
-        Object convert(String obj);
+        Object convert(Object obj);
     }
     private HashMap<Type, String> abstractName = new HashMap<>();
     private HashMap<String, Type> abstractType = new HashMap<>();
@@ -42,7 +42,7 @@ public class RPCType {
         else{
             this.abstractName.put(type, abstractName);
             this.abstractType.put(abstractName,type);
-            convert.put(abstractName, obj -> Utils.gson.fromJson(obj,type));
+            convert.put(abstractName, obj -> obj = Utils.gson.fromJson((String)obj,type));
         }
     }
     public void add(Type type, String abstractName, IConvert convert) throws RPCException {

@@ -20,7 +20,7 @@ public class RPCNetRequestFactory {
         if(service == null){
             SocketClient socketClient = null;
             Pair<String,String> clientKey = new Pair<String,String>(hostname,port);
-            service = RPCNetRequest.Register(interface_class,serviceName,clientKey,config);
+            service = RPCNetRequest.register(interface_class,serviceName,clientKey,config);
             services.put(key,service);
         }
         return service;

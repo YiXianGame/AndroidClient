@@ -13,8 +13,4 @@ public interface ReadyRequest {
     ArrayList<User> EnterSquad(Long id,String secretKey);
     @RPCRequest
     void StartMatch();
-    @RPCRequest
-    void SwitchCardGroup(CardGroup cardGroup);
-    @RPCRequest
-    Boolean ConfirmCardGroup();
 }

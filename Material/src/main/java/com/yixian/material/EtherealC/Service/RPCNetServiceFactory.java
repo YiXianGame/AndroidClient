@@ -20,7 +20,7 @@ public class RPCNetServiceFactory {
         if(service == null){
             try{
                 service = new RPCNetService();
-                service.Register(instance,config.getType());
+                service.register(instance,config.getType());
                 services.put(key,service);
             }
             catch (Exception err){
@@ -28,19 +28,8 @@ public class RPCNetServiceFactory {
             }
         }
     }
-    public static void register(@NonNull Class instanceClass, @NonNull String serviceName, @NonNull String hostname, @NonNull String port, @NonNull RPCNetServiceConfig config){
-        Triple<String,String,String> key = new Triple<>(serviceName,hostname,port);
-        RPCNetService service = services.get(key);
-        if(service == null){
-            try{
-                service = new RPCNetService();
-                service.Register(instanceClass,config.getType());
-                services.put(key,service);
-            }
-            catch (Exception err){
-                Log.e(Tag.RemoteRepository,serviceName + "异常报错，销毁注册\n" + err.getMessage());
-            }
-        }
+    public static void register(@NonNull Class instanceClass, @NonNull String serviceName, @NonNull String hostname, @NonNull String port, @NonNull RPCNetServiceConfig config) throws InstantiationException, IllegalAccessException {
+        register(instanceClass.newInstance(),serviceName,hostname,port,config);
     }
     public static void destory(String serviceName, String hostname, String port){
         Triple<String,String,String> key = new Triple<>(serviceName,hostname,port);

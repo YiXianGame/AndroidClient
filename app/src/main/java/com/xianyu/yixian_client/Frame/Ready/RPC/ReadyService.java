@@ -7,6 +7,7 @@ import com.xianyu.yixian_client.Frame.Ready.ReadyFragment;
 import com.xianyu.yixian_client.Model.MessageDialog;
 import com.xianyu.yixian_client.R;
 import com.yixian.make.Core;
+import com.yixian.material.Entity.CardGroup;
 import com.yixian.material.Entity.Player;
 import com.yixian.material.Entity.Team;
 import com.yixian.material.Entity.User;
@@ -43,21 +44,8 @@ public class ReadyService {
     }
     @RPCService(parameters = "List<Team>")
     public void MatchSuccess(ArrayList<Team> teams){
+        fragment.getViewModel().liveTeams.setValue(teams);
         fragment.getView().post(()->{
-            fragment.getViewModel().liveTeammates.setValue(new HashMap<>());
-            fragment.getViewModel().liveEnemies.setValue(new HashMap<>());
-            for (Team team : teams) {
-                if (team.getTeammates().containsKey(Core.liveUser.getValue().getId())) {
-                    for (Player player : team.getTeammates().values()){
-                        fragment.getViewModel().liveTeammates.getValue().put(player.getId(),player);
-                    }
-                }
-                else {
-                    for (Player player : team.getTeammates().values()){
-                        fragment.getViewModel().liveEnemies.getValue().put(player.getId(),player);
-                    }
-                }
-            }
             new MaterialAlertDialogBuilder(fragment.getView().getContext())
                     .setTitle("匹配成功")
                     .setMessage("即将进入卡组配置界面")
@@ -92,5 +80,14 @@ public class ReadyService {
                     .show();
         });
     }
-
+    @RPCService
+    public void SwitchCardGroup(Long id, CardGroup cardGroup){
+        for (Team team : fragment.getViewModel().liveTeams.getValue()){
+            if(team.getTeammates().containsKey(id)){
+                team.getTeammates().get(id).setCardGroup(cardGroup);
+                break;
+            }
+        }
+        fragment.getViewModel().liveTeams.postValue(fragment.getViewModel().liveTeams.getValue());
+    }
 }

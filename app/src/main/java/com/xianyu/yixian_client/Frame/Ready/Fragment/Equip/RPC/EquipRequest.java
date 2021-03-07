@@ -1,5 +1,8 @@
 package com.xianyu.yixian_client.Frame.Ready.Fragment.Equip.RPC;
 
+import com.yixian.material.Entity.CardGroup;
+import com.yixian.material.EtherealC.Annotation.RPCRequest;
+
 /**
  * @ProjectName: YiXian_Client
  * @Package: com.xianyu.yixian_client.Frame.Ready.RPC
@@ -12,5 +15,9 @@ package com.xianyu.yixian_client.Frame.Ready.Fragment.Equip.RPC;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class EquipRequest {
+public interface EquipRequest {
+    @RPCRequest
+    void SwitchCardGroup(CardGroup cardGroup);
+    @RPCRequest
+    Boolean ConfirmCardGroup();
 }

@@ -23,7 +23,7 @@ public  class RPCNetRequest implements InvocationHandler {
     private Pair<String,String> clientKey;
     private RPCNetRequestConfig config;
     private int paramStart;
-    public static <T> T Register(Class<T> interface_class, String service, Pair<String,String> key, RPCNetRequestConfig config){
+    public static <T> T register(Class<T> interface_class, String service, Pair<String,String> key, RPCNetRequestConfig config){
         RPCNetRequest proxy = new RPCNetRequest();
         proxy.service = service;
         proxy.clientKey = key;

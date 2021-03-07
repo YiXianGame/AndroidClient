@@ -2,7 +2,15 @@ package com.xianyu.yixian_client.Frame.Game.Fragment.Load.RPC;
 
 import com.xianyu.yixian_client.Frame.Game.Fragment.Load.Load_Fragment;
 import com.xianyu.yixian_client.Frame.Game.GameViewModel;
+import com.xianyu.yixian_client.Model.MessageDialog;
 import com.xianyu.yixian_client.databinding.GameLoadFragmentBinding;
+import com.yixian.material.Entity.Player;
+import com.yixian.material.Entity.Team;
+import com.yixian.material.EtherealC.Annotation.RPCService;
+
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
 
 /**
  * @ProjectName: YiXian_Client
@@ -23,4 +31,11 @@ public class LoadService {
         this.fragment = fragment;
     }
 
+    @RPCService
+    public void StartGame(ArrayList<Team> teams){
+        fragment.getView().post(()->{
+            fragment.getViewModel().getTeams().setValue(teams);
+            MessageDialog.Confirm_Dialog(fragment.getContext(),"[加载系统]","进入游戏画面");
+        });
+    }
 }
