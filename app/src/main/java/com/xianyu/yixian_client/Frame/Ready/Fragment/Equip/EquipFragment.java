@@ -62,7 +62,7 @@ public class EquipFragment extends Fragment {
     public void onDestroy() {
         RPCNetServiceFactory.destory("EquipService",Core.userServer.first,Core.userServer.second);
         RPCNetRequestFactory.destory("EquipRequest",Core.userServer.first,Core.userServer.second);
-        viewModel.equipRequest = null;
+        viewModel.setReadyRequest(null);
         super.onDestroy();
     }
 
@@ -83,10 +83,10 @@ public class EquipFragment extends Fragment {
             e.printStackTrace();
         }
         RPCNetServiceConfig config = new RPCNetServiceConfig(type);
-        RPCNetServiceFactory.register(new EquipService(this),"EquipService",Core.userServer.first,Core.userServer.second,config);
+        RPCNetServiceFactory.register(new EquipService(this),"EquipClient",Core.userServer.first,Core.userServer.second,config);
         LinearLayout teammates_layout = binding.getRoot().findViewById(R.id.teammates_layout);
         LinearLayout enemies_layout = binding.getRoot().findViewById(R.id.enemies_layout);
-        viewModel.liveTeams.observe(getViewLifecycleOwner(),teams->{
+        viewModel.getLiveTeams().observe(getViewLifecycleOwner(),teams->{
             for (Team team:teams) {
                 RecyclerView recyclerView = new RecyclerView(getContext());
                 Equip_User_Adapt user_adapt = new Equip_User_Adapt(viewModel);
@@ -94,9 +94,8 @@ public class EquipFragment extends Fragment {
                 recyclerView.setAdapter(user_adapt);
                 LinearLayoutManager manager = new LinearLayoutManager(getContext());
                 recyclerView.setLayoutManager(manager);
-                if(team.getTeammates().containsKey(Core.liveUser.getValue())){
+                if(team.getTeammates().containsKey(Core.liveUser.getValue().getId())){
                     teammates_layout.addView(recyclerView);
-                    viewModel.player = team.getTeammates().get(Core.liveUser.getValue().getId());
                 }
                 else {
                     enemies_layout.addView(recyclerView);
@@ -124,10 +123,10 @@ public class EquipFragment extends Fragment {
 
         Button confirm_button = binding.getRoot().findViewById(R.id.confirm_button);
         confirm_button.setOnClickListener(v -> {
-            if(viewModel.player.getCardGroup()!=null){
+            if(viewModel.getPlayer().getCardGroup()!=null){
                 viewModel.confirmCardGroup().as(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(value->{
                     if(value){
-                        viewModel.confirm = true;
+                        viewModel.setConfirm(true);
                         confirm_button.setEnabled(false);
                     }
                 });

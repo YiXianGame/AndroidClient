@@ -29,12 +29,61 @@ import io.reactivex.disposables.CompositeDisposable;
 public class ReadyViewModel extends ViewModel {
     private final CompositeDisposable disposable = new CompositeDisposable();
     private Repository repository;
-    public Room.RoomType roomType;
-    public ReadyRequest readyRequest;
-    public EquipRequest equipRequest;
-    public MutableLiveData<ArrayList<Team>> liveTeams = new MutableLiveData<>();
-    public Player player;
-    public boolean confirm = false;
+    private Room.RoomType roomType;
+    private ReadyRequest readyRequest;
+    private EquipRequest equipRequest;
+    private MutableLiveData<ArrayList<Team>> liveTeams = new MutableLiveData<>();
+    private Player player;
+    private boolean confirm = false;
+
+    public Room.RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(Room.RoomType roomType) {
+        this.roomType = roomType;
+    }
+
+    public ReadyRequest getReadyRequest() {
+        return readyRequest;
+    }
+
+    public void setReadyRequest(ReadyRequest readyRequest) {
+        this.readyRequest = readyRequest;
+    }
+
+    public EquipRequest getEquipRequest() {
+        return equipRequest;
+    }
+
+    public void setEquipRequest(EquipRequest equipRequest) {
+        this.equipRequest = equipRequest;
+    }
+
+    public MutableLiveData<ArrayList<Team>> getLiveTeams() {
+        return liveTeams;
+    }
+
+    public void setLiveTeams(MutableLiveData<ArrayList<Team>> liveTeams) {
+        this.liveTeams = liveTeams;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public boolean isConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(boolean confirm) {
+        this.confirm = confirm;
+    }
+
     public void initialization(Repository repository){
         this.repository = repository;
         //初始化RPC
@@ -53,8 +102,8 @@ public class ReadyViewModel extends ViewModel {
             e.printStackTrace();
         }
         RPCNetRequestConfig config = new RPCNetRequestConfig(type);
-        this.readyRequest = RPCNetRequestFactory.register(ReadyRequest.class,"ReadyRequest",Core.userServer.first,Core.userServer.second,config);
-        this.equipRequest = RPCNetRequestFactory.register(EquipRequest.class,"EquipRequest",Core.userServer.first,Core.userServer.second,config);
+        this.readyRequest = RPCNetRequestFactory.register(ReadyRequest.class,"ReadyServer",Core.userServer.first,Core.userServer.second,config);
+        this.equipRequest = RPCNetRequestFactory.register(EquipRequest.class,"EquipServer",Core.userServer.first,Core.userServer.second,config);
     }
     public Single<Boolean> inviteFriend(long id){
         return new Single<Boolean>() {

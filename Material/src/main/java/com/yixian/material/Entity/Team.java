@@ -1,5 +1,7 @@
 package com.yixian.material.Entity;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.HashMap;
 
 /**
@@ -15,8 +17,9 @@ import java.util.HashMap;
  * @Version: 1.0
  */
 public class Team {
+    @Expose
     private String name;
-
+    @Expose
     private HashMap<Long, Player> teammates = new HashMap<Long, Player>();
 
     public String getName() {

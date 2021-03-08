@@ -37,10 +37,10 @@ public class EquipService extends Fragment{
 
     @RPCService
     public void SwitchCardGroup(Long id, CardGroup cardGroup){
-        for(Team team : Objects.requireNonNull(fragment.getViewModel().liveTeams.getValue())){
+        for(Team team : Objects.requireNonNull(fragment.getViewModel().getLiveTeams().getValue())){
             if(team.getTeammates().containsKey(id)){
                 Objects.requireNonNull(team.getTeammates().get(id)).setCardGroup(cardGroup);
-                fragment.getViewModel().liveTeams.postValue(fragment.getViewModel().liveTeams.getValue());
+                fragment.getViewModel().getLiveTeams().postValue(fragment.getViewModel().getLiveTeams().getValue());
             }
         }
     }

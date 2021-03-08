@@ -15,7 +15,7 @@ import com.yixian.material.EtherealC.Model.RPCType;
  * @Version: 1.0
  */
 public class RPCNetRequestConfig {
-    private Boolean tokenEnable;
+    private Boolean tokenEnable = true;
     private RPCType type;
 
     public RPCNetRequestConfig(RPCType type){

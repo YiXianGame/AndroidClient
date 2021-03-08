@@ -13,8 +13,6 @@ package com.yixian.material.EtherealC.Net;
  * @Version: 1.0
  */
 public class RPCNetConfig {
-    private String host;
-    private String port;
     private int bufferSize = 1024;
 
     public int getBufferSize() {
@@ -23,22 +21,6 @@ public class RPCNetConfig {
 
     public void setBufferSize(int bufferSize) {
         this.bufferSize = bufferSize;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public String getPort() {
-        return port;
-    }
-
-    public void setPort(String port) {
-        this.port = port;
     }
 
 }

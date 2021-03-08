@@ -40,7 +40,7 @@ public class Equip_User_Adapt extends BaseQuickAdapter<Player, Equip_User_Adapt.
         }
         @Override
         public boolean areContentsTheSame(@NonNull Player oldItem, @NonNull Player newItem) {
-            return (oldItem.getCardGroup().getName().equals(newItem.getCardGroup().getName()));
+            return (oldItem.getCardGroup()!=newItem.getCardGroup());
         }
     }
     public class ViewHolder extends BaseViewHolder {

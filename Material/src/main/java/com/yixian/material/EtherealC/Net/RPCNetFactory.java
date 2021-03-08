@@ -11,12 +11,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class RPCNetFactory {
         static ConcurrentHashMap<Pair<String,String>, SocketClient> clients = new ConcurrentHashMap<>();
-        public static SocketClient StartClient(RPCNetConfig config){
-            Pair<String,String> key = new Pair<>(config.getHost(),config.getPort());
+        public static SocketClient StartClient(String host,String port,RPCNetConfig config){
+            Pair<String,String> key = new Pair<>(host,port);
             SocketClient socketClient = null;
             socketClient = clients.get(key);
             if(socketClient == null){
-                socketClient = new SocketClient(config);
+                socketClient = new SocketClient(host,port,config);
                 clients.put(key, socketClient);
                 try {
                     socketClient.start();

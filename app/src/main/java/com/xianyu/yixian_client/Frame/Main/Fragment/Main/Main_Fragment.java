@@ -16,7 +16,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.module.BaseLoadMoreModule;
 import com.google.android.material.tabs.TabLayout;
 import com.xianyu.yixian_client.Frame.Main.Adapt.Friend_Adapt;
-import com.xianyu.yixian_client.Frame.Main.Fragment.Main_FragmentDirections;
 import com.xianyu.yixian_client.Frame.Main.MainViewModel;
 import com.yixian.make.Core;
 import com.yixian.material.Entity.User;

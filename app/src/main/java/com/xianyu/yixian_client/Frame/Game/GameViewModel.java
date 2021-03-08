@@ -77,7 +77,7 @@ public class GameViewModel extends ViewModel {
         } catch (RPCException e) {
             e.printStackTrace();
         }
-        this.loadRequest = RPCNetRequestFactory.register(LoadRequest.class,"LoadRequest", Core.playerServer.first,Core.playerServer.second,new RPCNetRequestConfig(type));
+        this.loadRequest = RPCNetRequestFactory.register(LoadRequest.class,"LoadServer", Core.playerServer.first,Core.playerServer.second,new RPCNetRequestConfig(type));
     }
     public Single<ArrayList<SkillCard>> syncSkillCard(ArrayList<SkillCard> skillCards){
         return new Single<ArrayList<SkillCard>>() {

@@ -22,6 +22,7 @@ import com.yixian.make.Model.Repository;
 import com.yixian.material.Entity.CardGroup;
 import com.yixian.material.Entity.Team;
 import com.yixian.material.Entity.User;
+import com.yixian.material.EtherealC.Service.RPCNetServiceConfig;
 import com.yixian.material.Exception.RPCException;
 import com.yixian.material.EtherealC.Request.RPCNetRequestFactory;
 import com.yixian.material.EtherealC.Service.RPCNetServiceFactory;
@@ -57,9 +58,7 @@ public class ReadyFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(ReadyViewModel.class);
         viewModel.initialization(repository);
         assert getArguments() != null;
-        viewModel.roomType = ReadyFragmentArgs.fromBundle(requireArguments()).getRoomMode();
-        viewModel.liveTeammates.setValue(new HashMap<>());
-        viewModel.liveEnemies.setValue(new HashMap<>());
+        viewModel.setRoomType(ReadyFragmentArgs.fromBundle(requireArguments()).getRoomMode());
         if(Core.liveSquad.getValue()==null)Core.liveSquad.setValue(new ArrayList<>());
         else Core.liveSquad.getValue().clear();
         Core.liveSquad.getValue().add(Core.liveUser.getValue());
@@ -71,7 +70,7 @@ public class ReadyFragment extends Fragment {
     public void onDestroy() {
         RPCNetServiceFactory.destory("ReadyService",Core.userServer.first,Core.userServer.second);
         RPCNetRequestFactory.destory("ReadyRequest",Core.userServer.first,Core.userServer.second);
-        viewModel.readyRequest = null;
+        viewModel.setReadyRequest(null);
         super.onDestroy();
     }
 
@@ -91,7 +90,8 @@ public class ReadyFragment extends Fragment {
         } catch (RPCException e) {
             e.printStackTrace();
         }
-        RPCNetServiceFactory.register(new ReadyService(this),"ReadyService",Core.userServer.first,Core.userServer.second,type);
+        RPCNetServiceConfig config = new RPCNetServiceConfig(type);
+        RPCNetServiceFactory.register(new ReadyService(this),"ReadyClient",Core.userServer.first,Core.userServer.second,config);
 
         //好友
         RecyclerView recyclerView = binding.getRoot().findViewById(R.id.invite_recycle);

@@ -1,4 +1,4 @@
-package com.yixian.material.EtherealC.Net.Netty;
+    package com.yixian.material.EtherealC.Net.Netty;
 
 import android.util.Log;
 
@@ -41,8 +41,29 @@ public class SocketClient {
     private Random random = new Random();
     private RPCNetConfig config;
 
-    public SocketClient(RPCNetConfig config) {
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    private String host;
+    private String port;
+
+    public SocketClient(String host,String port,RPCNetConfig config) {
         this.config = config;
+        this.host = host;
+        this.port = port;
     }
     public void start() throws Exception {
         NioEventLoopGroup group = new NioEventLoopGroup();
@@ -72,10 +93,10 @@ public class SocketClient {
         if (channel != null && channel.isActive()) {
             return;
         }
-        ChannelFuture future = bootstrap.connect(config.getHost(), Integer.parseInt(config.getPort()));
+        ChannelFuture future = bootstrap.connect(host,Integer.parseInt(port));
         future.addListener(new ChannelFutureListener() {
             public void operationComplete(ChannelFuture futureListener) throws Exception {
-                if (futureListener.isSuccess()) {
+                if (futureListener .isSuccess()) {
                     channel = futureListener.channel();
                     System.out.println("Connect to server successfully!");
                 } else {

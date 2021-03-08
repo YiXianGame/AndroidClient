@@ -33,9 +33,9 @@ public class CardGroupSectionFirst extends BaseNodeProvider {
         name_text.setText(((CardGroupSectionFirstNode)baseNode).getCardGroup().getName());
         Button expand_button = baseViewHolder.findView(R.id.expand_button);
         expand_button.setOnClickListener(v -> {
-            if(!viewModel.confirm){
-                viewModel.player.setCardGroup(((CardGroupSectionFirstNode) baseNode).cardGroup);
-                viewModel.equipRequest.SwitchCardGroup(viewModel.player.getCardGroup());
+            if(!viewModel.isConfirm()){
+                viewModel.getPlayer().setCardGroup(((CardGroupSectionFirstNode) baseNode).cardGroup);
+                viewModel.getEquipRequest().SwitchCardGroup(viewModel.getPlayer().getCardGroup());
             }
         });
     }

@@ -41,7 +41,7 @@ public class CustomHeartbeatHandler extends ChannelHandlerAdapter {
             }
             else {
                 Log.e(Tag.RemoteRepository,"\n------------------未找到请求--------------------");
-                Log.e(Tag.RemoteRepository,String.format("%s:%s::[客]\n%s",socketClient.getConfig().getHost(),socketClient.getConfig().getPort(),respond));
+                Log.e(Tag.RemoteRepository,String.format("%s:%s::[客]\n%s",socketClient.getHost(),socketClient.getPort(),respond));
                 Log.e(Tag.RemoteRepository,"--------------------------------------------");
             }
         }
@@ -49,7 +49,7 @@ public class CustomHeartbeatHandler extends ChannelHandlerAdapter {
             ServerRequestModel request = (ServerRequestModel)msg;
             RPCNetService adapt;
             Method method;
-            adapt = RPCNetServiceFactory.services.get(new Triple<>(((ServerRequestModel) msg).Service,socketClient.getConfig().getHost(),socketClient.getConfig().getPort()));
+            adapt = RPCNetServiceFactory.services.get(new Triple<>(((ServerRequestModel) msg).Service,socketClient.getHost(),socketClient.getPort()));
             if(adapt != null){
                 method = adapt.getMethods().get(request.MethodId);
                 if(method!= null){
@@ -58,14 +58,14 @@ public class CustomHeartbeatHandler extends ChannelHandlerAdapter {
                 }
                 else {
                     Log.e(Tag.RemoteRepository,"\n------------------未找到该方法--------------------");
-                    Log.e(Tag.RemoteRepository,String.format("%s:%s::[客]\n%s",socketClient.getConfig().getHost(),socketClient.getConfig().getPort()));
+                    Log.e(Tag.RemoteRepository,String.format("%s:%s::[客]\n%s",socketClient.getHost(),socketClient.getPort()));
                     Log.e(Tag.RemoteRepository,"--------------------------------------------");
                     return;
                 }
             }
             else {
                 Log.e(Tag.RemoteRepository,"\n------------------未找到该服务--------------------");
-                Log.e(Tag.RemoteRepository,String.format("%s:%s::[客]\n%s",socketClient.getConfig().getHost(),socketClient.getConfig().getPort()));
+                Log.e(Tag.RemoteRepository,String.format("%s:%s::[客]\n%s",socketClient.getHost(),socketClient.getPort()));
                 Log.e(Tag.RemoteRepository,"--------------------------------------------");
                 return;
             }

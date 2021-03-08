@@ -1,5 +1,7 @@
 package com.yixian.material.Entity;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * @ProjectName: YiXian_Client
  * @Package: com.yixian.material.Entity
@@ -13,18 +15,31 @@ package com.yixian.material.Entity;
  * @Version: 1.0
  */
 public class Player {
+    @Expose
     private long id;
+    @Expose
     private String username = "";//玩家ID也是QQ号（-1时为机器人）
+    @Expose
     private String nickname;//玩家昵称
+    @Expose
     private int hp;//血量
+    @Expose
     private int mp;//能量
+    @Expose
     private int hp_max;//血量上限
+    @Expose
     private int mp_max;//仙气上限
+    @Expose
     private String title = "炼气";//称号
+    @Expose
     private int lv = 1;//等级
+    @Expose
     private byte[] headImage;
+    @Expose
     private Room room;//房间
+    @Expose
     private Team team;//队友
+    @Expose
     private CardGroup cardGroup;
 
     public long getId() {

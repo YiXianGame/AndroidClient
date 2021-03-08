@@ -12,8 +12,6 @@ import androidx.navigation.Navigation;
 
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-import com.xianyu.yixian_client.Frame.Main.Fragment.ChooseMode_FragmentArgs;
-import com.xianyu.yixian_client.Frame.Main.Fragment.ChooseMode_FragmentDirections;
 import com.xianyu.yixian_client.Frame.Main.MainViewModel;
 import com.xianyu.yixian_client.Model.MessageDialog;
 import com.xianyu.yixian_client.R;

@@ -12,6 +12,8 @@ import com.yixian.material.Entity.Player;
 import com.yixian.material.Entity.Team;
 import com.yixian.material.Entity.User;
 import com.yixian.material.EtherealC.Annotation.RPCService;
+import com.yixian.material.EtherealC.Request.RPCNetRequestFactory;
+import com.yixian.material.EtherealC.Service.RPCNetServiceFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +26,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ReadyService {
     private ReadyFragment fragment;
     private final CompositeDisposable disposable = new CompositeDisposable();
-
+    boolean sure = false;
     public ReadyService(ReadyFragment fragment) {
         this.fragment = fragment;
     }
@@ -44,8 +46,16 @@ public class ReadyService {
     }
     @RPCService(parameters = "List<Team>")
     public void MatchSuccess(ArrayList<Team> teams){
-        fragment.getViewModel().liveTeams.setValue(teams);
+        if(sure == false)sure = true;
+        else return;
         fragment.getView().post(()->{
+            fragment.getViewModel().getLiveTeams().setValue(teams);
+            for(Team team : teams){
+                if(team.getTeammates().containsKey(Core.liveUser.getValue().getId())){
+                    fragment.getViewModel().setPlayer(team.getTeammates().get(Core.liveUser.getValue().getId()));
+                }
+                team.getTeammates().values().forEach(item->item.setTeam(team));
+            }
             new MaterialAlertDialogBuilder(fragment.getView().getContext())
                     .setTitle("匹配成功")
                     .setMessage("即将进入卡组配置界面")
@@ -67,7 +77,7 @@ public class ReadyService {
                     .setMessage("您收到来自"+ inviter .getNickname()+"的邀请")
                     .setPositiveButton(R.string.confirm_dialog, (dialog, which) -> {
                         Single.create((SingleOnSubscribe<User>) emitter -> {
-                            ArrayList<User> users = fragment.getViewModel().readyRequest.EnterSquad(inviter.getId(),secretKey);
+                            ArrayList<User> users = fragment.getViewModel().getReadyRequest().EnterSquad(inviter.getId(),secretKey);
                             if(users!=null){
                                 Core.liveSquad.postValue(users);
                                 Navigation.findNavController(fragment.getView()).navigate(R.id.action_readyFragment_to_equipFragment);
@@ -82,12 +92,12 @@ public class ReadyService {
     }
     @RPCService
     public void SwitchCardGroup(Long id, CardGroup cardGroup){
-        for (Team team : fragment.getViewModel().liveTeams.getValue()){
+        for (Team team : fragment.getViewModel().getLiveTeams().getValue()){
             if(team.getTeammates().containsKey(id)){
                 team.getTeammates().get(id).setCardGroup(cardGroup);
                 break;
             }
         }
-        fragment.getViewModel().liveTeams.postValue(fragment.getViewModel().liveTeams.getValue());
+        fragment.getViewModel().getLiveTeams().postValue(fragment.getViewModel().getLiveTeams().getValue());
     }
 }
